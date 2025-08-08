@@ -28,14 +28,14 @@ This guide will help you deploy Chang Cookbook to a Digital Ocean droplet with D
 
 1. **Connect to Your Server**
    ```bash
-   ssh root@157.230.61.225
+   ssh root@157.230.61.255
    ```
 
 2. **Upload Setup Script**
    Copy the `production-setup.sh` script to your server:
    ```bash
    # From your local machine
-   scp production-setup.sh root@157.230.61.225:/root/
+   scp production-setup.sh root@157.230.61.255:/root/
    ```
 
 3. **Run Server Setup**
@@ -57,7 +57,7 @@ This guide will help you deploy Chang Cookbook to a Digital Ocean droplet with D
 1. **Upload Your Application**
    ```bash
    # From your local machine (in chang-cookbook directory)
-   scp -r . root@157.230.61.225:/opt/chang-cookbook/
+   scp -r . root@157.230.61.255:/opt/chang-cookbook/
    ```
 
 2. **Configure Environment**

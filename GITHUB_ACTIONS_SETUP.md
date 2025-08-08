@@ -26,7 +26,7 @@ Before the workflows can run, you need to configure these secrets in your GitHub
 |-------------|-------------|---------------|
 | `DEPLOY_SSH_KEY` | Private SSH key for server access | `-----BEGIN OPENSSH PRIVATE KEY-----...` |
 | `DEPLOY_USER` | Server username | `root` or `your-username` |
-| `DEPLOY_HOST` | Server IP address | `157.230.61.225` |
+| `DEPLOY_HOST` | Server IP address | `157.230.61.255` |
 | `DEPLOY_PATH` | Deployment directory path | `/opt/chang-cookbook` |
 | `DEPLOYMENT_URL` | Your website URL | `https://cook.alexthip.com` |
 

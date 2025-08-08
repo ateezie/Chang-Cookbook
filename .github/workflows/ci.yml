@@ -33,6 +33,8 @@ jobs:
       continue-on-error: true
       
     - name: 🗄️ Setup test database
+      env:
+        DATABASE_URL: "file:./test.db"
       run: |
         npx prisma generate
         npx prisma migrate deploy
@@ -64,9 +66,16 @@ jobs:
       run: npm ci
       
     - name: 🗄️ Generate Prisma client
+      env:
+        DATABASE_URL: "file:./test.db"
       run: npx prisma generate
       
     - name: 🏗️ Build Next.js application
+      env:
+        DATABASE_URL: "file:./test.db"
+        NODE_ENV: "production"
+        NEXTAUTH_URL: "http://localhost:3000"
+        JWT_SECRET: "test-jwt-secret"
       run: npm run build
       
     - name: 📊 Upload build artifacts
@@ -92,6 +101,9 @@ jobs:
         node-version: '18'
         cache: 'npm'
         
+    - name: 📦 Install dependencies
+      run: npm ci
+      
     - name: 🔍 Audit dependencies
       run: npm audit --audit-level=high || echo "Audit found issues but continuing..."
       

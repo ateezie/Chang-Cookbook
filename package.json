@@ -1,0 +1,51 @@
+{
+  "name": "chang-cookbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:migrate": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "migrate:json": "node scripts/migrate-json-to-db.js",
+    "setup:admin": "node scripts/create-admin.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/server-filesystem": "^2025.7.29",
+    "@prisma/client": "^6.13.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.1",
+    "jsdom": "^26.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mcp-unsplash": "^1.0.0",
+    "multer": "^2.0.2",
+    "next": "^15.4.6",
+    "node-fetch": "^3.3.2",
+    "prisma": "^6.13.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.32.0",
+    "eslint-config-next": "^15.4.6",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.2"
+  }
+}

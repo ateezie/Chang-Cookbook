@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Admin user model for authentication
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  recipes   Recipe[]
+}
+
+// Recipe categories
+model Category {
+  id          String   @id
+  name        String
+  description String
+  emoji       String
+  count       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  recipes Recipe[]
+
+  @@map("categories")
+}
+
+// Main recipe model
+model Recipe {
+  id           String   @id
+  title        String
+  slug         String   @unique // URL-friendly permalink
+  description  String
+  categoryId   String
+  difficulty   String   // 'easy' | 'medium' | 'hard'
+  prepTime     Int      // in minutes
+  cookTime     Int      // in minutes  
+  totalTime    Int      // in minutes
+  servings     Int
+  rating       Float    @default(0)
+  reviewCount  Int      @default(0)
+  image        String?
+  imageCredit  String?
+  unsplashId   String?
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  category     Category     @relation(fields: [categoryId], references: [id])
+  chef         Chef         @relation(fields: [chefId], references: [id])
+  chefId       String
+  ingredients  Ingredient[]
+  instructions Instruction[]
+  nutrition    Nutrition?
+  tags         RecipeTag[]
+
+  // Created by admin user
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  @@map("recipes")
+}
+
+// Chef information
+model Chef {
+  id        String   @id @default(cuid())
+  name      String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  recipes Recipe[]
+
+  @@map("chefs")
+}
+
+// Recipe ingredients
+model Ingredient {
+  id       String @id @default(cuid())
+  recipeId String
+  item     String
+  amount   String
+  order    Int    @default(0)
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@map("ingredients")
+}
+
+// Recipe instructions
+model Instruction {
+  id       String @id @default(cuid())
+  recipeId String
+  step     String
+  order    Int
+
+  // Relations  
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@map("instructions")
+}
+
+// Nutrition information
+model Nutrition {
+  id       String @id @default(cuid())
+  recipeId String @unique
+  calories Int
+  protein  String
+  carbs    String
+  fat      String
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@map("nutrition")
+}
+
+// Tags system
+model Tag {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Relations
+  recipes RecipeTag[]
+
+  @@map("tags")
+}
+
+// Many-to-many relation between recipes and tags
+model RecipeTag {
+  recipeId String
+  tagId    String
+
+  // Relations
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, tagId])
+  @@map("recipe_tags")
+}

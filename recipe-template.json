@@ -1,0 +1,47 @@
+{
+  "id": "your-recipe-slug-here",
+  "title": "Your Recipe Title",
+  "description": "Brief 1-2 sentence description of your recipe",
+  "category": "main-course",
+  "difficulty": "easy",
+  "prepTime": 15,
+  "cookTime": 30,
+  "totalTime": 45,
+  "servings": 4,
+  "rating": 4.5,
+  "reviewCount": 25,
+  "image": "https://images.unsplash.com/photo-example-url?w=800&q=80",
+  "chef": {
+    "name": "Your Name",
+    "avatar": "https://images.unsplash.com/photo-avatar-url?w=100&q=80"
+  },
+  "tags": ["tag1", "tag2", "comfort-food"],
+  "ingredients": [
+    {
+      "item": "ingredient name",
+      "amount": "1 cup"
+    },
+    {
+      "item": "another ingredient",
+      "amount": "2 tablespoons"
+    },
+    {
+      "item": "third ingredient",
+      "amount": "to taste"
+    }
+  ],
+  "instructions": [
+    "Step 1: First instruction with specific details and timing",
+    "Step 2: Second step with temperatures or visual cues",
+    "Step 3: Continue with clear, actionable steps",
+    "Step 4: Final step and serving suggestions"
+  ],
+  "nutrition": {
+    "calories": 350,
+    "protein": "25g",
+    "carbs": "40g",
+    "fat": "12g"
+  },
+  "featured": false,
+  "createdAt": "2024-12-07"
+}

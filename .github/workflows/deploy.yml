@@ -1,0 +1,105 @@
+name: 🚀 Deploy to Digital Ocean
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to Digital Ocean
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.environment || 'production' }}
+      url: ${{ secrets.DEPLOYMENT_URL }}
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔐 Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+        
+    - name: 🔍 Verify server connection
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "echo 'Connection successful'"
+        
+    - name: 📤 Deploy application
+      run: |
+        # Create deployment directory if it doesn't exist
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ${{ secrets.DEPLOY_PATH }}"
+        
+        # Sync files to server (excluding sensitive files)
+        rsync -avz --delete \
+          --exclude '.git' \
+          --exclude 'node_modules' \
+          --exclude '.env*' \
+          --exclude 'data/database/*.db' \
+          --exclude 'data/uploads' \
+          --exclude '.next' \
+          ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/
+          
+    - name: 🔧 Setup environment and deploy
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          # Create environment file from secrets
+          cat > .env.local << 'ENVEOF'
+        DATABASE_URL="${{ secrets.DATABASE_URL }}"
+        JWT_SECRET="${{ secrets.JWT_SECRET }}"
+        ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
+        ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}"
+        NEXTAUTH_URL="${{ secrets.NEXTAUTH_URL }}"
+        NODE_ENV="production"
+        ENVEOF
+          
+          # Make scripts executable
+          chmod +x *.sh
+          
+          # Run deployment
+          ./deploy.sh
+        EOF
+        
+    - name: 🔍 Verify deployment
+      run: |
+        # Wait for application to start
+        sleep 30
+        
+        # Check if application is responding
+        curl -f ${{ secrets.NEXTAUTH_URL }} || exit 1
+        curl -f ${{ secrets.NEXTAUTH_URL }}/api/recipes || exit 1
+        
+        echo "✅ Deployment successful!"
+        
+    - name: 📊 Post-deployment cleanup
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          # Clean up old Docker images
+          docker system prune -f
+          
+          # Create backup after successful deployment
+          cd ${{ secrets.DEPLOY_PATH }}
+          ./backup.sh
+        EOF
+        
+    - name: 📢 Notify deployment status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Chang Cookbook deployed successfully to ${{ secrets.NEXTAUTH_URL }}"
+        else
+          echo "❌ Deployment failed"
+          exit 1
+        fi

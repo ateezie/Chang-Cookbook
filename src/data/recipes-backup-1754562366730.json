@@ -1,0 +1,1373 @@
+{
+  "recipes": [
+    {
+      "id": "brown-sugar-dijon-chicken-thighs",
+      "title": "Brown Sugar Dijon Chicken Thighs",
+      "description": "Delicious brown sugar dijon chicken thighs recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 35,
+      "totalTime": 45,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Brown%20Sugar%20Dijon%20Chicken%20Thighs",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Baking dish"
+        },
+        {
+          "amount": "",
+          "item": "Small mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Pastry brush or spoon"
+        },
+        {
+          "amount": "",
+          "item": "Meat thermometer"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": true,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "korean-bulgogi-recipe",
+      "title": "Korean Bulgogi Recipe",
+      "description": "Delicious korean bulgogi recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 4,
+      "cookTime": 15,
+      "totalTime": 19,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Korean%20Bulgogi%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Box grater or food processor"
+        },
+        {
+          "amount": "",
+          "item": "Large skillet or grill pan"
+        },
+        {
+          "amount": "",
+          "item": "Tongs for flipping"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        }
+      ],
+      "instructions": [
+        "Asian Pear Benefits: The natural enzymes help tenderize the meat while adding subtle sweetness."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": true,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "creamy-romesco-chicken-garlic-bread-blue-apron-recipe",
+      "title": "Creamy Romesco Chicken & Garlic Bread - Blue Apron Recipe",
+      "description": "Delicious creamy romesco chicken & garlic bread - blue apron recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 30,
+      "totalTime": 40,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Creamy%20Romesco%20Chicken%20%26%20Garlic%20Bread%20-%20Blue%20Apron%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "2-4",
+          "item": "Boneless, Skinless Chicken Breasts"
+        },
+        {
+          "amount": "2-4",
+          "item": "Boneless, Center-Cut Pork Chops"
+        },
+        {
+          "amount": "2-4 Flank",
+          "item": "Steaks"
+        },
+        {
+          "amount": "2-4",
+          "item": "Skin-On Salmon Fillets"
+        },
+        {
+          "amount": "",
+          "item": "Medium Nonstick Pan (Large for 4 servings)"
+        },
+        {
+          "amount": "",
+          "item": "Sheet Pan"
+        },
+        {
+          "amount": "",
+          "item": "Aluminum Foil"
+        },
+        {
+          "amount": "",
+          "item": "Knife"
+        },
+        {
+          "amount": "",
+          "item": "Cutting Board"
+        },
+        {
+          "amount": "",
+          "item": "Mixing Bowl"
+        },
+        {
+          "amount": "",
+          "item": "Chicken: 165°F"
+        },
+        {
+          "amount": "",
+          "item": "Pork: 145°F"
+        },
+        {
+          "amount": "",
+          "item": "Steak: 145°F (cook additional 2-3 min to achieve)"
+        },
+        {
+          "amount": "",
+          "item": "Fish: 145°F"
+        }
+      ],
+      "instructions": [
+        "Cooking for 4? Double highlighted measurements and use larger pans.",
+        "Safe Cooking Temps: Chicken 165°F | Pork 145°F | Steak 145°F | Fish 145°F",
+        "Consuming raw or undercooked meat, poultry, fish, seafood or eggs may increase your risk of foodborne illness."
+      ],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": true,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "egg-roll-in-a-bowl",
+      "title": "Egg Roll in a Bowl",
+      "description": "Delicious egg roll in a bowl recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 20,
+      "totalTime": 30,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Egg%20Roll%20in%20a%20Bowl",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large skillet or wok"
+        },
+        {
+          "amount": "",
+          "item": "Spatula or wooden spoon"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife"
+        },
+        {
+          "amount": "",
+          "item": "Measuring spoons"
+        },
+        {
+          "amount": "",
+          "item": "Serving bowls"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": true,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "modern-recipe-template",
+      "title": "Modern Recipe Template",
+      "description": "Delicious modern recipe template recipe from Chang Cookbook.",
+      "category": "quick-meals",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 5,
+      "totalTime": 15,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Modern%20Recipe%20Template",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large cast iron skillet or grill pan"
+        },
+        {
+          "amount": "",
+          "item": "Large serving platter or baking sheet"
+        },
+        {
+          "amount": "",
+          "item": "Small bowls for toppings"
+        },
+        {
+          "amount": "",
+          "item": "Squeeze bottles (optional, for neat drizzling)"
+        },
+        {
+          "amount": "",
+          "item": "Tongs"
+        }
+      ],
+      "instructions": [
+        "Spice Level: Adjust chili de arbol dust to taste - start with less and add more."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "fontina-cheeseburgers-blue-apron-recipe",
+      "title": "Fontina Cheeseburgers - Blue Apron Recipe",
+      "description": "Delicious fontina cheeseburgers - blue apron recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 20,
+      "totalTime": 35,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Fontina%20Cheeseburgers%20-%20Blue%20Apron%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "10",
+          "item": "| 20 oz Ground Beef"
+        },
+        {
+          "amount": "10",
+          "item": "| 20 oz Ground Pork"
+        },
+        {
+          "amount": "12",
+          "item": "| 24 oz Premium Ground Beef Blend"
+        },
+        {
+          "amount": "",
+          "item": "Medium Nonstick Pan (Large for 4 servings)"
+        },
+        {
+          "amount": "",
+          "item": "Sheet Pan"
+        },
+        {
+          "amount": "",
+          "item": "Aluminum Foil"
+        },
+        {
+          "amount": "",
+          "item": "Knife"
+        },
+        {
+          "amount": "",
+          "item": "Cutting Board"
+        },
+        {
+          "amount": "",
+          "item": "Large Bowl for mixing"
+        },
+        {
+          "amount": "",
+          "item": "Ground Beef: 160°F"
+        },
+        {
+          "amount": "",
+          "item": "Ground Pork: 160°F"
+        }
+      ],
+      "instructions": [
+        "Truffle Butter: White truffle seasoned butter adds rich, earthy flavor without overpowering. Perfect for coating roasted potatoes.",
+        "Cooking for 4? Double the highlighted measurements and use larger pans.",
+        "Peppadew Peppers: These sweet-tangy South African peppers add a unique kick to the burgers.",
+        "Important: Pork requires longer cooking time than beef to reach safe internal temperature. Always use a meat thermometer to verify doneness.",
+        "Consuming raw or undercooked meat may increase your risk of foodborne illness.",
+        "Why longer cooking? Ground pork requires more time to reach the safe internal temperature of 160°F.",
+        "Resting: Let pork patties rest 2-3 minutes after cooking to allow juices to redistribute."
+      ],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "gourmet-ham-cheese-sandwich",
+      "title": "Gourmet Ham & Cheese Sandwich",
+      "description": "Delicious gourmet ham & cheese sandwich recipe from Chang Cookbook.",
+      "category": "desserts",
+      "difficulty": "medium",
+      "prepTime": 5,
+      "cookTime": 5,
+      "totalTime": 10,
+      "servings": 1,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Gourmet%20Ham%20%26%20Cheese%20Sandwich",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Griddle or large skillet"
+        },
+        {
+          "amount": "",
+          "item": "Spatula"
+        },
+        {
+          "amount": "",
+          "item": "Small saucepan (for sauce)"
+        },
+        {
+          "amount": "",
+          "item": "Pastry brush (for honey)"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "honey-butter-chicken-recipe",
+      "title": "Honey Butter Chicken Recipe",
+      "description": "Delicious honey butter chicken recipe recipe from Chang Cookbook.",
+      "category": "appetizers",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 20,
+      "totalTime": 35,
+      "servings": 1,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Honey%20Butter%20Chicken%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Instant Pot Air Fryer"
+        },
+        {
+          "amount": "3 shallow",
+          "item": "bowls for dredging"
+        },
+        {
+          "amount": "",
+          "item": "Small saucepan"
+        },
+        {
+          "amount": "",
+          "item": "Mixing bowl with lid"
+        },
+        {
+          "amount": "",
+          "item": "Toaster or grill pan"
+        },
+        {
+          "amount": "",
+          "item": "Meat thermometer"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "mango-sticky-rice-recipes",
+      "title": "Mango Sticky Rice Recipes",
+      "description": "Delicious mango sticky rice recipes recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 70,
+      "cookTime": 25,
+      "totalTime": 95,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Mango%20Sticky%20Rice%20Recipes",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 can",
+          "item": "(400ml) coconut milk"
+        },
+        {
+          "amount": "2-3 tbsp",
+          "item": "liquid palm sugar"
+        },
+        {
+          "amount": "1/2 tsp",
+          "item": "salt"
+        },
+        {
+          "amount": "",
+          "item": "Rice cooker"
+        },
+        {
+          "amount": "",
+          "item": "Fine mesh strainer"
+        },
+        {
+          "amount": "",
+          "item": "Measuring cups"
+        },
+        {
+          "amount": "",
+          "item": "Mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Small saucepan"
+        },
+        {
+          "amount": "",
+          "item": "Serving plates"
+        },
+        {
+          "amount": "1 can",
+          "item": "(400ml) coconut milk"
+        },
+        {
+          "amount": "3-4 tbsp",
+          "item": "sugar"
+        },
+        {
+          "amount": "1/2 tsp",
+          "item": "salt"
+        },
+        {
+          "amount": "",
+          "item": "Large steamer basket"
+        },
+        {
+          "amount": "",
+          "item": "Large pot with tight-fitting lid"
+        },
+        {
+          "amount": "",
+          "item": "Cheesecloth or banana leaves"
+        },
+        {
+          "amount": "",
+          "item": "Large mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Small saucepan"
+        },
+        {
+          "amount": "",
+          "item": "Fine mesh strainer"
+        }
+      ],
+      "instructions": [
+        "Soaking is Key: Don't skip the soaking time - it's essential for proper texture and cooking."
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "momofuku-noodle-ramen-recipes",
+      "title": "Momofuku Noodle Ramen Recipes",
+      "description": "Delicious momofuku noodle ramen recipes recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 30,
+      "totalTime": 40,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Momofuku%20Noodle%20Ramen%20Recipes",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large Dutch oven or soup pot"
+        },
+        {
+          "amount": "",
+          "item": "Oven"
+        },
+        {
+          "amount": "",
+          "item": "Large serving bowls"
+        },
+        {
+          "amount": "",
+          "item": "Slotted spoon"
+        },
+        {
+          "amount": "",
+          "item": "Large pot or Dutch oven"
+        },
+        {
+          "amount": "",
+          "item": "Oven"
+        },
+        {
+          "amount": "",
+          "item": "Large serving bowls"
+        },
+        {
+          "amount": "",
+          "item": "Spatula"
+        },
+        {
+          "amount": "",
+          "item": "Large pot for boiling water"
+        },
+        {
+          "amount": "",
+          "item": "Mixing bowls"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife"
+        },
+        {
+          "amount": "",
+          "item": "Serving bowls"
+        },
+        {
+          "amount": "",
+          "item": "Large stockpot (6+ quart capacity)"
+        },
+        {
+          "amount": "",
+          "item": "Fine mesh strainer"
+        },
+        {
+          "amount": "",
+          "item": "Cheesecloth"
+        },
+        {
+          "amount": "",
+          "item": "Baking sheet"
+        },
+        {
+          "amount": "",
+          "item": "Slotted spoon"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "moo-ping-thai-grilled-pork-skewers",
+      "title": "Moo Ping - Thai Grilled Pork Skewers",
+      "description": "Delicious moo ping - thai grilled pork skewers recipe from Chang Cookbook.",
+      "category": "appetizers",
+      "difficulty": "medium",
+      "prepTime": 30,
+      "cookTime": 30,
+      "totalTime": 60,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Moo%20Ping%20-%20Thai%20Grilled%20Pork%20Skewers",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Grill or Grill Pan"
+        },
+        {
+          "amount": "",
+          "item": "Wooden Skewers (soaked in water)"
+        },
+        {
+          "amount": "",
+          "item": "Sharp Knife"
+        },
+        {
+          "amount": "",
+          "item": "Cutting Board"
+        },
+        {
+          "amount": "",
+          "item": "Mixing Bowls"
+        },
+        {
+          "amount": "",
+          "item": "Pastry Brush (for basting)"
+        },
+        {
+          "amount": "",
+          "item": "Traditional: Sticky rice (khao niao) and Som Tam"
+        },
+        {
+          "amount": "",
+          "item": "Modern: Jasmine rice and cucumber salad"
+        },
+        {
+          "amount": "",
+          "item": "Appetizer: Cut into smaller pieces for parties"
+        },
+        {
+          "amount": "",
+          "item": "Salad: Slice over mixed greens with Thai herbs"
+        },
+        {
+          "amount": "",
+          "item": "Noodles: Serve over rice noodles or vermicelli"
+        }
+      ],
+      "instructions": [
+        "Coconut Milk: Don't skip the coconut milk basting - it prevents drying and adds authentic flavor.",
+        "Rice Powder: Add to dipping sauce just before serving to maintain crunch. Can substitute with crushed toasted rice.",
+        "Pork Butt: Pork shoulder or pork tenderloin (adjust cooking time)",
+        "Safe Pork Temperature: Cook to internal temperature of 145°F, then let rest 3 minutes.",
+        "Storage: Cooked skewers keep in refrigerator for 3 days. Reheat thoroughly before serving."
+      ],
+      "nutrition": {
+        "calories": 170,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "pad-ka-prao-thai-basil-stir-fry-recipe",
+      "title": "Pad Ka Prao (Thai Basil Stir-Fry) Recipe",
+      "description": "Delicious pad ka prao (thai basil stir-fry) recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 10,
+      "cookTime": 5,
+      "totalTime": 15,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Pad%20Ka%20Prao%20(Thai%20Basil%20Stir-Fry)%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "simple",
+        "vegetarian",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Wok or Large Skillet"
+        },
+        {
+          "amount": "",
+          "item": "Mortar and Pestle (preferred)"
+        },
+        {
+          "amount": "",
+          "item": "Small Frying Pan for Eggs"
+        },
+        {
+          "amount": "",
+          "item": "Wooden Spoon or Wok Spatula"
+        },
+        {
+          "amount": "",
+          "item": "Knife and Cutting Board"
+        }
+      ],
+      "instructions": [
+        "High Heat is Key: Use the highest heat possible for authentic \"wok hei\" (breath of the wok) flavor that makes Thai stir-fries special.",
+        "Basil Timing: Add basil at the very end and remove from heat immediately to preserve its aromatic oils.",
+        "Mild (1-2 chilies): Perfect for beginners or those sensitive to heat.",
+        "Oil Temperature: Heat oil until shimmering and very hot before adding egg.",
+        "Safety: Be careful of oil splatter when adding egg to hot oil."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "authentic-pad-thai-traditional-thai-recipe",
+      "title": "Authentic Pad Thai - Traditional Thai Recipe",
+      "description": "Delicious authentic pad thai - traditional thai recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 20,
+      "cookTime": 30,
+      "totalTime": 50,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Authentic%20Pad%20Thai%20-%20Traditional%20Thai%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "vegetarian",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "3 tbsp",
+          "item": "Coconut Sugar (or Palm Sugar)"
+        },
+        {
+          "amount": "3 tbsp",
+          "item": "Fish Sauce"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "Tamarind Juice"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "Chili Sauce (adjust to taste)"
+        },
+        {
+          "amount": "",
+          "item": "Large Wok or Heavy-bottomed Skillet"
+        },
+        {
+          "amount": "",
+          "item": "Wooden Spatula or Wok Turner"
+        },
+        {
+          "amount": "",
+          "item": "Large Bowl for soaking noodles"
+        },
+        {
+          "amount": "",
+          "item": "Small Bowl for mixing sauce"
+        },
+        {
+          "amount": "",
+          "item": "Knife and Cutting Board"
+        },
+        {
+          "amount": "",
+          "item": "Strainer"
+        }
+      ],
+      "instructions": [
+        "Noodle Texture: Don't over-soak the noodles - they should be pliable but still have some bite. They'll finish cooking in the wok.",
+        "Wok Hei: Cook over high heat and keep ingredients moving constantly for that authentic \"breath of the wok\" flavor that makes restaurant-style Pad Thai.",
+        "Banana Leaf: Street vendors traditionally wrap Pad Thai in banana leaves, which adds a subtle aroma and keeps the dish warm.",
+        "Fresh Garnishes: Bean sprouts, lime wedges, and crushed peanuts are essential fresh garnishes that add texture and flavor contrast.",
+        "High Heat is Key: Thai cooking relies on extremely high heat. If your stove doesn't get hot enough, cook in smaller batches to maintain temperature.",
+        "Timing: Pad Thai should be served immediately after cooking. The noodles continue to absorb sauce and can become mushy if left sitting."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "moms-peanut-sauce-recipe",
+      "title": "Mom's Peanut Sauce Recipe",
+      "description": "Delicious mom's peanut sauce recipe recipe from Chang Cookbook.",
+      "category": "appetizers",
+      "difficulty": "medium",
+      "prepTime": 5,
+      "cookTime": 30,
+      "totalTime": 35,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Mom's%20Peanut%20Sauce%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Spring rolls or summer rolls"
+        },
+        {
+          "amount": "",
+          "item": "Grilled chicken satay"
+        },
+        {
+          "amount": "",
+          "item": "Cold noodle salads"
+        },
+        {
+          "amount": "",
+          "item": "Fresh vegetables as dip"
+        },
+        {
+          "amount": "",
+          "item": "Rice bowls or grain salads"
+        },
+        {
+          "amount": "",
+          "item": "Medium mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Whisk or fork"
+        },
+        {
+          "amount": "",
+          "item": "Garlic press or knife for mincing"
+        },
+        {
+          "amount": "",
+          "item": "Measuring cups and spoons"
+        },
+        {
+          "amount": "",
+          "item": "Small serving bowl or jar"
+        }
+      ],
+      "instructions": [
+        "Consistency Tips: The sauce should coat the back of a spoon but still drizzle easily. If too thick, add water 1 teaspoon at a time.",
+        "Flavor Variations: Add a pinch of red pepper flakes for heat, fresh ginger for zing, or lime juice for extra brightness."
+      ],
+      "nutrition": {
+        "calories": 140,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "tender-braised-pork-belly-with-savory-napa-cabbage",
+      "title": "Tender Braised Pork Belly with Savory Napa Cabbage",
+      "description": "Delicious tender braised pork belly with savory napa cabbage recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 180,
+      "totalTime": 195,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Tender%20Braised%20Pork%20Belly%20with%20Savory%20Napa%20Cabbage",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Heavy oven-safe pot or Dutch oven"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife for scoring"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        },
+        {
+          "amount": "",
+          "item": "Grater for ginger"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "som-tum-green-papaya-salad",
+      "title": "Som Tum - Green Papaya Salad",
+      "description": "Delicious som tum - green papaya salad recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 30,
+      "totalTime": 45,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Som%20Tum%20-%20Green%20Papaya%20Salad",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large mortar and pestle (traditional Thai style preferred)"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife for julienning"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        },
+        {
+          "amount": "",
+          "item": "Serving plates"
+        }
+      ],
+      "instructions": [
+        "Spice Level: Start with 1 chili and add more to taste. Thai bird's eye chilies are quite hot!",
+        "Traditional Addition: Add fermented fish (pla-ra) for more authentic flavor if available."
+      ],
+      "nutrition": {
+        "calories": 170,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "som-tum-moms-version",
+      "title": "Som Tum - Mom's Version",
+      "description": "Delicious som tum - mom's version recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 20,
+      "cookTime": 30,
+      "totalTime": 50,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Som%20Tum%20-%20Mom's%20Version",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large mortar and pestle"
+        },
+        {
+          "amount": "",
+          "item": "Bowl for soaking papaya"
+        },
+        {
+          "amount": "",
+          "item": "Small bowl for melting palm sugar"
+        },
+        {
+          "amount": "",
+          "item": "Sharp knife for julienning"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        },
+        {
+          "amount": "",
+          "item": "Ice cubes"
+        }
+      ],
+      "instructions": [
+        "Ice Water Technique: The ice water soak makes papaya extra crispy and removes any bitterness - a signature step in Mom's version.",
+        "Toasted Peanuts: Pre-toasted peanuts add wonderful texture and deeper nutty flavor compared to raw peanuts.",
+        "Bird's Eye Chili: Provides authentic Thai heat - start with 1 and add more to taste. Much hotter than regular chilies!",
+        "This version has been perfected through years of family cooking. The ice water step and specific sequence of adding ingredients ensures the perfect balance of textures and flavors that make this Som Tum special."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "steak-cheese-rice",
+      "title": "Steak, Cheese & Rice",
+      "description": "Delicious steak, cheese & rice recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 25,
+      "totalTime": 40,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Steak%2C%20Cheese%20%26%20Rice",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "simple",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Two large skillets"
+        },
+        {
+          "amount": "",
+          "item": "Lid for rice skillet"
+        },
+        {
+          "amount": "",
+          "item": "Wooden spoon or spatula"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board and knife"
+        },
+        {
+          "amount": "",
+          "item": "Measuring cups and spoons"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "thai-tea-recipe-traditional-iced-tea",
+      "title": "Thai Tea Recipe - Traditional Iced Tea",
+      "description": "Delicious thai tea recipe - traditional iced tea recipe from Chang Cookbook.",
+      "category": "desserts",
+      "difficulty": "medium",
+      "prepTime": 5,
+      "cookTime": 30,
+      "totalTime": 35,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Thai%20Tea%20Recipe%20-%20Traditional%20Iced%20Tea",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large mixing bowl"
+        },
+        {
+          "amount": "",
+          "item": "Fine mesh strainer or tea sock"
+        },
+        {
+          "amount": "",
+          "item": "Measuring cups and spoons"
+        },
+        {
+          "amount": "",
+          "item": "Tall glasses for serving"
+        },
+        {
+          "amount": "",
+          "item": "Wooden spoon for stirring"
+        },
+        {
+          "amount": "",
+          "item": "Small saucepan (optional)"
+        }
+      ],
+      "instructions": [
+        "Tea Strength: For stronger flavor, increase steeping time to 4-5 minutes or add 1-2 more tablespoons of tea powder.",
+        "Sweetness: Adjust sugar levels to taste. Start with less and add more if needed.",
+        "Variations: For lighter version, substitute half the condensed milk with additional evaporated milk."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    },
+    {
+      "id": "thai-coconut-shrimp-tom-yum-recipe",
+      "title": "Thai Coconut Shrimp Tom Yum Recipe",
+      "description": "Delicious thai coconut shrimp tom yum recipe recipe from Chang Cookbook.",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 15,
+      "totalTime": 30,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "https://via.placeholder.com/800x500/ff9966/ffffff?text=Thai%20Coconut%20Shrimp%20Tom%20Yum%20Recipe",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Large saucepan or pot"
+        },
+        {
+          "amount": "",
+          "item": "Knife for prep"
+        },
+        {
+          "amount": "",
+          "item": "Cutting board"
+        },
+        {
+          "amount": "",
+          "item": "Ladle"
+        },
+        {
+          "amount": "",
+          "item": "Serving bowls"
+        },
+        {
+          "amount": "",
+          "item": "Citrus juicer (optional)"
+        }
+      ],
+      "instructions": [],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-07"
+    }
+  ],
+  "categories": [
+    {
+      "id": "main-course",
+      "name": "Main Course",
+      "description": "Delicious main course recipes",
+      "emoji": "🍽️",
+      "count": 14
+    },
+    {
+      "id": "quick-meals",
+      "name": "Quick Meals",
+      "description": "Delicious quick meals recipes",
+      "emoji": "🍽️",
+      "count": 1
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "description": "Delicious desserts recipes",
+      "emoji": "🍽️",
+      "count": 2
+    },
+    {
+      "id": "appetizers",
+      "name": "Appetizers",
+      "description": "Delicious appetizers recipes",
+      "emoji": "🍽️",
+      "count": 3
+    }
+  ]
+}

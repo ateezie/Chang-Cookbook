@@ -1,0 +1,204 @@
+name: 🗄️ Database Operations
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Database action to perform'
+        required: true
+        type: choice
+        options:
+        - migrate
+        - backup
+        - restore
+        - seed
+      backup_file:
+        description: 'Backup file name (for restore operation)'
+        required: false
+        type: string
+
+jobs:
+  database-operation:
+    name: 🗄️ Database ${{ github.event.inputs.action }}
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔐 Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+        
+    - name: 🗄️ Database Migration
+      if: github.event.inputs.action == 'migrate'
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          echo "🚀 Starting database migration..."
+          
+          # Backup current database before migration
+          ./backup.sh
+          
+          # Run Prisma migrations
+          docker-compose exec -T chang-cookbook npx prisma migrate deploy
+          
+          # Generate Prisma client
+          docker-compose exec -T chang-cookbook npx prisma generate
+          
+          # Restart application to ensure new schema is loaded
+          docker-compose restart chang-cookbook
+          
+          echo "✅ Database migration completed successfully"
+        EOF
+        
+    - name: 💾 Database Backup
+      if: github.event.inputs.action == 'backup'
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          echo "💾 Creating database backup..."
+          
+          # Run backup script
+          ./backup.sh
+          
+          # List recent backups
+          ls -la backups/ | tail -5
+          
+          echo "✅ Database backup completed successfully"
+        EOF
+        
+    - name: 🔄 Database Restore
+      if: github.event.inputs.action == 'restore'
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          BACKUP_FILE="${{ github.event.inputs.backup_file }}"
+          
+          if [ -z "$BACKUP_FILE" ]; then
+            echo "❌ Backup file name is required for restore operation"
+            exit 1
+          fi
+          
+          if [ ! -f "backups/$BACKUP_FILE" ]; then
+            echo "❌ Backup file 'backups/$BACKUP_FILE' not found"
+            echo "Available backups:"
+            ls -la backups/
+            exit 1
+          fi
+          
+          echo "🔄 Restoring database from $BACKUP_FILE..."
+          
+          # Stop application
+          docker-compose stop chang-cookbook
+          
+          # Extract backup
+          cd backups
+          tar -xzf "$BACKUP_FILE"
+          
+          # Find the extracted directory
+          BACKUP_DIR=$(tar -tzf "$BACKUP_FILE" | head -1 | cut -f1 -d"/")
+          
+          # Restore database
+          if [ -f "$BACKUP_DIR/production.db" ]; then
+            cp "$BACKUP_DIR/production.db" ../data/database/
+            echo "✅ Database restored successfully"
+          else
+            echo "❌ No database file found in backup"
+            exit 1
+          fi
+          
+          # Restore uploads if available
+          if [ -d "$BACKUP_DIR/uploads" ]; then
+            cp -r "$BACKUP_DIR/uploads" ../data/
+            echo "✅ Uploads restored successfully"
+          fi
+          
+          cd ..
+          
+          # Start application
+          docker-compose start chang-cookbook
+          
+          # Wait for startup
+          sleep 10
+          
+          # Verify restoration
+          curl -f http://localhost:3000/api/recipes || exit 1
+          
+          echo "✅ Database restore completed successfully"
+        EOF
+        
+    - name: 🌱 Database Seed
+      if: github.event.inputs.action == 'seed'
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          echo "🌱 Seeding database with recipe data..."
+          
+          # Run the migration script to import JSON recipes
+          docker-compose exec -T chang-cookbook node scripts/migrate-json-to-db.js
+          
+          # Run production database setup to ensure admin user exists
+          docker-compose exec -T chang-cookbook node scripts/production-db-setup.js
+          
+          echo "✅ Database seeding completed successfully"
+        EOF
+        
+    - name: 🔍 Post-operation verification
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          
+          echo "🔍 Verifying database operation..."
+          
+          # Check application health
+          curl -f http://localhost:3000 || exit 1
+          curl -f http://localhost:3000/api/recipes || exit 1
+          
+          # Check database statistics
+          echo "📊 Current database statistics:"
+          docker-compose exec -T chang-cookbook node -e "
+            const { PrismaClient } = require('@prisma/client');
+            const prisma = new PrismaClient();
+            
+            async function getStats() {
+              try {
+                const recipes = await prisma.recipe.count();
+                const categories = await prisma.category.count();
+                const users = await prisma.user.count();
+                
+                console.log(\`Recipes: \${recipes}\`);
+                console.log(\`Categories: \${categories}\`);
+                console.log(\`Users: \${users}\`);
+              } catch (error) {
+                console.error('Error:', error.message);
+                process.exit(1);
+              } finally {
+                await prisma.\$disconnect();
+              }
+            }
+            
+            getStats();
+          " || exit 1
+          
+          echo "✅ Database operation verified successfully"
+        EOF
+        
+    - name: 📢 Operation summary
+      if: always()
+      run: |
+        ACTION="${{ github.event.inputs.action }}"
+        STATUS="${{ job.status }}"
+        
+        if [ "$STATUS" == "success" ]; then
+          echo "✅ Database $ACTION operation completed successfully"
+        else
+          echo "❌ Database $ACTION operation failed"
+          exit 1
+        fi

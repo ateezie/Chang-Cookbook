@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fontina Cheeseburgers - Blue Apron Recipe</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #2d3748;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Ingredients */
+        .protein-options {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .protein-options h4 {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .protein-options ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .protein-options li {
+            font-size: 11px;
+            color: #856404;
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .protein-options li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #4a5568;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #2d3748;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #2d3748;
+        }
+        
+        .print-button:hover {
+            background: #2d3748;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        .safety-warning {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .safety-warning h4 {
+            color: #c53030;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .safety-warning p {
+            font-size: 10px;
+            color: #742a2a;
+            line-height: 1.3;
+        }
+
+        .temp-list {
+            margin: 8px 0;
+        }
+
+        .temp-list li {
+            font-size: 10px;
+            color: #742a2a;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipe</button>
+    
+    <div class="recipe-container">
+        <!-- Main Recipe Page -->
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Fontina Cheeseburgers
+            </div>
+            <div class="recipe-subtitle">
+                with Truffle Butter Roasted Potatoes - Blue Apron Recipe
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">15 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">20 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">2-4</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="protein-options">
+                            <h4>Protein Options (choose one):</h4>
+                            <ul>
+                                <li>10 | 20 oz Ground Beef</li>
+                                <li>10 | 20 oz Ground Pork</li>
+                                <li>12 | 24 oz Premium Ground Beef Blend</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 | 4 Burger Buns</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">12 | 24 oz Potatoes</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 | 4 cloves Garlic</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">½ | 1 oz Pickled Peppadew Peppers</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 | 4 oz Shredded Fontina Cheese</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 | 2 oz White Truffle Flavored Butter</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Olive Oil, Salt, Pepper</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Medium Nonstick Pan (Large for 4 servings)</li>
+                                <li>Sheet Pan</li>
+                                <li>Aluminum Foil</li>
+                                <li>Knife</li>
+                                <li>Cutting Board</li>
+                                <li>Large Bowl for mixing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Remove butter from refrigerator to soften. Preheat oven to 450°F. Line sheet pan with foil. Halve potatoes lengthwise, then cut crosswise into ½-inch pieces. Toss with olive oil, salt, and pepper. Roast 18-22 minutes until tender when pierced with fork.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Meanwhile, peel and roughly chop 2 cloves of garlic. In a bowl, combine the meat and chopped garlic. Season with salt and pepper. Gently mix and form into 2 patties, about ½-inch thick.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Heat a drizzle of olive oil in nonstick pan on medium-high. Add patties and cook 4-5 minutes until browned. Flip carefully, top evenly with fontina cheese, and loosely cover with foil. Cook 1-3 minutes more until cheese melts and patties are cooked through.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Transfer patties to work surface and drain excess oil from pan. Add buns cut-side down to same pan and toast 30 seconds to 1 minute until lightly browned.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Toss roasted potatoes with softened truffle butter. Assemble burgers with toasted buns, cooked patties, and peppadew peppers (torn into bite-sized pieces). Serve with truffle butter potatoes on the side.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Truffle Butter:</strong> White truffle seasoned butter adds rich, earthy flavor without overpowering. Perfect for coating roasted potatoes.</p>
+                            <p><strong>Cooking for 4?</strong> Double the highlighted measurements and use larger pans.</p>
+                            <p><strong>Peppadew Peppers:</strong> These sweet-tangy South African peppers add a unique kick to the burgers.</p>
+                            <p><strong>Storage:</strong> Contains dairy. Check ingredient packaging for allergens.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternative Protein Instructions Page -->
+    <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Ground Pork Alternative
+            </div>
+            <div class="recipe-subtitle">
+                Customized cooking method for pork patties
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">5-6 min/side</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Target Temp</span>
+                        <div class="meta-value">160°F</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Rest Time</span>
+                        <div class="meta-value">2-3 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">2-4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🥩 Ground Pork Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Meanwhile, peel and roughly chop 2 cloves of garlic. In a bowl, combine the pork and chopped garlic. Season with salt and pepper. Gently mix and form into 2 patties, about ½-inch thick.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">In a medium nonstick pan (or large for 4 servings), heat a drizzle of olive oil on medium-high until hot.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Add the patties. Cook 5 to 6 minutes, or until browned on first side.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Flip the patties (carefully, as the oil may splatter) and evenly top with the fontina. Loosely cover the pan with foil.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Cook 5 to 6 minutes, or until the cheese is melted and the patties are browned and cooked through.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">6</div>
+                            <div class="step-text">Leaving any browned bits (or fond) in the pan, transfer to a work surface. Carefully drain off and discard any excess oil.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="safety-warning">
+                        <h4>⚠️ Safety Notes</h4>
+                        <p><strong>USDA Recommended Temperatures:</strong></p>
+                        <ul class="temp-list">
+                            <li>Ground Beef: 160°F</li>
+                            <li>Ground Pork: 160°F</li>
+                        </ul>
+                        <p><strong>Important:</strong> Pork requires longer cooking time than beef to reach safe internal temperature. Always use a meat thermometer to verify doneness.</p>
+                        <p><em>Consuming raw or undercooked meat may increase your risk of foodborne illness.</em></p>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">💡 Pork Cooking Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Why longer cooking?</strong> Ground pork requires more time to reach the safe internal temperature of 160°F.</p>
+                            <p><strong>Visual cues:</strong> Pork patties should be golden brown on both sides with no pink remaining in the center.</p>
+                            <p><strong>Resting:</strong> Let pork patties rest 2-3 minutes after cooking to allow juices to redistribute.</p>
+                            <p><strong>Flavor note:</strong> Pork pairs exceptionally well with the truffle butter and fontina cheese combination.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

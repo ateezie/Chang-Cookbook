@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pad Ka Prao (Thai Basil Stir-Fry) Recipe</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #2d3748;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Ingredients */
+        .protein-options {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .protein-options h4 {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .protein-options ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .protein-options li {
+            font-size: 11px;
+            color: #856404;
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .protein-options li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #4a5568;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #2d3748;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #2d3748;
+        }
+        
+        .print-button:hover {
+            background: #2d3748;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        .safety-warning {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .safety-warning h4 {
+            color: #c53030;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .safety-warning p {
+            font-size: 10px;
+            color: #742a2a;
+            line-height: 1.3;
+        }
+
+        .temp-list {
+            margin: 8px 0;
+        }
+
+        .temp-list li {
+            font-size: 10px;
+            color: #742a2a;
+        }
+
+        .thai-note {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .thai-note h4 {
+            color: #2f855a;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .thai-note p {
+            font-size: 11px;
+            color: #2f855a;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipe</button>
+    
+    <div class="recipe-container">
+        <!-- Main Recipe Page -->
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Pad Ka Prao (ผัดกะเพรา)
+            </div>
+            <div class="recipe-subtitle">
+                Thai Stir-fried Holy Basil with Meat - Authentic Street Food Classic
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">10 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">5 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">2</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Easy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="thai-note">
+                            <h4>About Holy Basil (Ka Prao):</h4>
+                            <p>Thai holy basil has a spicier, more intense flavor than sweet basil. Look for it at Asian markets. Thai basil is the best substitute if unavailable.</p>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">3-5 Thai chilies, roughly crushed</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">3-4 garlic cloves, roughly crushed</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 cup Thai holy basil leaves (ka prao)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">200g ground pork, chicken, or beef</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tablespoons vegetable oil</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tablespoons fish sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 tablespoon soy sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 teaspoon sugar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 eggs for frying</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Cooked jasmine rice for serving</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Wok or Large Skillet</li>
+                                <li>Mortar and Pestle (preferred)</li>
+                                <li>Small Frying Pan for Eggs</li>
+                                <li>Wooden Spoon or Wok Spatula</li>
+                                <li>Knife and Cutting Board</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Using mortar and pestle, roughly crush chilies and garlic together. Keep pieces chunky, not paste-like. Heat oil in wok or large skillet over high heat until smoking.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Add crushed chilies and garlic to hot oil. Stir-fry for 30 seconds until fragrant and sizzling. Be careful not to burn.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Add ground meat and break apart with spatula. Stir-fry for 2-3 minutes over high heat until meat is cooked through and slightly crispy around edges.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Add fish sauce, soy sauce, and sugar. Stir well to combine and cook for 1 minute to let flavors meld and sauce reduce slightly.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Add holy basil leaves and toss quickly for 30 seconds until wilted. Remove from heat immediately. Meanwhile, fry eggs in separate pan until crispy-edged. Serve over rice with fried egg on top.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>High Heat is Key:</strong> Use the highest heat possible for authentic "wok hei" (breath of the wok) flavor that makes Thai stir-fries special.</p>
+                            <p><strong>Crispy Egg:</strong> The fried egg should have golden, crispy, lacy edges. This textural contrast is essential to the dish.</p>
+                            <p><strong>Basil Timing:</strong> Add basil at the very end and remove from heat immediately to preserve its aromatic oils.</p>
+                            <p><strong>Serving Style:</strong> Traditionally served with extra chilies and fish sauce on the side for customization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips & Variations Page -->
+    <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Pad Ka Prao Variations & Tips
+            </div>
+            <div class="recipe-subtitle">
+                Different proteins and authentic techniques
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Seafood</span>
+                        <div class="meta-value">2-3 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Tofu</span>
+                        <div class="meta-value">3-4 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Spice Level</span>
+                        <div class="meta-value">Adjustable</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Origin</span>
+                        <div class="meta-value">Thailand</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🌶️ Protein Variations</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">🦐</div>
+                            <div class="step-text"><strong>Seafood Version:</strong> Use 200g shrimp, squid, or mixed seafood. Cook for only 2-3 minutes total to avoid overcooking. Add seafood after aromatics, before seasonings.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">🥩</div>
+                            <div class="step-text"><strong>Sliced Meat:</strong> Use thinly sliced pork, beef, or chicken instead of ground meat. Slice against the grain and cook 2-3 minutes until just done.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">🥢</div>
+                            <div class="step-text"><strong>Vegetarian:</strong> Use 200g firm tofu, cubed, or mixed mushrooms. Pan-fry tofu until golden before adding to wok. Cook mushrooms 3-4 minutes until tender.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">🥚</div>
+                            <div class="step-text"><strong>Century Egg:</strong> Traditional variation includes sliced century egg (preserved egg) added with the meat for authentic street food experience.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🔥 Heat Level Guide</h3>
+                        <div class="info-box">
+                            <p><strong>Mild (1-2 chilies):</strong> Perfect for beginners or those sensitive to heat.</p>
+                            <p><strong>Medium (3-4 chilies):</strong> Traditional Bangkok street food level.</p>
+                            <p><strong>Hot (5-7 chilies):</strong> Southern Thai style, very spicy.</p>
+                            <p><strong>Thai Hot (8+ chilies):</strong> Only for serious chili lovers!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">🥬 Basil Guide</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text"><strong>Holy Basil (Ka Prao):</strong> Best choice. Spicy, peppery flavor with purple-tinged stems. Found at Thai/Asian markets.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text"><strong>Thai Sweet Basil:</strong> Good substitute. Sweeter, more anise-like flavor. More commonly available.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text"><strong>Italian Basil:</strong> Last resort. Much milder flavor. Use double the amount and add at very end.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text"><strong>Storage Tip:</strong> Keep basil stems in water like flowers. Don't refrigerate - it will turn black.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍳 Perfect Fried Egg</h3>
+                        <div class="info-box">
+                            <p><strong>Oil Temperature:</strong> Heat oil until shimmering and very hot before adding egg.</p>
+                            <p><strong>Technique:</strong> Crack egg from low height. Oil should bubble and sizzle around whites immediately.</p>
+                            <p><strong>Result:</strong> Whites should be crispy and lacy around edges, yolk still runny.</p>
+                            <p><strong>Safety:</strong> Be careful of oil splatter when adding egg to hot oil.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="thai-note">
+                        <h4>Cultural Notes:</h4>
+                        <p>Pad Ka Prao is Thailand's most popular one-dish meal, served at virtually every street stall and restaurant. It's commonly eaten for lunch and is considered comfort food.</p>
+                        <p>The dish originated in central Thailand but variations exist throughout the country, with southern versions being spicier.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

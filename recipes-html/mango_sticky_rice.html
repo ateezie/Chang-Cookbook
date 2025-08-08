@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mango Sticky Rice Recipes</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #e67e22;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #d35400;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #e67e22;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Special highlights */
+        .coconut-sauce {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .coconut-sauce h4 {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .coconut-sauce ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .coconut-sauce li {
+            font-size: 11px;
+            color: #856404;
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .coconut-sauce li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #e67e22;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #e67e22;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #d35400;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #d35400;
+        }
+        
+        .print-button:hover {
+            background: #d35400;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        .cultural-note {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-left: 4px solid #0ea5e9;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .cultural-note h4 {
+            color: #0c4a6e;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .cultural-note p {
+            font-size: 10px;
+            color: #075985;
+            line-height: 1.3;
+        }
+
+        .temp-list {
+            margin: 8px 0;
+        }
+
+        .temp-list li {
+            font-size: 10px;
+            color: #075985;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipes</button>
+    
+    <div class="recipe-container">
+        <!-- Recipe 1: Rice Cooker Method -->
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Sticky Rice in Rice Cooker
+            </div>
+            <div class="recipe-subtitle">
+                Thai Mango Sticky Rice - Easy Rice Cooker Method
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">70 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">25 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">4</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Easy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="coconut-sauce">
+                            <h4>For the Coconut Sauce:</h4>
+                            <ul>
+                                <li>1 can (400ml) coconut milk</li>
+                                <li>2-3 tbsp liquid palm sugar</li>
+                                <li>1/2 tsp salt</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 cups sticky rice (glutinous rice)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Water for soaking and cooking</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2-3 ripe mangoes, sliced</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Toasted peanuts for garnish</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Extra coconut milk for serving</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Rice cooker</li>
+                                <li>Fine mesh strainer</li>
+                                <li>Measuring cups</li>
+                                <li>Mixing bowl</li>
+                                <li>Small saucepan</li>
+                                <li>Serving plates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Rinse 2 cups of sticky rice in cold water until water runs clear. Soak rice for 30 minutes in enough water to cover.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Add water until rice is completely submerged (about 7/8 new level). Continue soaking for additional 40 minutes total.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Drain water until it just barely covers the rice, maintaining a 1:1 ratio of rice to water.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Transfer to rice cooker and use white rice setting to cook. Meanwhile, prepare coconut sauce by heating coconut milk, palm sugar, and salt in saucepan until sugar dissolves.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Let rice rest in cooker for 5 minutes, then fluff gently. Serve with sliced mango, drizzle with coconut sauce, and garnish with toasted peanuts.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Rice Quality:</strong> Use only glutinous rice (sticky rice) - regular rice won't work for this dish.</p>
+                            <p><strong>Soaking is Key:</strong> Don't skip the soaking time - it's essential for proper texture and cooking.</p>
+                            <p><strong>Mango Selection:</strong> Choose ripe but firm mangoes like Tommy Atkins or Kent varieties.</p>
+                            <p><strong>Storage:</strong> Best served fresh, but leftovers keep 2 days refrigerated.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipe 2: Traditional Steamed Method -->
+    <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Traditional Mango Sticky Rice
+            </div>
+            <div class="recipe-subtitle">
+                ข้าวเหนียวมะม่วง - Authentic Steamed Method
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">8+ hours</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">45 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">4-6</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="coconut-sauce">
+                            <h4>For the Coconut Sauce:</h4>
+                            <ul>
+                                <li>1 can (400ml) coconut milk</li>
+                                <li>3-4 tbsp sugar</li>
+                                <li>1/2 tsp salt</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 cups glutinous rice</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Water for overnight soaking</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2-3 ripe yellow mangoes</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Toasted mung beans (optional)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Extra coconut milk for serving</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Large steamer basket</li>
+                                <li>Large pot with tight-fitting lid</li>
+                                <li>Cheesecloth or banana leaves</li>
+                                <li>Large mixing bowl</li>
+                                <li>Small saucepan</li>
+                                <li>Fine mesh strainer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Soak glutinous rice overnight (8+ hours) in enough water to cover by 2 inches. Drain and rinse before cooking.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Line steamer basket with cheesecloth. Add soaked rice and steam over boiling water for 25-30 minutes until tender and translucent.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Meanwhile, prepare coconut sauce: heat coconut milk with sugar and salt over low heat. Simmer until sugar dissolves completely. Remove from heat and let cool.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Transfer hot steamed rice to bowl. Pour coconut mixture over rice, mix well. Cover and let rest for 1 hour - this "MOON" process allows rice to absorb all the coconut milk.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Slice mangoes and arrange with sticky rice. Garnish with toasted mung beans and serve with extra coconut milk on the side.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Overnight Soaking:</strong> This is non-negotiable for authentic texture - plan ahead!</p>
+                            <p><strong>The "MOON" Process:</strong> Thai technique where rice absorbs coconut milk completely - patience is key.</p>
+                            <p><strong>Steaming Tips:</strong> Keep water at gentle boil, don't let it touch the rice. Check water level regularly.</p>
+                            <p><strong>Serving:</strong> Best at room temperature. Traditional presentation uses banana leaves.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cultural-note">
+            <h4>🇹🇭 Cultural Notes</h4>
+            <p><strong>About Khao Niao Mamuang:</strong> This beloved Thai dessert represents the perfect balance of sweet, salty, and creamy flavors. Traditionally served during mango season (March-June), it's considered one of Thailand's national desserts. The dish originated in Central Thailand and has been enjoyed for centuries as both a street food and restaurant delicacy.</p>
+        </div>
+    </div>
+</body>
+</html>

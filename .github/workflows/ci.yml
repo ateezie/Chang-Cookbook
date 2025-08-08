@@ -1,0 +1,102 @@
+name: 🧪 CI - Test and Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 🧪 Test and Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔍 Run TypeScript check
+      run: npm run type-check
+      
+    - name: 🧹 Run ESLint
+      run: npm run lint
+      
+    - name: 🗄️ Setup test database
+      run: |
+        npx prisma generate
+        npx prisma migrate deploy
+        
+    - name: 🧪 Run tests (if available)
+      run: |
+        if [ -f "package.json" ] && grep -q '"test"' package.json; then
+          npm test
+        else
+          echo "No tests configured, skipping..."
+        fi
+        
+  build:
+    name: 🏗️ Build Application
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🗄️ Generate Prisma client
+      run: npx prisma generate
+      
+    - name: 🏗️ Build Next.js application
+      run: npm run build
+      
+    - name: 📊 Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: |
+          .next/
+          public/
+        retention-days: 1
+        
+  security:
+    name: 🔒 Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 🔍 Audit dependencies
+      run: npm audit --audit-level=high
+      
+    - name: 🔒 Check for secrets
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --debug --only-verified

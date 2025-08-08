@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mom's Peanut Sauce Recipe</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #2d3748;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Ingredients */
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #4a5568;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #2d3748;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #2d3748;
+        }
+        
+        .print-button:hover {
+            background: #2d3748;
+        }
+        
+        .serving-options {
+            background: #f0fff4;
+            border: 1px solid #c6f6d5;
+            border-left: 4px solid #38a169;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .serving-options h4 {
+            color: #2f855a;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .serving-options ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .serving-options li {
+            font-size: 11px;
+            color: #2f855a;
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .serving-options li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipe</button>
+    
+    <div class="recipe-container">
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Mom's Peanut Sauce
+            </div>
+            <div class="recipe-subtitle">
+                A classic Asian-style peanut sauce perfect for dipping, drizzling, or dressing
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">5 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">None</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">4-6</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Easy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="serving-options">
+                            <h4>Perfect for serving with:</h4>
+                            <ul>
+                                <li>Spring rolls or summer rolls</li>
+                                <li>Grilled chicken satay</li>
+                                <li>Cold noodle salads</li>
+                                <li>Fresh vegetables as dip</li>
+                                <li>Rice bowls or grain salads</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1/3 cup peanut butter (creamy works best)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tablespoons rice vinegar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tablespoons soy sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tablespoons maple syrup</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 tablespoon toasted sesame oil</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 cloves garlic, minced</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2-3 tablespoons warm water</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Medium mixing bowl</li>
+                                <li>Whisk or fork</li>
+                                <li>Garlic press or knife for mincing</li>
+                                <li>Measuring cups and spoons</li>
+                                <li>Small serving bowl or jar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">In a medium bowl, whisk together the peanut butter, rice vinegar, soy sauce, and maple syrup until well combined and smooth.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Add the minced garlic and toasted sesame oil to the mixture, whisking until fully incorporated.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Gradually whisk in 2-3 tablespoons of warm water, one tablespoon at a time, until you reach your desired consistency. The sauce should be smooth and pourable but not too thin.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Taste and adjust seasonings as needed. Add more soy sauce for saltiness, maple syrup for sweetness, or rice vinegar for tang.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Transfer to serving bowl or storage container. Use immediately or store covered in refrigerator for up to one week. Thin with additional warm water if needed before serving.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Consistency Tips:</strong> The sauce should coat the back of a spoon but still drizzle easily. If too thick, add water 1 teaspoon at a time.</p>
+                            <p><strong>Flavor Variations:</strong> Add a pinch of red pepper flakes for heat, fresh ginger for zing, or lime juice for extra brightness.</p>
+                            <p><strong>Make-Ahead:</strong> This sauce actually improves in flavor after sitting. Make it a few hours ahead for best results.</p>
+                            <p><strong>Storage:</strong> The sauce will thicken in the refrigerator - just whisk in a little warm water to restore consistency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

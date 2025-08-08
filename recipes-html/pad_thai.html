@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentic Pad Thai - Traditional Thai Recipe</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #2d3748;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Sauce Section */
+        .sauce-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sauce-section h4 {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .sauce-section ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sauce-section li {
+            font-size: 11px;
+            color: #856404;
+            margin-bottom: 3px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .sauce-section li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #4a5568;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #2d3748;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #2d3748;
+        }
+        
+        .print-button:hover {
+            background: #2d3748;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        .thai-tip {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .thai-tip h4 {
+            color: #c53030;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .thai-tip p {
+            font-size: 10px;
+            color: #742a2a;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipe</button>
+    
+    <div class="recipe-container">
+        <!-- Main Recipe Page -->
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Authentic Pad Thai ผัดไทย
+            </div>
+            <div class="recipe-subtitle">
+                Traditional Thai Stir-Fried Rice Noodles - Product of Thailand
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">20 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">8-10 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serves</span>
+                        <div class="meta-value">2-3</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Ingredients</h3>
+
+                        <div class="sauce-section">
+                            <h4>Pad Thai Sauce:</h4>
+                            <ul>
+                                <li>3 tbsp Coconut Sugar (or Palm Sugar)</li>
+                                <li>3 tbsp Fish Sauce</li>
+                                <li>2 tbsp Tamarind Juice</li>
+                                <li>1 tsp Chili Sauce (adjust to taste)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">200g Rice Noodles (Pad Thai width)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 Large Eggs</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">100g Firm Tofu, cubed</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 cup Fresh Bean Sprouts</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">3-4 Chinese Chives, cut 2-inch pieces</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tbsp Dried Shrimp (optional)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 tbsp Pickled Radish, chopped</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">¼ cup Crushed Peanuts</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 tsp Dried Chili Powder</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 Lime, cut into wedges</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Vegetable Oil for cooking</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">Banana Flower for garnish (optional)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Large Wok or Heavy-bottomed Skillet</li>
+                                <li>Wooden Spatula or Wok Turner</li>
+                                <li>Large Bowl for soaking noodles</li>
+                                <li>Small Bowl for mixing sauce</li>
+                                <li>Knife and Cutting Board</li>
+                                <li>Strainer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Soak rice noodles in warm water until soft and pliable, about 30 minutes. Drain well. In a small bowl, whisk together all sauce ingredients until sugar dissolves completely. Set aside.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Heat 2 tablespoons oil in large wok or skillet over high heat. Add cubed tofu and stir-fry until golden brown on all sides, about 3-4 minutes. Remove and set aside on plate.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">In same wok, crack eggs and scramble quickly. Stir fry in hot oil until eggs are cooked through but still slightly wet. Push eggs to one side of wok.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Add drained rice noodles to wok. Pour Pad Thai sauce over noodles. Using wooden spatula, toss everything together constantly to prevent sticking. Stir-fry for 2-3 minutes until noodles are heated through and sauce is absorbed.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Add bean sprouts, Chinese chives, dried shrimp (if using), pickled radish, and cooked tofu. Continue stir-frying for another 2 minutes until vegetables are slightly wilted but still crisp.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">6</div>
+                            <div class="step-text">Remove from heat immediately. Transfer to serving plates. Garnish with crushed peanuts, chili powder, and lime wedges. Serve with banana flower if available. Enjoy while hot!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Thai Cooking Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Noodle Texture:</strong> Don't over-soak the noodles - they should be pliable but still have some bite. They'll finish cooking in the wok.</p>
+                            <p><strong>Wok Hei:</strong> Cook over high heat and keep ingredients moving constantly for that authentic "breath of the wok" flavor that makes restaurant-style Pad Thai.</p>
+                            <p><strong>Tamarind Substitute:</strong> If tamarind juice unavailable, mix 1 tbsp lime juice + 1 tbsp rice vinegar as substitute.</p>
+                            <p><strong>Vegetarian Version:</strong> Omit dried shrimp and replace fish sauce with soy sauce or vegetarian mushroom sauce.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thai Culture & Variations Page -->
+    <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Pad Thai: Cultural Notes & Variations
+            </div>
+            <div class="recipe-subtitle">
+                Understanding Thailand's National Dish
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Origin</span>
+                        <div class="meta-value">1930s Thailand</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Region</span>
+                        <div class="meta-value">Central Thai</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Style</span>
+                        <div class="meta-value">Street Food</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Spice Level</span>
+                        <div class="meta-value">Mild-Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🇹🇭 Cultural Background</h3>
+                        <div class="info-box">
+                            <p><strong>National Identity:</strong> Pad Thai was promoted as Thailand's national dish in the 1930s by Prime Minister Plaek Phibunsongkhram as part of a campaign to promote Thai nationalism and unity.</p>
+                            <p><strong>Street Food Heritage:</strong> Originally sold by street vendors throughout Thailand, Pad Thai represents the essence of Thai street food culture - quick, flavorful, and made fresh to order.</p>
+                            <p><strong>Balance of Flavors:</strong> True to Thai cuisine principles, Pad Thai balances sweet (coconut sugar), sour (tamarind), salty (fish sauce), and spicy (chili) flavors in perfect harmony.</p>
+                            <p><strong>Regional Variations:</strong> While this recipe represents the central Thai style, different regions of Thailand have their own variations and preferred ingredients.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🥢 Serving Traditions</h3>
+                        <div class="info-box">
+                            <p><strong>Condiment Station:</strong> In Thailand, Pad Thai is often served with small bowls of sugar, chili flakes, fish sauce, and lime for individual customization.</p>
+                            <p><strong>Banana Leaf:</strong> Street vendors traditionally wrap Pad Thai in banana leaves, which adds a subtle aroma and keeps the dish warm.</p>
+                            <p><strong>Fresh Garnishes:</strong> Bean sprouts, lime wedges, and crushed peanuts are essential fresh garnishes that add texture and flavor contrast.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">🔄 Popular Variations</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text"><strong>Pad Thai Gai:</strong> Add sliced chicken breast during step 4, cooking until done before adding noodles.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text"><strong>Pad Thai Goong:</strong> Include medium shrimp, cooking until pink before adding noodles.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text"><strong>Pad Thai Jay (Vegetarian):</strong> Omit fish sauce and dried shrimp. Use soy sauce and add extra vegetables like carrots or cabbage.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text"><strong>Pad Thai Woon Sen:</strong> Replace rice noodles with glass noodles (bean thread noodles) for a different texture.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text"><strong>Pad Thai Phak Ruam:</strong> Add mixed vegetables like bell peppers, snap peas, or baby corn for extra nutrition and crunch.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="thai-tip">
+                        <h4>🌶️ Authentic Thai Tips</h4>
+                        <p><strong>High Heat is Key:</strong> Thai cooking relies on extremely high heat. If your stove doesn't get hot enough, cook in smaller batches to maintain temperature.</p>
+                        <p><strong>Ingredient Quality:</strong> Use authentic tamarind paste if possible - it makes a significant difference in flavor compared to substitutes.</p>
+                        <p><strong>Timing:</strong> Pad Thai should be served immediately after cooking. The noodles continue to absorb sauce and can become mushy if left sitting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

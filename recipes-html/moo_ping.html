@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moo Ping - Thai Grilled Pork Skewers</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f7fa;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px 0;
+        }
+        
+        .recipe-container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .recipe-page {
+            width: 100%;
+            background: white;
+            page-break-after: always;
+            padding: 30px;
+        }
+        
+        .recipe-page:last-child {
+            page-break-after: avoid;
+        }
+        
+        /* Header Section - PDF Compatible */
+        .recipe-header {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #2d3748;
+        }
+        
+        .recipe-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .recipe-subtitle {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .recipe-meta {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .meta-row {
+            display: table-row;
+        }
+        
+        .meta-item {
+            display: table-cell;
+            width: 25%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .meta-value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Content Layout */
+        .recipe-content {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .content-row {
+            display: table-row;
+        }
+        
+        .left-column, .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        
+        .left-column {
+            padding-left: 0;
+        }
+        
+        .right-column {
+            padding-right: 0;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #4a5568;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        
+        /* Ingredients */
+        .ingredient-line {
+            display: table;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #cbd5e0;
+            padding-bottom: 3px;
+        }
+        
+        .ingredient-line:last-child {
+            border-bottom: none;
+        }
+        
+        .ingredient-bullet {
+            display: table-cell;
+            width: 15px;
+            vertical-align: top;
+            padding-top: 2px;
+        }
+        
+        .ingredient-bullet:before {
+            content: "•";
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .ingredient-text {
+            display: table-cell;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        /* Instructions */
+        .instruction-step {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .step-number {
+            display: table-cell;
+            width: 25px;
+            height: 20px;
+            background: #4a5568;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            vertical-align: top;
+            border: 1px solid #2d3748;
+        }
+        
+        .step-text {
+            display: table-cell;
+            padding-left: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            vertical-align: top;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .info-box li {
+            margin-bottom: 5px;
+            padding-left: 12px;
+            position: relative;
+            font-size: 11px;
+        }
+        
+        .info-box li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        
+        .info-box p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #2d3748;
+        }
+        
+        .print-button:hover {
+            background: #2d3748;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+                padding: 0;
+            }
+            
+            .recipe-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .recipe-page {
+                padding: 0.5in;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 700px) {
+            .recipe-content {
+                display: block;
+            }
+            
+            .left-column, .right-column {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .recipe-meta {
+                display: block;
+            }
+            
+            .meta-row {
+                display: block;
+            }
+            
+            .meta-item {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        .safety-warning {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .safety-warning h4 {
+            color: #c53030;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .safety-warning p {
+            font-size: 10px;
+            color: #742a2a;
+            line-height: 1.3;
+        }
+
+        .temp-list {
+            margin: 8px 0;
+        }
+
+        .temp-list li {
+            font-size: 10px;
+            color: #742a2a;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print Recipe</button>
+    
+    <div class="recipe-container">
+        <!-- Main Recipe Page -->
+        <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Moo Ping
+            </div>
+            <div class="recipe-subtitle">
+                Thai Grilled Pork Skewers with Nam Jim Jeaw Dipping Sauce
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Prep Time</span>
+                        <div class="meta-value">30 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Cook Time</span>
+                        <div class="meta-value">8-10 min</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Marinate</span>
+                        <div class="meta-value">4-8 hrs</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <div class="meta-value">Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🛒 Pork & Marinade</h3>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 lbs pork butt (in one piece)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">4 cloves garlic, minced</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 Tbsp minced cilantro stems + fresh leaves</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 Tbsp chopped palm sugar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 Tbsp fish sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 Tbsp soy sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 Tbsp pineapple juice</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">½ tsp white pepper</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">½ tsp sugar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 can coconut milk (for basting)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🌶️ Nam Jim Jeaw (Dipping Sauce)</h3>
+                        
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">½ cup fish sauce</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 Tbsp sugar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">4 Thai garlic cloves, minced</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">¼ cup minced chilies (giant chilies, about 4 tsp)</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">1 tsp white vinegar</div>
+                        </div>
+                        <div class="ingredient-line">
+                            <div class="ingredient-bullet"></div>
+                            <div class="ingredient-text">2 Tbsp toasted rice powder</div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">🍴 Equipment</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Grill or Grill Pan</li>
+                                <li>Wooden Skewers (soaked in water)</li>
+                                <li>Sharp Knife</li>
+                                <li>Cutting Board</li>
+                                <li>Mixing Bowls</li>
+                                <li>Pastry Brush (for basting)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">📋 Instructions</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Combine garlic, cilantro stems and leaves, palm sugar, fish sauce, soy sauce, pineapple juice, white pepper, and sugar in a bowl. Mix well to create marinade.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Freeze pork for 15-30 minutes to make slicing easier. This helps achieve clean, even cuts.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Slice pork against the grain into ¾" wide, ⅛" thick strips. Keeping uniform thickness ensures even cooking.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Combine pork with marinade in a bowl. Cover and refrigerate for 4-8 hours, or overnight for best flavor.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Thread pork onto soaked wooden skewers tightly, weaving through each piece to secure. Leave space at ends for handling.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">6</div>
+                            <div class="step-text">Grill skewers over medium-high heat. Brush frequently with coconut milk and flip often. Cook for 8-10 minutes total until caramelized and cooked through.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">7</div>
+                            <div class="step-text">For dipping sauce: Mix fish sauce, sugar, garlic, chilies, and vinegar. Add toasted rice powder at the end and mix well.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">8</div>
+                            <div class="step-text">Serve hot with lime wedges, fresh cilantro, and Nam Jim Jeaw dipping sauce.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 Chef's Notes & Tips</h3>
+                        <div class="info-box">
+                            <p><strong>Authentic Flavor:</strong> Moo Ping is a beloved Thai street food. The key is the balance of sweet, salty, and savory in the marinade.</p>
+                            <p><strong>Slicing Tip:</strong> Freezing the pork briefly makes it much easier to slice uniformly thin.</p>
+                            <p><strong>Coconut Milk:</strong> Don't skip the coconut milk basting - it prevents drying and adds authentic flavor.</p>
+                            <p><strong>Rice Powder:</strong> Add to dipping sauce just before serving to maintain crunch. Can substitute with crushed toasted rice.</p>
+                            <p><strong>Serving:</strong> Traditionally served with sticky rice and Som Tam (papaya salad).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Tips & Variations Page -->
+    <div class="recipe-page">
+        <div class="recipe-header">
+            <div class="recipe-title">
+                Moo Ping Variations & Tips
+            </div>
+            <div class="recipe-subtitle">
+                Alternative preparations and serving suggestions
+            </div>
+            <div class="recipe-meta">
+                <div class="meta-row">
+                    <div class="meta-item">
+                        <span class="meta-label">Pork Temp</span>
+                        <div class="meta-value">145°F</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Serving</span>
+                        <div class="meta-value">4-6 people</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Storage</span>
+                        <div class="meta-value">3 days</div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Origin</span>
+                        <div class="meta-value">Thailand</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="content-row">
+                <div class="left-column">
+                    <div class="section">
+                        <h3 class="section-title">🔄 Ingredient Substitutions</h3>
+                        <div class="info-box">
+                            <p><strong>Palm Sugar:</strong> Brown sugar or coconut sugar (use slightly less)</p>
+                            <p><strong>Pineapple Juice:</strong> Fresh lime juice or rice vinegar</p>
+                            <p><strong>Pork Butt:</strong> Pork shoulder or pork tenderloin (adjust cooking time)</p>
+                            <p><strong>Thai Chilies:</strong> Serrano or jalapeño peppers</p>
+                            <p><strong>Rice Powder:</strong> Crushed toasted rice or cornstarch</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">🍽️ Serving Suggestions</h3>
+                        <div class="info-box">
+                            <ul>
+                                <li>Traditional: Sticky rice (khao niao) and Som Tam</li>
+                                <li>Modern: Jasmine rice and cucumber salad</li>
+                                <li>Appetizer: Cut into smaller pieces for parties</li>
+                                <li>Salad: Slice over mixed greens with Thai herbs</li>
+                                <li>Noodles: Serve over rice noodles or vermicelli</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <h3 class="section-title">⚡ Quick Prep Version</h3>
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">For faster marinating: Score the pork lightly and marinate for just 1 hour at room temperature.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Use a meat mallet to tenderize thicker cuts before marinating.</div>
+                        </div>
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Pre-make dipping sauce up to 3 days ahead - flavors improve over time.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="safety-warning">
+                        <h4>⚠️ Food Safety</h4>
+                        <p><strong>Safe Pork Temperature:</strong> Cook to internal temperature of 145°F, then let rest 3 minutes.</p>
+                        <p><strong>Marinating:</strong> Always marinate in refrigerator, never at room temperature for extended periods.</p>
+                        <p><strong>Cross-contamination:</strong> Use separate cutting boards for raw meat and vegetables.</p>
+                        <p><strong>Storage:</strong> Cooked skewers keep in refrigerator for 3 days. Reheat thoroughly before serving.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

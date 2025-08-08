@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  chang-cookbook:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.local
+    volumes:
+      # Persist the database
+      - ./data/database:/app/prisma
+      # Persist uploaded images
+      - ./data/uploads:/app/public/uploads
+      # Persist logs
+      - ./data/logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "http.get('http://localhost:3000/api/recipes', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - chang-network
+
+networks:
+  chang-network:
+    driver: bridge
+
+# Optional: Add nginx reverse proxy for SSL/domain handling
+# nginx:
+#   image: nginx:alpine
+#   ports:
+#     - "80:80"
+#     - "443:443"
+#   volumes:
+#     - ./nginx.conf:/etc/nginx/nginx.conf
+#     - ./ssl:/etc/ssl
+#   depends_on:
+#     - chang-cookbook
+#   networks:
+#     - chang-network

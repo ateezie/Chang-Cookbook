@@ -1,0 +1,1703 @@
+{
+  "recipes": [
+    {
+      "id": "brown-sugar-dijon-chicken-thighs",
+      "title": "Brown Sugar Dijon Chicken Thighs",
+      "description": "Perfect blend of sweet and tangy flavors with caramelized glaze",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 35,
+      "totalTime": 45,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/brown-sugar-dijon-chicken-thighs.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "4",
+          "item": "bone-in, skin-on chicken thighs"
+        },
+        {
+          "amount": "¼ cup",
+          "item": "brown sugar"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "Dijon mustard"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "olive oil"
+        },
+        {
+          "amount": "2 cloves",
+          "item": "garlic, minced"
+        },
+        {
+          "amount": "1 teaspoon",
+          "item": "fresh thyme leaves (or ½ teaspoon dried)"
+        },
+        {
+          "amount": "",
+          "item": "Salt and freshly ground black pepper to taste"
+        }
+      ],
+      "instructions": [
+        "Preheat the oven to 400°F (200°C).",
+        "In a small bowl, mix together brown sugar, Dijon mustard, olive oil, minced garlic, and thyme.",
+        "Season chicken thighs evenly with salt and pepper.",
+        "Place the chicken in a baking dish in a single layer. Brush each thigh generously with the brown sugar-Dijon mixture.",
+        "Bake for 35 minutes, or until the internal temperature reaches 165°F (74°C). Remove from oven and let rest for 5 minutes before serving."
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "korean-bulgogi-recipe",
+      "title": "Korean Bulgogi Recipe",
+      "description": "Traditional marinated beef with Asian pear",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 4,
+      "cookTime": 15,
+      "totalTime": 19,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/korean-bulgogi-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "2 lbs",
+          "item": "thinly sliced ribeye or sirloin (1/8 inch thick)"
+        },
+        {
+          "amount": "1 large",
+          "item": "Asian pear, grated (about 1 cup)"
+        },
+        {
+          "amount": "1/2 cup",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "3 tablespoons",
+          "item": "brown sugar"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "sesame oil"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "rice wine (mirin) or dry sherry"
+        },
+        {
+          "amount": "6 garlic",
+          "item": "cloves, minced"
+        },
+        {
+          "amount": "1 inch",
+          "item": "fresh ginger, grated"
+        },
+        {
+          "amount": "4 green",
+          "item": "onions, chopped"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "toasted sesame seeds"
+        }
+      ],
+      "instructions": [
+        "Grate the Asian pear using a box grater or food processor. In a large bowl, combine grated pear, soy sauce, brown sugar, sesame oil, rice wine, minced garlic, grated ginger, and half the green onions.",
+        "Add the sliced beef to the marinade, ensuring all pieces are well coated. Cover and refrigerate for at least 2 hours, preferably 4 hours or overnight for best flavor.",
+        "Heat a large skillet or grill pan over medium-high heat. Remove beef from marinade, discarding excess liquid. Cook beef in batches for 2-3 minutes per side until caramelized.",
+        "Don't overcrowd the pan - work in batches if necessary. The beef should develop a nice brown color but remain tender inside.",
+        "Transfer to serving platter and garnish with remaining green onions and sesame seeds. Serve immediately with steamed rice and Korean side dishes."
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "creamy-romesco-chicken-garlic-bread-blue-apron-recipe",
+      "title": "Creamy Romesco Chicken & Garlic Bread - Blue Apron Recipe",
+      "description": "with Roasted Broccoli & Parmesan Cheese - Blue Apron Recipe",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 30,
+      "totalTime": 40,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/creamy-romesco-chicken-garlic-bread-blue-apron-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1-2 Small",
+          "item": "Baguette"
+        },
+        {
+          "amount": "8-16 oz",
+          "item": "Broccoli"
+        },
+        {
+          "amount": "¼-½ cup",
+          "item": "Grated Parmesan Cheese"
+        },
+        {
+          "amount": "2-4 Tbsp",
+          "item": "Crème Fraîche"
+        },
+        {
+          "amount": "½-1 oz",
+          "item": "Garlic & Herb Flavored Butter"
+        },
+        {
+          "amount": "3-6 Tbsp",
+          "item": "Romesco Sauce"
+        },
+        {
+          "amount": "1-2 Tbsp",
+          "item": "Italian Seasoning"
+        },
+        {
+          "amount": "",
+          "item": "Olive Oil, Salt, Pepper"
+        }
+      ],
+      "instructions": [
+        "Preheat oven to 450°F. Remove butter from refrigerator to soften. Wash and dry produce. Cut off and discard bottom ½ inch of broccoli stem, then cut into small florets. Halve the baguette(s). In a bowl, combine romesco sauce and crème fraîche.",
+        "Line sheet pan with foil. Transfer broccoli florets to one side. Drizzle with olive oil, season with salt and pepper, toss to coat. Arrange in even layer. Roast 8 minutes, leaving oven on, then remove.",
+        "Place halved baguette(s) on other side of sheet pan, cut side up. Spread softened butter on baguette, top with half the parmesan. Return to oven and roast 5-9 minutes until baguette is lightly browned, cheese melted, and broccoli tender. Remove and transfer garlic bread to cutting board; halve on an angle.",
+        "Meanwhile, pat chicken dry with paper towels. Season both sides with salt, pepper, and Italian seasoning. In medium nonstick pan (large for 4 servings), heat drizzle of olive oil on medium-high. Add seasoned chicken and cook 6-7 minutes per side until browned and cooked through (165°F internal temp).",
+        "Transfer chicken to cutting board. When cool enough to handle, slice crosswise. Serve sliced chicken with garlic bread and roasted broccoli. Top chicken with creamy romesco sauce and garnish with remaining parmesan. Enjoy!",
+        "Pat pork dry with paper towels. Season both sides with salt, pepper, and Italian seasoning.",
+        "In medium nonstick pan (large for 4 servings), heat drizzle of olive oil on medium-high until hot.",
+        "Add seasoned pork. Cook 4-6 minutes per side for medium (center may be slightly pink), or until browned and cooked to desired doneness.",
+        "Transfer to cutting board; let rest at least 5 minutes. Slice crosswise and serve with garlic bread and roasted broccoli. Top with creamy romesco and garnish with remaining parmesan.",
+        "Pat steaks dry with paper towels. Season both sides with salt, pepper, and Italian seasoning.",
+        "In medium nonstick pan (large for 4 servings), heat drizzle of olive oil on medium-high until hot.",
+        "Add seasoned steaks. Cook 4-6 minutes per side for medium-rare (125°F), or until browned and cooked to desired doneness.",
+        "Transfer to cutting board; let rest at least 5 minutes. Find direction of muscle grain and slice crosswise against the grain. Serve with garlic bread and roasted broccoli. Top with creamy romesco and garnish with remaining parmesan.",
+        "Pat fish dry with paper towels. Season with salt and pepper on both sides. Season only the skinless side with Italian seasoning.",
+        "In medium nonstick pan (large for 4 servings), heat drizzle of olive oil on medium-high until hot."
+      ],
+      "nutrition": {
+        "calories": 400,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "egg-roll-in-a-bowl",
+      "title": "Egg Roll in a Bowl",
+      "description": "All the flavors of egg rolls without the wrapper",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 20,
+      "totalTime": 30,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/egg-roll-in-a-bowl.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 lb",
+          "item": "ground beef (or pork, chicken, turkey)"
+        },
+        {
+          "amount": "1 bag",
+          "item": "(14-16 oz) coleslaw mix"
+        },
+        {
+          "amount": "1 medium",
+          "item": "onion, diced"
+        },
+        {
+          "amount": "3 cloves",
+          "item": "garlic, minced"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "fresh ginger, minced"
+        },
+        {
+          "amount": "3 tablespoons",
+          "item": "low-sodium soy sauce"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "sesame oil"
+        },
+        {
+          "amount": "",
+          "item": "Red pepper flakes (optional)"
+        },
+        {
+          "amount": "",
+          "item": "Green onions for garnish"
+        },
+        {
+          "amount": "",
+          "item": "Sesame seeds for garnish"
+        }
+      ],
+      "instructions": [
+        "Brown the ground beef in a large skillet over medium heat, breaking it into chunks. Cook until no longer pink and slightly caramelized.",
+        "Add diced onion to the pan and cook for 3-4 minutes until softened.",
+        "Add minced garlic and ginger, cooking for 1 minute until fragrant. Be careful not to burn.",
+        "Add coleslaw mix and cook for 3-5 minutes until vegetables are tender-crisp, maintaining some crunch.",
+        "Stir in soy sauce, sesame oil, and red pepper flakes. Cook for 1-2 minutes more. Garnish with green onions and sesame seeds before serving."
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "modern-recipe-template",
+      "title": "Modern Recipe Template",
+      "description": "Mexican Street Corn Flavors on Crispy Jalapeño Kettle Chips",
+      "category": "quick-meals",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 5,
+      "totalTime": 15,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/modern-recipe-template.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 large",
+          "item": "bag jalapeño kettle chips"
+        },
+        {
+          "amount": "2 cups",
+          "item": "fresh corn kernels (or 1 can, drained)"
+        },
+        {
+          "amount": "1/3 cup",
+          "item": "mayonnaise"
+        },
+        {
+          "amount": "1/2 cup",
+          "item": "cotija cheese, crumbled"
+        },
+        {
+          "amount": "2-3 tablespoons",
+          "item": "Everything But The Elote seasoning"
+        },
+        {
+          "amount": "1 teaspoon",
+          "item": "chili de arbol dust (to taste)"
+        },
+        {
+          "amount": "1/4 cup",
+          "item": "crema mexicana (or sour cream)"
+        },
+        {
+          "amount": "1/4 cup",
+          "item": "fresh cilantro, chopped"
+        },
+        {
+          "amount": "2-3",
+          "item": "limes, cut into wedges"
+        }
+      ],
+      "instructions": [
+        "Char the corn in a hot cast iron skillet until kernels are golden and slightly blackened, about 4-5 minutes. Season with salt and set aside to cool slightly.",
+        "Warm the kettle chips in a 250°F oven for 2-3 minutes to help toppings adhere better. Arrange on a large serving platter.",
+        "Drizzle mayonnaise and crema mexicana over the warm chips in a crosshatch pattern.",
+        "Sprinkle the warm charred corn evenly over the chips, followed by crumbled cotija cheese.",
+        "Season with Everything But The Elote seasoning and chili de arbol dust. Top with fresh cilantro and serve immediately with lime wedges."
+      ],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "fontina-cheeseburgers-blue-apron-recipe",
+      "title": "Fontina Cheeseburgers - Blue Apron Recipe",
+      "description": "with Truffle Butter Roasted Potatoes - Blue Apron Recipe",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 20,
+      "totalTime": 35,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/fontina-cheeseburgers-blue-apron-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "2",
+          "item": "| 4 Burger Buns"
+        },
+        {
+          "amount": "12",
+          "item": "| 24 oz Potatoes"
+        },
+        {
+          "amount": "2",
+          "item": "| 4 cloves Garlic"
+        },
+        {
+          "amount": "½",
+          "item": "| 1 oz Pickled Peppadew Peppers"
+        },
+        {
+          "amount": "2",
+          "item": "| 4 oz Shredded Fontina Cheese"
+        },
+        {
+          "amount": "1",
+          "item": "| 2 oz White Truffle Flavored Butter"
+        },
+        {
+          "amount": "",
+          "item": "Olive Oil, Salt, Pepper"
+        }
+      ],
+      "instructions": [
+        "Remove butter from refrigerator to soften. Preheat oven to 450°F. Line sheet pan with foil. Halve potatoes lengthwise, then cut crosswise into ½-inch pieces. Toss with olive oil, salt, and pepper. Roast 18-22 minutes until tender when pierced with fork.",
+        "Meanwhile, peel and roughly chop 2 cloves of garlic. In a bowl, combine the meat and chopped garlic. Season with salt and pepper. Gently mix and form into 2 patties, about ½-inch thick.",
+        "Heat a drizzle of olive oil in nonstick pan on medium-high. Add patties and cook 4-5 minutes until browned. Flip carefully, top evenly with fontina cheese, and loosely cover with foil. Cook 1-3 minutes more until cheese melts and patties are cooked through.",
+        "Transfer patties to work surface and drain excess oil from pan. Add buns cut-side down to same pan and toast 30 seconds to 1 minute until lightly browned.",
+        "Toss roasted potatoes with softened truffle butter. Assemble burgers with toasted buns, cooked patties, and peppadew peppers (torn into bite-sized pieces). Serve with truffle butter potatoes on the side.",
+        "Meanwhile, peel and roughly chop 2 cloves of garlic. In a bowl, combine the pork and chopped garlic. Season with salt and pepper. Gently mix and form into 2 patties, about ½-inch thick.",
+        "In a medium nonstick pan (or large for 4 servings), heat a drizzle of olive oil on medium-high until hot.",
+        "Add the patties. Cook 5 to 6 minutes, or until browned on first side.",
+        "Flip the patties (carefully, as the oil may splatter) and evenly top with the fontina. Loosely cover the pan with foil.",
+        "Cook 5 to 6 minutes, or until the cheese is melted and the patties are browned and cooked through.",
+        "Leaving any browned bits (or fond) in the pan, transfer to a work surface. Carefully drain off and discard any excess oil."
+      ],
+      "nutrition": {
+        "calories": 350,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "gourmet-ham-cheese-sandwich",
+      "title": "Gourmet Ham & Cheese Sandwich",
+      "description": "Artisan ingredients on griddled sourdough brioche",
+      "category": "desserts",
+      "difficulty": "easy",
+      "prepTime": 5,
+      "cookTime": 5,
+      "totalTime": 10,
+      "servings": 1,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/gourmet-ham-cheese-sandwich.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Premium ham from Boxhill Grocer"
+        },
+        {
+          "amount": "",
+          "item": "Béchamel or Mornay sauce"
+        },
+        {
+          "amount": "",
+          "item": "White American cheese"
+        },
+        {
+          "amount": "",
+          "item": "Swiss cheese"
+        },
+        {
+          "amount": "",
+          "item": "Artisan bacon from Bolyards"
+        },
+        {
+          "amount": "",
+          "item": "Honey for drizzling"
+        },
+        {
+          "amount": "",
+          "item": "Sourdough brioche from Knead Bakehouse"
+        }
+      ],
+      "instructions": [
+        "Prepare the béchamel or mornay sauce according to your preferred recipe. Keep warm.",
+        "Cook the Bolyards bacon until crispy. Set aside on paper towels.",
+        "Slice the sourdough brioche. Layer one slice with ham, sauce, white American and Swiss cheese blend, and crispy bacon.",
+        "Drizzle honey over the filling, then top with the second slice of bread.",
+        "Heat griddle over medium heat. Griddle the sandwich until golden brown and cheese melts, about 2-3 minutes per side."
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "honey-butter-chicken-recipe",
+      "title": "Honey Butter Chicken Recipe",
+      "description": "Crispy air-fried chicken with sweet honey butter glaze and fresh cucumber salad",
+      "category": "appetizers",
+      "difficulty": "easy",
+      "prepTime": 15,
+      "cookTime": 20,
+      "totalTime": 35,
+      "servings": 1,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/honey-butter-chicken-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 chicken",
+          "item": "thigh"
+        },
+        {
+          "amount": "1 cup",
+          "item": "corn flakes, crushed"
+        },
+        {
+          "amount": "1 cup",
+          "item": "flour"
+        },
+        {
+          "amount": "2",
+          "item": "eggs, beaten"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "unsalted butter"
+        },
+        {
+          "amount": "3 garlic",
+          "item": "cloves, minced"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "brown sugar replacement"
+        },
+        {
+          "amount": "3 tbsp",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "sesame oil"
+        },
+        {
+          "amount": "1/4 cup",
+          "item": "water"
+        },
+        {
+          "amount": "1 whole",
+          "item": "cucumber, sliced"
+        },
+        {
+          "amount": "1/4",
+          "item": "cabbage, sliced"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "avocado oil"
+        },
+        {
+          "amount": "1/2",
+          "item": "lemon, juiced"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "sugar replacement"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "garlic powder"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "honey"
+        },
+        {
+          "amount": "1/2 tbsp",
+          "item": "salt"
+        },
+        {
+          "amount": "",
+          "item": "Ciabatta bread for serving"
+        }
+      ],
+      "instructions": [
+        "Prepare chicken: Set up dredging station with flour, beaten eggs, and crushed corn flakes in separate bowls. Dredge chicken thigh first in flour, then eggs, then press crushed corn flakes firmly into the chicken.",
+        "Air fry chicken: Preheat Instant Pot air fryer to 385°F. Place battered chicken thigh in air fryer, spray lightly with oil. Cook for 16 minutes or until internal temperature reaches 165°F.",
+        "Make sauce: In a small pan, heat sesame oil and cook minced garlic until fragrant. Add butter, brown sugar replacement, soy sauce, and water. Reduce heat and simmer until sauce thickens.",
+        "Prepare salad: In a bowl with lid, combine sliced cucumber, cabbage, avocado oil, lemon juice, sugar replacement, garlic powder, honey, and salt. Close lid and shake well to combine.",
+        "Assemble and serve: Toast ciabatta bread. Place cooked chicken on toasted bread, drizzle with honey butter sauce, and serve with cucumber salad on the side."
+      ],
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "mango-sticky-rice-recipes",
+      "title": "Mango Sticky Rice Recipes",
+      "description": "Thai Mango Sticky Rice - Easy Rice Cooker Method",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 70,
+      "cookTime": 25,
+      "totalTime": 95,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/mango-sticky-rice-recipes.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "2 cups",
+          "item": "sticky rice (glutinous rice)"
+        },
+        {
+          "amount": "",
+          "item": "Water for soaking and cooking"
+        },
+        {
+          "amount": "2-3 ripe",
+          "item": "mangoes, sliced"
+        },
+        {
+          "amount": "",
+          "item": "Toasted peanuts for garnish"
+        },
+        {
+          "amount": "",
+          "item": "Extra coconut milk for serving"
+        },
+        {
+          "amount": "2 cups",
+          "item": "glutinous rice"
+        },
+        {
+          "amount": "",
+          "item": "Water for overnight soaking"
+        },
+        {
+          "amount": "2-3 ripe",
+          "item": "yellow mangoes"
+        },
+        {
+          "amount": "",
+          "item": "Toasted mung beans (optional)"
+        },
+        {
+          "amount": "",
+          "item": "Extra coconut milk for serving"
+        }
+      ],
+      "instructions": [
+        "Rinse 2 cups of sticky rice in cold water until water runs clear. Soak rice for 30 minutes in enough water to cover.",
+        "Add water until rice is completely submerged (about 7/8 new level). Continue soaking for additional 40 minutes total.",
+        "Drain water until it just barely covers the rice, maintaining a 1:1 ratio of rice to water.",
+        "Transfer to rice cooker and use white rice setting to cook. Meanwhile, prepare coconut sauce by heating coconut milk, palm sugar, and salt in saucepan until sugar dissolves.",
+        "Let rice rest in cooker for 5 minutes, then fluff gently. Serve with sliced mango, drizzle with coconut sauce, and garnish with toasted peanuts.",
+        "Soak glutinous rice overnight (8+ hours) in enough water to cover by 2 inches. Drain and rinse before cooking.",
+        "Line steamer basket with cheesecloth. Add soaked rice and steam over boiling water for 25-30 minutes until tender and translucent.",
+        "Meanwhile, prepare coconut sauce: heat coconut milk with sugar and salt over low heat. Simmer until sugar dissolves completely. Remove from heat and let cool.",
+        "Transfer hot steamed rice to bowl. Pour coconut mixture over rice, mix well. Cover and let rest for 1 hour - this \"MOON\" process allows rice to absorb all the coconut milk.",
+        "Slice mangoes and arrange with sticky rice. Garnish with toasted mung beans and serve with extra coconut milk on the side."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "momofuku-noodle-ramen-recipes",
+      "title": "Momofuku Noodle Ramen Recipes",
+      "description": "Using Momofuku Soy & Scallion Noodles",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 30,
+      "totalTime": 40,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/momofuku-noodle-ramen-recipes.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "4 packs",
+          "item": "Momofuku Soy & Scallion Noodles"
+        },
+        {
+          "amount": "1 whole",
+          "item": "garlic bulb"
+        },
+        {
+          "amount": "6 cloves",
+          "item": "garlic (for frying)"
+        },
+        {
+          "amount": "6 cloves",
+          "item": "garlic, chopped"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "neutral oil"
+        },
+        {
+          "amount": "2",
+          "item": "scallions, whites and greens separated"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "fresh ginger, chopped"
+        },
+        {
+          "amount": "8 cups",
+          "item": "chicken stock"
+        },
+        {
+          "amount": "2 cups",
+          "item": "cooked chicken, shredded"
+        },
+        {
+          "amount": "4 cups",
+          "item": "mixed greens"
+        },
+        {
+          "amount": "4",
+          "item": "soft-boiled eggs (optional)"
+        },
+        {
+          "amount": "3 packs",
+          "item": "Momofuku Tingly Chili Wavy Noodles"
+        },
+        {
+          "amount": "1 whole",
+          "item": "garlic bulb"
+        },
+        {
+          "amount": "1 lb",
+          "item": "ground pork"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "white miso paste"
+        },
+        {
+          "amount": "6 cups",
+          "item": "chicken broth"
+        },
+        {
+          "amount": "2",
+          "item": "scallions, sliced"
+        },
+        {
+          "amount": "3",
+          "item": "soft-boiled eggs"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "neutral oil"
+        },
+        {
+          "amount": "",
+          "item": "Momofuku Chili Crunch for serving"
+        }
+      ],
+      "instructions": [
+        "Heat oven to 400°F. Roast whole garlic bulb for 30 minutes until soft.",
+        "Heat oil in Dutch oven over medium-high. Thinly slice 6 garlic cloves and fry 2-3 minutes until browned. Remove and set aside.",
+        "Reduce heat to medium. Add chopped garlic, scallion whites, and ginger. Cook until fragrant, about 1 minute.",
+        "Add chicken stock and bring to simmer. Cook noodles according to package instructions.",
+        "Assemble bowls: noodles, broth, greens, chicken, scallion greens, and fried garlic. Top with soft-boiled egg if desired.",
+        "Heat oven to 400°F. Roast whole garlic bulb for 30 minutes until tender.",
+        "Heat oil in large pot over medium-high heat. Add ground pork, spread evenly. Cook undisturbed 4 minutes, then stir and cook 4 more minutes.",
+        "Remove pork and toss with 1 Tingly Chili sauce packet and white miso. Set aside.",
+        "Heat chicken broth in the same pot. Boil noodles for 2 minutes, then drain.",
+        "Assemble bowls with noodles and broth. Top with pork mixture, sliced scallions, soft-boiled egg, and Chili Crunch.",
+        "Slice green onions into 3-inch pieces, then cut into thin strips. Mix with cilantro and torn nori in a bowl.",
+        "Whisk rice vinegar, sesame oil, and salt. Pour over herb mixture and toss. Refrigerate scallion salad.",
+        "Bring water to boil. Add eggs and cook 7 minutes. Transfer to ice bath, then peel and set aside.",
+        "Cook noodles according to package directions. Sauté mushrooms until golden.",
+        "Assemble bowls with noodles, scallion salad, mushrooms, halved soft-boiled eggs, and Chili Crunch to taste."
+      ],
+      "nutrition": {
+        "calories": 220,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "moo-ping-thai-grilled-pork-skewers",
+      "title": "Moo Ping - Thai Grilled Pork Skewers",
+      "description": "Thai Grilled Pork Skewers with Nam Jim Jeaw Dipping Sauce",
+      "category": "appetizers",
+      "difficulty": "medium",
+      "prepTime": 30,
+      "cookTime": 30,
+      "totalTime": 60,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/moo-ping-thai-grilled-pork-skewers.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "2 lbs",
+          "item": "pork butt (in one piece)"
+        },
+        {
+          "amount": "4 cloves",
+          "item": "garlic, minced"
+        },
+        {
+          "amount": "2 Tbsp",
+          "item": "minced cilantro stems + fresh leaves"
+        },
+        {
+          "amount": "2 Tbsp",
+          "item": "chopped palm sugar"
+        },
+        {
+          "amount": "1 Tbsp",
+          "item": "fish sauce"
+        },
+        {
+          "amount": "1 Tbsp",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "1 Tbsp",
+          "item": "pineapple juice"
+        },
+        {
+          "amount": "½ tsp",
+          "item": "white pepper"
+        },
+        {
+          "amount": "½ tsp",
+          "item": "sugar"
+        },
+        {
+          "amount": "1 can",
+          "item": "coconut milk (for basting)"
+        },
+        {
+          "amount": "½ cup",
+          "item": "fish sauce"
+        },
+        {
+          "amount": "2 Tbsp",
+          "item": "sugar"
+        },
+        {
+          "amount": "4 Thai",
+          "item": "garlic cloves, minced"
+        },
+        {
+          "amount": "¼ cup",
+          "item": "minced chilies (giant chilies, about 4 tsp)"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "white vinegar"
+        },
+        {
+          "amount": "2 Tbsp",
+          "item": "toasted rice powder"
+        }
+      ],
+      "instructions": [
+        "Combine garlic, cilantro stems and leaves, palm sugar, fish sauce, soy sauce, pineapple juice, white pepper, and sugar in a bowl. Mix well to create marinade.",
+        "Freeze pork for 15-30 minutes to make slicing easier. This helps achieve clean, even cuts.",
+        "Slice pork against the grain into ¾\" wide, ⅛\" thick strips. Keeping uniform thickness ensures even cooking.",
+        "Combine pork with marinade in a bowl. Cover and refrigerate for 4-8 hours, or overnight for best flavor.",
+        "Thread pork onto soaked wooden skewers tightly, weaving through each piece to secure. Leave space at ends for handling.",
+        "Grill skewers over medium-high heat. Brush frequently with coconut milk and flip often. Cook for 8-10 minutes total until caramelized and cooked through.",
+        "For dipping sauce: Mix fish sauce, sugar, garlic, chilies, and vinegar. Add toasted rice powder at the end and mix well.",
+        "Serve hot with lime wedges, fresh cilantro, and Nam Jim Jeaw dipping sauce.",
+        "For faster marinating: Score the pork lightly and marinate for just 1 hour at room temperature.",
+        "Use a meat mallet to tenderize thicker cuts before marinating.",
+        "Pre-make dipping sauce up to 3 days ahead - flavors improve over time."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "pad-ka-prao-thai-basil-stir-fry-recipe",
+      "title": "Pad Ka Prao (Thai Basil Stir-Fry) Recipe",
+      "description": "Thai Stir-fried Holy Basil with Meat - Authentic Street Food Classic",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 5,
+      "totalTime": 15,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/pad-ka-prao-thai-basil-stir-fry-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "vegetarian",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "3-5 Thai",
+          "item": "chilies, roughly crushed"
+        },
+        {
+          "amount": "3-4 garlic",
+          "item": "cloves, roughly crushed"
+        },
+        {
+          "amount": "1 cup",
+          "item": "Thai holy basil leaves (ka prao)"
+        },
+        {
+          "amount": "",
+          "item": "200g ground pork, chicken, or beef"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "vegetable oil"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "fish sauce"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "1 teaspoon",
+          "item": "sugar"
+        },
+        {
+          "amount": "2 eggs",
+          "item": "for frying"
+        },
+        {
+          "amount": "",
+          "item": "Cooked jasmine rice for serving"
+        }
+      ],
+      "instructions": [
+        "Using mortar and pestle, roughly crush chilies and garlic together. Keep pieces chunky, not paste-like. Heat oil in wok or large skillet over high heat until smoking.",
+        "Add crushed chilies and garlic to hot oil. Stir-fry for 30 seconds until fragrant and sizzling. Be careful not to burn.",
+        "Add ground meat and break apart with spatula. Stir-fry for 2-3 minutes over high heat until meat is cooked through and slightly crispy around edges.",
+        "Add fish sauce, soy sauce, and sugar. Stir well to combine and cook for 1 minute to let flavors meld and sauce reduce slightly.",
+        "Add holy basil leaves and toss quickly for 30 seconds until wilted. Remove from heat immediately. Meanwhile, fry eggs in separate pan until crispy-edged. Serve over rice with fried egg on top.",
+        "Seafood Version: Use 200g shrimp, squid, or mixed seafood. Cook for only 2-3 minutes total to avoid overcooking. Add seafood after aromatics, before seasonings.",
+        "Sliced Meat: Use thinly sliced pork, beef, or chicken instead of ground meat. Slice against the grain and cook 2-3 minutes until just done.",
+        "Vegetarian: Use 200g firm tofu, cubed, or mixed mushrooms. Pan-fry tofu until golden before adding to wok. Cook mushrooms 3-4 minutes until tender.",
+        "Century Egg: Traditional variation includes sliced century egg (preserved egg) added with the meat for authentic street food experience.",
+        "Holy Basil (Ka Prao): Best choice. Spicy, peppery flavor with purple-tinged stems. Found at Thai/Asian markets.",
+        "Thai Sweet Basil: Good substitute. Sweeter, more anise-like flavor. More commonly available.",
+        "Italian Basil: Last resort. Much milder flavor. Use double the amount and add at very end.",
+        "Storage Tip: Keep basil stems in water like flowers. Don't refrigerate - it will turn black."
+      ],
+      "nutrition": {
+        "calories": 220,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "authentic-pad-thai-traditional-thai-recipe",
+      "title": "Authentic Pad Thai - Traditional Thai Recipe",
+      "description": "Traditional Thai Stir-Fried Rice Noodles - Product of Thailand",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 20,
+      "cookTime": 30,
+      "totalTime": 50,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/authentic-pad-thai-traditional-thai-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "vegetarian",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "200g Rice Noodles (Pad Thai width)"
+        },
+        {
+          "amount": "2 Large",
+          "item": "Eggs"
+        },
+        {
+          "amount": "",
+          "item": "100g Firm Tofu, cubed"
+        },
+        {
+          "amount": "1 cup",
+          "item": "Fresh Bean Sprouts"
+        },
+        {
+          "amount": "3-4 Chinese",
+          "item": "Chives, cut 2-inch pieces"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "Dried Shrimp (optional)"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "Pickled Radish, chopped"
+        },
+        {
+          "amount": "¼ cup",
+          "item": "Crushed Peanuts"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "Dried Chili Powder"
+        },
+        {
+          "amount": "1",
+          "item": "Lime, cut into wedges"
+        },
+        {
+          "amount": "",
+          "item": "Vegetable Oil for cooking"
+        },
+        {
+          "amount": "",
+          "item": "Banana Flower for garnish (optional)"
+        }
+      ],
+      "instructions": [
+        "Soak rice noodles in warm water until soft and pliable, about 30 minutes. Drain well. In a small bowl, whisk together all sauce ingredients until sugar dissolves completely. Set aside.",
+        "Heat 2 tablespoons oil in large wok or skillet over high heat. Add cubed tofu and stir-fry until golden brown on all sides, about 3-4 minutes. Remove and set aside on plate.",
+        "In same wok, crack eggs and scramble quickly. Stir fry in hot oil until eggs are cooked through but still slightly wet. Push eggs to one side of wok.",
+        "Add drained rice noodles to wok. Pour Pad Thai sauce over noodles. Using wooden spatula, toss everything together constantly to prevent sticking. Stir-fry for 2-3 minutes until noodles are heated through and sauce is absorbed.",
+        "Add bean sprouts, Chinese chives, dried shrimp (if using), pickled radish, and cooked tofu. Continue stir-frying for another 2 minutes until vegetables are slightly wilted but still crisp.",
+        "Remove from heat immediately. Transfer to serving plates. Garnish with crushed peanuts, chili powder, and lime wedges. Serve with banana flower if available. Enjoy while hot!",
+        "Pad Thai Gai: Add sliced chicken breast during step 4, cooking until done before adding noodles.",
+        "Pad Thai Goong: Include medium shrimp, cooking until pink before adding noodles.",
+        "Pad Thai Jay (Vegetarian): Omit fish sauce and dried shrimp. Use soy sauce and add extra vegetables like carrots or cabbage.",
+        "Pad Thai Woon Sen: Replace rice noodles with glass noodles (bean thread noodles) for a different texture.",
+        "Pad Thai Phak Ruam: Add mixed vegetables like bell peppers, snap peas, or baby corn for extra nutrition and crunch."
+      ],
+      "nutrition": {
+        "calories": 220,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "moms-peanut-sauce-recipe",
+      "title": "Mom's Peanut Sauce Recipe",
+      "description": "A classic Asian-style peanut sauce perfect for dipping, drizzling, or dressing",
+      "category": "appetizers",
+      "difficulty": "easy",
+      "prepTime": 5,
+      "cookTime": 30,
+      "totalTime": 35,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/moms-peanut-sauce-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1/3 cup",
+          "item": "peanut butter (creamy works best)"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "rice vinegar"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "maple syrup"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "toasted sesame oil"
+        },
+        {
+          "amount": "2 cloves",
+          "item": "garlic, minced"
+        },
+        {
+          "amount": "2-3 tablespoons",
+          "item": "warm water"
+        }
+      ],
+      "instructions": [
+        "In a medium bowl, whisk together the peanut butter, rice vinegar, soy sauce, and maple syrup until well combined and smooth.",
+        "Add the minced garlic and toasted sesame oil to the mixture, whisking until fully incorporated.",
+        "Gradually whisk in 2-3 tablespoons of warm water, one tablespoon at a time, until you reach your desired consistency. The sauce should be smooth and pourable but not too thin.",
+        "Taste and adjust seasonings as needed. Add more soy sauce for saltiness, maple syrup for sweetness, or rice vinegar for tang.",
+        "Transfer to serving bowl or storage container. Use immediately or store covered in refrigerator for up to one week. Thin with additional warm water if needed before serving."
+      ],
+      "nutrition": {
+        "calories": 350,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "tender-braised-pork-belly-with-savory-napa-cabbage",
+      "title": "Tender Braised Pork Belly with Savory Napa Cabbage",
+      "description": "Rich, melt-in-your-mouth pork belly slow-braised with Asian flavors",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 180,
+      "totalTime": 195,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/tender-braised-pork-belly-with-savory-napa-cabbage.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 lb",
+          "item": "pork belly, skin scored"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "olive oil"
+        },
+        {
+          "amount": "1",
+          "item": "onion, sliced"
+        },
+        {
+          "amount": "2 cloves",
+          "item": "garlic, minced"
+        },
+        {
+          "amount": "1 cup",
+          "item": "chicken broth"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "soy sauce"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "brown sugar"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "ginger, grated"
+        },
+        {
+          "amount": "1/2 napa",
+          "item": "cabbage, chopped"
+        },
+        {
+          "amount": "",
+          "item": "Salt and pepper to taste"
+        }
+      ],
+      "instructions": [
+        "Preheat the oven to 300°F (150°C).",
+        "Heat olive oil in a heavy oven-safe pot over medium heat. Brown the pork belly on all sides, about 5-7 minutes.",
+        "Remove the pork belly and set aside. Add the onion and garlic to the pot and cook for 2 minutes until softened.",
+        "Stir in chicken broth, soy sauce, brown sugar, and ginger. Return the pork belly to the pot, skin-side up.",
+        "Cover the pot and transfer it to the oven. Braise for 2.5 hours or until the pork is tender.",
+        "In the last 15 minutes of cooking, stir in the napa cabbage and cook until wilted.",
+        "Season with salt and pepper, then serve hot."
+      ],
+      "nutrition": {
+        "calories": 220,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "som-tum-green-papaya-salad",
+      "title": "Som Tum - Green Papaya Salad",
+      "description": "Traditional Thai Green Papaya Salad - Product of Thailand",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 15,
+      "cookTime": 30,
+      "totalTime": 45,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/som-tum-green-papaya-salad.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "Green papaya, julienned"
+        },
+        {
+          "amount": "",
+          "item": "Dried shrimp"
+        },
+        {
+          "amount": "",
+          "item": "Long beans, cut into 1-inch pieces"
+        },
+        {
+          "amount": "",
+          "item": "Cherry tomatoes, halved"
+        },
+        {
+          "amount": "",
+          "item": "Coconut sugar (or palm sugar)"
+        },
+        {
+          "amount": "",
+          "item": "Fresh garlic cloves"
+        },
+        {
+          "amount": "",
+          "item": "Fresh Thai chili (bird's eye)"
+        },
+        {
+          "amount": "",
+          "item": "Fish sauce"
+        },
+        {
+          "amount": "",
+          "item": "Fresh lime juice"
+        }
+      ],
+      "instructions": [
+        "In mortar and pestle, pound garlic and chili together until roughly crushed. Add coconut sugar and pound until combined.",
+        "Add fish sauce and lime juice to the mortar. Mix well to dissolve the sugar completely.",
+        "Add dried shrimp and long beans to the mortar. Pound gently to bruise the beans and break up the shrimp.",
+        "Add julienned green papaya and tomatoes. Using the pestle, gently pound and toss the ingredients together until well mixed and papaya is slightly softened.",
+        "Taste and adjust seasoning with more fish sauce, lime juice, or sugar as needed. Serve immediately with fresh vegetables like cucumber slices and additional long beans."
+      ],
+      "nutrition": {
+        "calories": 170,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "som-tum-moms-version",
+      "title": "Som Tum - Mom's Version",
+      "description": "Mom's Special Version - Enhanced Thai Green Papaya Salad",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 20,
+      "cookTime": 30,
+      "totalTime": 50,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/som-tum-moms-version.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "½ cup",
+          "item": "green papaya, julienned"
+        },
+        {
+          "amount": "2 tablespoons",
+          "item": "toasted peanuts"
+        },
+        {
+          "amount": "2 cloves",
+          "item": "fresh garlic"
+        },
+        {
+          "amount": "1-2 fresh",
+          "item": "bird's eye chili"
+        },
+        {
+          "amount": "1 tablespoon",
+          "item": "dried shrimp (soaked)"
+        },
+        {
+          "amount": "½ piece",
+          "item": "palm sugar"
+        },
+        {
+          "amount": "7 cherry",
+          "item": "tomatoes"
+        },
+        {
+          "amount": "½ tablespoon",
+          "item": "fresh lime juice"
+        },
+        {
+          "amount": "½ tablespoon",
+          "item": "fish sauce"
+        },
+        {
+          "amount": "1-2 tablespoons",
+          "item": "long beans, cut into 1-inch pieces"
+        }
+      ],
+      "instructions": [
+        "Soak julienned green papaya in ice water for 10-15 minutes to crisp up and remove any bitterness. Drain well before using.",
+        "In mortar and pestle, pound toasted peanuts roughly until broken into smaller pieces. Set aside a portion for garnish.",
+        "In small bowl, melt palm sugar with 2 tablespoons water until completely dissolved. This ensures even sweetness distribution.",
+        "In mortar, pound green beans, chili, and a pinch of salt roughly. Add soaked dried shrimp and crushed peanuts, pound gently to combine.",
+        "Add drained papaya, cherry tomatoes, melted palm sugar mixture, lime juice, and fish sauce. Pound and toss thoroughly until all ingredients are well combined and papaya is slightly softened but still crispy."
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "steak-cheese-rice",
+      "title": "Steak, Cheese & Rice",
+      "description": "One-skillet Mexican-inspired steak and rice with white queso",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 15,
+      "cookTime": 25,
+      "totalTime": 40,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/steak-cheese-rice.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 cup",
+          "item": "long grain white rice"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "olive oil"
+        },
+        {
+          "amount": "1 small",
+          "item": "onion, chopped"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "minced garlic"
+        },
+        {
+          "amount": "2 cups",
+          "item": "chicken broth"
+        },
+        {
+          "amount": "8 oz",
+          "item": "tomato sauce"
+        },
+        {
+          "amount": "1/2 tsp",
+          "item": "each salt and pepper"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "each cumin and dried cilantro"
+        },
+        {
+          "amount": "1 pound",
+          "item": "sirloin steak, cut up"
+        },
+        {
+          "amount": "2 tbsp",
+          "item": "butter"
+        },
+        {
+          "amount": "",
+          "item": "Montreal steak seasoning"
+        },
+        {
+          "amount": "",
+          "item": "Fresh cilantro for garnish"
+        },
+        {
+          "amount": "",
+          "item": "Flour tortillas for serving"
+        }
+      ],
+      "instructions": [
+        "Rinse rice and add to a skillet over medium-high heat with olive oil. Toast rice, stirring frequently, until lightly golden.",
+        "Add chopped onion and minced garlic to rice. Stir well and cook for 2 minutes until fragrant.",
+        "Add chicken broth, tomato sauce, and all seasonings. Stir well and bring to a boil. Cover, reduce heat to medium-low, and cook 20 minutes until rice is tender.",
+        "While rice cooks, heat butter in a second skillet over medium-high heat. Add cut steak, season with Montreal seasoning, and cook to desired doneness.",
+        "Top cooked rice with steak and drizzle with white queso. Garnish with fresh cilantro. Serve in bowls or with flour tortillas."
+      ],
+      "nutrition": {
+        "calories": 320,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "thai-tea-recipe-traditional-iced-tea",
+      "title": "Thai Tea Recipe - Traditional Iced Tea",
+      "description": "Traditional Thai Iced Tea - Creamy & Sweet",
+      "category": "desserts",
+      "difficulty": "easy",
+      "prepTime": 5,
+      "cookTime": 30,
+      "totalTime": 35,
+      "servings": 4,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/thai-tea-recipe-traditional-iced-tea.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "1 cup",
+          "item": "hot water (not boiling)"
+        },
+        {
+          "amount": "9 tablespoons",
+          "item": "Thai tea powder"
+        },
+        {
+          "amount": "6 tablespoons",
+          "item": "white sugar"
+        },
+        {
+          "amount": "6 tablespoons",
+          "item": "brown sugar"
+        },
+        {
+          "amount": "1 teaspoon",
+          "item": "salt"
+        },
+        {
+          "amount": "1½ cups",
+          "item": "sweetened condensed milk"
+        },
+        {
+          "amount": "1 cup",
+          "item": "evaporated milk"
+        },
+        {
+          "amount": "",
+          "item": "Ice (for serving)"
+        }
+      ],
+      "instructions": [
+        "Heat 1 cup of water until hot but not boiling (around 180-190°F). Add 9 tablespoons of Thai tea powder and let steep for 3 minutes, stirring occasionally.",
+        "Strain the tea mixture through a fine mesh strainer or tea sock. Gently squeeze or press the tea leaves to extract maximum liquid until you have approximately 1½ cups of concentrated tea.",
+        "In a large mixing bowl, combine the hot strained tea with white sugar, brown sugar, and salt. Stir vigorously until all sugars are completely dissolved.",
+        "Add the sweetened condensed milk and evaporated milk to the sweetened tea mixture. Stir well to combine all ingredients thoroughly. Allow to cool slightly.",
+        "Fill tall glasses with ice to the top. Pour the Thai tea mixture over the ice. Stir gently before drinking to ensure even flavor distribution. Serve immediately and enjoy!"
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    },
+    {
+      "id": "thai-coconut-shrimp-tom-yum-recipe",
+      "title": "Thai Coconut Shrimp Tom Yum Recipe",
+      "description": "Spicy, creamy shrimp soup with coconut milk, lemongrass, and fresh herbs",
+      "category": "main-course",
+      "difficulty": "easy",
+      "prepTime": 15,
+      "cookTime": 15,
+      "totalTime": 30,
+      "servings": 2,
+      "rating": 4,
+      "reviewCount": 1,
+      "image": "/images/recipes/thai-coconut-shrimp-tom-yum-recipe.jpg",
+      "chef": {
+        "name": "Chang Cookbook",
+        "avatar": "/images/logo/chang-logo-small.png"
+      },
+      "tags": [
+        "quick",
+        "homemade"
+      ],
+      "ingredients": [
+        {
+          "amount": "",
+          "item": "300g shrimp, peeled"
+        },
+        {
+          "amount": "2 cups",
+          "item": "coconut milk"
+        },
+        {
+          "amount": "2 cups",
+          "item": "chicken broth"
+        },
+        {
+          "amount": "1 stalk",
+          "item": "lemongrass"
+        },
+        {
+          "amount": "3 kaffir",
+          "item": "lime leaves"
+        },
+        {
+          "amount": "1 tbsp",
+          "item": "fish sauce"
+        },
+        {
+          "amount": "1 tsp",
+          "item": "chili paste"
+        },
+        {
+          "amount": "",
+          "item": "Juice of 1 lime"
+        },
+        {
+          "amount": "",
+          "item": "Fresh cilantro for garnish"
+        },
+        {
+          "amount": "",
+          "item": "Red chili slices for garnish"
+        }
+      ],
+      "instructions": [
+        "Bruise the lemongrass stalk with the back of a knife and cut into 2-inch pieces. Tear the kaffir lime leaves slightly to release their oils.",
+        "In a large saucepan, gently simmer coconut milk with lemongrass, lime leaves, and chicken broth over medium heat for 5 minutes. Do not boil vigorously.",
+        "Add chili paste and fish sauce to the simmering broth. Stir well to combine and let flavors meld for 2-3 minutes.",
+        "Add shrimp to the pot and cook for 2-3 minutes until they turn pink and are just cooked through. Do not overcook.",
+        "Remove from heat and stir in fresh lime juice. Taste and adjust seasoning. Serve immediately garnished with cilantro and red chili slices."
+      ],
+      "nutrition": {
+        "calories": 170,
+        "protein": "15g",
+        "carbs": "25g",
+        "fat": "10g"
+      },
+      "featured": false,
+      "createdAt": "2025-08-08"
+    }
+  ],
+  "categories": [
+    {
+      "id": "main-course",
+      "name": "Main Course",
+      "description": "Delicious main course recipes",
+      "emoji": "🍽️",
+      "count": 14
+    },
+    {
+      "id": "quick-meals",
+      "name": "Quick Meals",
+      "description": "Delicious quick meals recipes",
+      "emoji": "🍽️",
+      "count": 1
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "description": "Delicious desserts recipes",
+      "emoji": "🍽️",
+      "count": 2
+    },
+    {
+      "id": "appetizers",
+      "name": "Appetizers",
+      "description": "Delicious appetizers recipes",
+      "emoji": "🍽️",
+      "count": 3
+    }
+  ]
+}

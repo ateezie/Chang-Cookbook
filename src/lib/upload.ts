@@ -1,5 +1,4 @@
 import multer from 'multer'
-import path from 'path'
 import fs from 'fs'
 import { NextRequest } from 'next/server'
 
@@ -44,7 +43,7 @@ const chefStorage = multer.diskStorage({
 })
 
 // File filter to allow only images
-const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req: unknown, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
   
   if (allowedTypes.includes(file.mimetype)) {
@@ -88,9 +87,9 @@ export function deleteUploadedFile(filePath: string) {
 }
 
 // Middleware wrapper for Next.js API routes
-export function runMiddleware(req: any, res: any, fn: any): Promise<any> {
+export function runMiddleware(req: unknown, res: unknown, fn: unknown): Promise<unknown> {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result: any) => {
+    fn(req, res, (result: unknown) => {
       if (result instanceof Error) {
         return reject(result)
       }

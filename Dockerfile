@@ -11,10 +11,17 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci && npm cache clean --force
 
+# Install dev dependencies for build stage
+FROM base AS dev-deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --include=dev && npm cache clean --force
+
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=dev-deps /app/node_modules ./node_modules
 COPY . .
 
 # Set build environment variables

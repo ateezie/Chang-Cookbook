@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const { page, limit, category, difficulty, featured, search, sortBy, order } = query
 
     // Build where clause
-    const where: any = {}
+    const where: Record<string, unknown> = {}
     
     if (category) where.categoryId = category
     if (difficulty) where.difficulty = difficulty
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Build orderBy clause
-    let orderBy: any = { createdAt: 'desc' } // default
+    let orderBy: Record<string, string> = { createdAt: 'desc' } // default
     
     switch (sortBy) {
       case 'newest':

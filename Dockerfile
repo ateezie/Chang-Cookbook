@@ -37,6 +37,11 @@ RUN npx prisma generate
 # Build the application
 RUN npm run build
 
+# Debug: List what's in the build output
+RUN echo "=== Contents of /app ===" && ls -la /app
+RUN echo "=== Contents of .next ===" && ls -la .next/ || echo "No .next directory"
+RUN echo "=== Contents of public ===" && ls -la public/ || echo "No public directory"
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -50,8 +55,8 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy public folder
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# Copy public folder from source (not build output)
+COPY --chown=nextjs:nodejs public ./public
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

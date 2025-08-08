@@ -10,8 +10,8 @@ services:
     env_file:
       - .env.local
     volumes:
-      # Persist the database
-      - ./data/database:/app/prisma
+      # Persist the database file only, not the entire prisma directory
+      - ./data/database:/app/data
       # Persist uploaded images
       - ./data/uploads:/app/public/uploads
       # Persist logs

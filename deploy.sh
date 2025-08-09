@@ -53,11 +53,11 @@ fi
 
 # Stop existing containers
 print_status "Stopping existing containers..."
-docker-compose down || true
+docker compose down || true
 
 # Build and start the application
 print_status "Building and starting Chang Cookbook..."
-docker-compose up --build -d
+docker compose up --build -d
 
 # Wait for the application to be ready
 print_status "Waiting for application to be ready..."
@@ -65,8 +65,8 @@ sleep 10
 
 # Run database migrations and setup
 print_status "Setting up database..."
-docker-compose exec chang-cookbook npx prisma migrate deploy
-docker-compose exec chang-cookbook node scripts/migrate-json-to-db.js
+docker compose exec chang-cookbook npx prisma migrate deploy
+docker compose exec chang-cookbook node scripts/migrate-json-to-db.js
 
 # Check if the application is running
 print_status "Checking application health..."
@@ -81,7 +81,7 @@ if curl -f http://localhost:3000/api/recipes > /dev/null 2>&1; then
     print_status "3. Set up automated backups"
 else
     print_error "❌ Application health check failed"
-    print_warning "Check logs with: docker-compose logs chang-cookbook"
+    print_warning "Check logs with: docker compose logs chang-cookbook"
     exit 1
 fi
 

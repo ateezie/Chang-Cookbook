@@ -63,6 +63,10 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
+# Copy dependencies needed for scripts
+COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
+COPY --from=deps /app/node_modules ./node_modules
+
 # Copy scripts for database setup
 COPY --from=builder /app/scripts ./scripts
 

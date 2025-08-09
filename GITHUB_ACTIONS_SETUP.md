@@ -24,7 +24,7 @@ Before the workflows can run, you need to configure these secrets in your GitHub
 
 | Secret Name | Description | Example Value |
 |-------------|-------------|---------------|
-| `DEPLOY_SSH_KEY` | Private SSH key for server access | `-----BEGIN OPENSSH PRIVATE KEY-----...` |
+| `DEPLOY_SSH_KEY` | Private SSH key for server access | `-----BEGIN OPENSSH PRIVATE KEY-----b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACDKKTf+OVzW3su6UR1DlqBZYBEyrxXeiCFmzW07xklFvwAAAJDBvzhmwb84ZgAAAAtzc2gtZWQyNTUxOQAAACDKKTf+OVzW3su6UR1DlqBZYBEyrxXeiCFmzW07xklFvwAAAECRec9IDkXJmsnRbfT1s5bWkeZjeAsqK2Eo6lk8YJuKPMopN/45XNbey7pRHUOWoFlgETKvFd6IIWbNbTvGSUW/AAAAC2F0aGlwQEhBTlpPAQI=-----END OPENSSH PRIVATE KEY-----` |
 | `DEPLOY_USER` | Server username | `root` or `your-username` |
 | `DEPLOY_HOST` | Server IP address | `157.230.61.255` |
 | `DEPLOY_PATH` | Deployment directory path | `/opt/chang-cookbook` |

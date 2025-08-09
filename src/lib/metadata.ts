@@ -4,8 +4,8 @@ import { Recipe, Category } from '@/types'
 const siteConfig = {
   name: 'Chang Cookbook',
   description: 'Discover delicious recipes for every occasion. From quick weeknight dinners to special treats, find your next favorite dish with our tested and loved recipes.',
-  url: 'http://localhost:3000',
-  ogImage: '/og-image.jpg',
+  url: 'https://cook.alexthip.com',
+  ogImage: '/images/og/default.jpg',
   creator: '@changcookbook',
   keywords: ['recipes', 'cooking', 'food', 'dinner', 'desserts', 'healthy', 'quick meals', 'italian', 'asian', 'mediterranean']
 }

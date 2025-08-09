@@ -29,7 +29,9 @@
       "Bash(docker build:*)",
       "Bash(ssh:*)",
       "Bash(cp:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(git stash:*)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }

@@ -57,6 +57,9 @@ export default function RecipeImage({
     }
   }
 
+  // Check if this is a locally uploaded image
+  const isLocalUpload = imgSrc.startsWith('/images/recipes/') || imgSrc.startsWith('/images/chefs/')
+  
   return (
     <Image
       src={imgSrc}
@@ -68,6 +71,8 @@ export default function RecipeImage({
       onError={handleError}
       placeholder="blur"
       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+      // Disable optimization for local uploads to prevent Next.js image optimization errors
+      unoptimized={isLocalUpload}
     />
   )
 }

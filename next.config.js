@@ -27,10 +27,20 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cook.alexthip.com',
+        port: '',
+        pathname: '/images/**',
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Disable optimization for local uploads to avoid issues
+    unoptimized: false,
+    // Configure loader for better handling
+    loader: 'default',
   },
 }
 

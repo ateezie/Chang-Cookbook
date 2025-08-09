@@ -78,8 +78,8 @@ RUN chown -R nextjs:nodejs ./public/uploads
 RUN mkdir -p ./data
 RUN chown -R nextjs:nodejs ./data
 
-# Make database init script executable
-RUN chmod +x ./scripts/init-database.sh
+# Copy database initialization script
+COPY --from=builder /app/init-db.js ./init-db.js
 
 USER nextjs
 
@@ -89,4 +89,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Initialize database on startup, then start the server
-CMD ["sh", "-c", "./scripts/init-database.sh && node server.js"]
+CMD ["sh", "-c", "node init-db.js && node server.js"]

@@ -308,5 +308,7 @@ npm run dev
 - Enhanced image verification with fallback mechanisms  
 - Updated deployment secrets configuration
 - Made security scan completely optional and informative
+- Fixed SSH private key formatting for GitHub Actions deployment
+- Resolved libcrypto errors with dynamic key reformatting
 
 **Deployment Target:** https://cook.alexthip.com (Digital Ocean droplet)

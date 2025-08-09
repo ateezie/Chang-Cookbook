@@ -210,57 +210,64 @@ jobs:
           echo "[INFO] Current directory contents:"
           ls -la
           
-          # Check if there are existing deployment scripts
+          # CRITICAL: Remove any existing deployment scripts that might interfere
           if [ -f "deploy.sh" ]; then
-            echo "[WARNING] Found existing deploy.sh script - not using it"
+            echo "[WARNING] Removing existing deploy.sh script to prevent conflicts"
+            mv deploy.sh deploy.sh.disabled
           fi
+          
+          # Stop any existing containers from previous deployments
+          echo "[INFO] Stopping any existing Chang Cookbook containers..."
+          docker stop $(docker ps -q --filter "name=chang-cookbook") 2>/dev/null || echo "No existing containers to stop"
+          docker rm $(docker ps -aq --filter "name=chang-cookbook") 2>/dev/null || echo "No existing containers to remove"
           
           echo "[INFO] Pulling latest Docker image..."
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           
-          echo "[INFO] Checking for docker-compose.yml..."
-          if [ -f "docker-compose.yml" ]; then
-            echo "[INFO] Updating docker-compose.yml to use registry image..."
-            cp docker-compose.yml docker-compose.yml.backup
-            sed -i 's|build: \.|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest|' docker-compose.yml
-            
-            echo "[INFO] Stopping existing containers..."
-            docker-compose down || echo "No containers to stop"
-            
-            echo "[INFO] Starting new container..."
-            docker-compose up -d
-            
-            echo "[INFO] Waiting for container to be ready..."
-            sleep 30
-            
-            echo "[INFO] Checking container status..."
-            docker-compose ps
-            
-            echo "[INFO] Verifying deployment..."
-            if curl -f http://localhost:3000/api/health 2>/dev/null || curl -f http://localhost:3000 2>/dev/null; then
-              echo "✅ Deployment successful!"
-            else
-              echo "⚠️ Health check failed, but container may still be starting..."
-              docker-compose logs --tail=20
-            fi
-          else
-            echo "[ERROR] No docker-compose.yml found in ${{ secrets.DEPLOY_PATH }}"
-            echo "[INFO] Creating minimal docker-compose.yml..."
-            cat > docker-compose.yml << COMPOSE_EOF
+          echo "[INFO] Creating fresh docker-compose.yml for registry image..."
+          # Always create a fresh docker-compose.yml to ensure we use the registry image
+          cat > docker-compose.yml << COMPOSE_EOF
 version: '3.8'
 services:
   chang-cookbook:
     image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+    container_name: chang-cookbook
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - DATABASE_URL=file:./data/database.db
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/public/uploads
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 COMPOSE_EOF
-            echo "[INFO] Starting container with new compose file..."
-            docker-compose up -d
-            sleep 30
-            docker-compose ps
+          
+          echo "[INFO] Docker compose file created:"
+          cat docker-compose.yml
+          
+          echo "[INFO] Starting deployment with registry image..."
+          docker-compose down || echo "No containers to stop"
+          docker-compose up -d
+          
+          echo "[INFO] Waiting for container to be ready..."
+          sleep 30
+          
+          echo "[INFO] Checking container status..."
+          docker-compose ps
+          
+          echo "[INFO] Verifying deployment..."
+          if curl -f http://localhost:3000 2>/dev/null; then
+            echo "✅ Deployment successful - Chang Cookbook is running!"
+          else
+            echo "⚠️ Health check failed, checking logs..."
+            docker-compose logs --tail=20 chang-cookbook
+            echo "Container may still be starting up..."
           fi
         EOF
         

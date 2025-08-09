@@ -52,8 +52,14 @@ jobs:
         head -1 ~/.ssh/deploy_key
         tail -1 ~/.ssh/deploy_key
         
+        # Debug environment variables
+        echo "DEPLOY_HOST value: [${{ secrets.DEPLOY_HOST }}]"
+        echo "DEPLOY_USER value: [${{ secrets.DEPLOY_USER }}]"
+        
         # Add host to known_hosts to avoid prompts
-        ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+        HOST_IP="${{ secrets.DEPLOY_HOST }}"
+        echo "Adding host $HOST_IP to known_hosts"
+        ssh-keyscan -H "$HOST_IP" >> ~/.ssh/known_hosts || echo "ssh-keyscan failed, continuing anyway"
         
     - name: 🔍 Verify server connection
       run: |

@@ -1,0 +1,241 @@
+{
+  "categories": [
+    {
+      "id": "appetizers",
+      "name": "Appetizers", 
+      "description": "Start your meal with these delicious appetizers",
+      "emoji": "🥗",
+      "count": 0
+    },
+    {
+      "id": "main-course",
+      "name": "Main Course",
+      "description": "Hearty and satisfying main dishes for every occasion", 
+      "emoji": "🍽️",
+      "count": 0
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "description": "Sweet treats to end your meal on a perfect note",
+      "emoji": "🍰", 
+      "count": 0
+    },
+    {
+      "id": "quick-meals",
+      "name": "Quick Meals",
+      "description": "Fast and easy meals ready in 30 minutes or less",
+      "emoji": "⚡",
+      "count": 0
+    }
+  ],
+  "recipes": [
+    {
+      "id": "example-recipe-1",
+      "title": "Classic Spaghetti Carbonara",
+      "description": "Authentic Italian pasta dish with eggs, cheese, and pancetta",
+      "category": "main-course",
+      "difficulty": "medium",
+      "prepTime": 15,
+      "cookTime": 20,
+      "totalTime": 35,
+      "servings": 4,
+      "rating": 4.7,
+      "reviewCount": 42,
+      "image": "/images/recipes/carbonara.jpg",
+      "imageCredit": "Photo by Chef Mario",
+      "unsplashId": null,
+      "featured": true,
+      "chef": {
+        "name": "Chef Mario Rossi",
+        "avatar": "/images/chefs/mario.jpg"
+      },
+      "tags": ["italian", "pasta", "comfort-food", "traditional"],
+      "ingredients": [
+        {
+          "item": "spaghetti pasta",
+          "amount": "400g"
+        },
+        {
+          "item": "pancetta or guanciale, diced",
+          "amount": "150g"
+        },
+        {
+          "item": "large eggs",
+          "amount": "4"
+        },
+        {
+          "item": "Pecorino Romano cheese, grated",
+          "amount": "100g"
+        },
+        {
+          "item": "black pepper",
+          "amount": "freshly ground"
+        },
+        {
+          "item": "salt",
+          "amount": "to taste"
+        }
+      ],
+      "instructions": [
+        "Bring a large pot of salted water to boil and cook spaghetti according to package directions until al dente.",
+        "While pasta cooks, heat a large skillet over medium heat and cook pancetta until crispy, about 5-7 minutes.",
+        "In a bowl, whisk together eggs, grated Pecorino Romano, and plenty of black pepper.",
+        "Reserve 1 cup of pasta cooking water, then drain the pasta.",
+        "Add hot pasta to the skillet with pancetta and toss quickly.",
+        "Remove from heat and immediately add the egg mixture, tossing vigorously to create a creamy sauce.",
+        "Add pasta water a little at a time if needed to achieve desired consistency.",
+        "Serve immediately with additional cheese and black pepper."
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": "22g",
+        "carbs": "65g",
+        "fat": "18g"
+      },
+      "createdAt": "2024-01-15"
+    },
+    {
+      "id": "example-recipe-2", 
+      "title": "Quick Chicken Caesar Salad",
+      "description": "Fresh and crispy Caesar salad with grilled chicken breast",
+      "category": "quick-meals",
+      "difficulty": "easy",
+      "prepTime": 10,
+      "cookTime": 15,
+      "totalTime": 25,
+      "servings": 2,
+      "rating": 4.3,
+      "reviewCount": 18,
+      "image": "/images/recipes/caesar-salad.jpg",
+      "imageCredit": null,
+      "unsplashId": "abc123def456",
+      "featured": false,
+      "chef": {
+        "name": "Sarah Johnson",
+        "avatar": "/images/chefs/sarah.jpg"
+      },
+      "tags": ["healthy", "quick", "salad", "protein"],
+      "ingredients": [
+        {
+          "item": "boneless chicken breasts",
+          "amount": "2 pieces"
+        },
+        {
+          "item": "romaine lettuce, chopped",
+          "amount": "1 large head"
+        },
+        {
+          "item": "Caesar dressing",
+          "amount": "1/2 cup"
+        },
+        {
+          "item": "Parmesan cheese, grated",
+          "amount": "1/4 cup"
+        },
+        {
+          "item": "croutons",
+          "amount": "1 cup"
+        },
+        {
+          "item": "olive oil",
+          "amount": "2 tbsp"
+        }
+      ],
+      "instructions": [
+        "Season chicken breasts with salt and pepper.",
+        "Heat olive oil in a skillet over medium-high heat.",
+        "Cook chicken for 6-7 minutes per side until golden and cooked through (165°F internal temp).",
+        "Let chicken rest for 5 minutes, then slice into strips.",
+        "In a large bowl, toss romaine lettuce with Caesar dressing.",
+        "Top with sliced chicken, croutons, and grated Parmesan cheese.",
+        "Serve immediately while chicken is still warm."
+      ],
+      "nutrition": {
+        "calories": 385,
+        "protein": "35g", 
+        "carbs": "12g",
+        "fat": "22g"
+      },
+      "createdAt": "2024-02-03"
+    },
+    {
+      "id": "example-recipe-3",
+      "title": "Chocolate Chip Cookies",
+      "description": "Classic homemade chocolate chip cookies that are crispy outside and chewy inside",
+      "category": "desserts",
+      "difficulty": "easy",
+      "prepTime": 15,
+      "cookTime": 12,
+      "totalTime": 27,
+      "servings": 24,
+      "rating": 4.9,
+      "reviewCount": 87,
+      "image": "/images/recipes/chocolate-chip-cookies.jpg", 
+      "imageCredit": null,
+      "unsplashId": null,
+      "featured": true,
+      "chef": {
+        "name": "Chef Mario Rossi",
+        "avatar": "/images/chefs/mario.jpg"
+      },
+      "tags": ["dessert", "cookies", "chocolate", "baking", "comfort-food"],
+      "ingredients": [
+        {
+          "item": "all-purpose flour",
+          "amount": "2 1/4 cups"
+        },
+        {
+          "item": "baking soda", 
+          "amount": "1 tsp"
+        },
+        {
+          "item": "salt",
+          "amount": "1 tsp"
+        },
+        {
+          "item": "butter, softened",
+          "amount": "1 cup"
+        },
+        {
+          "item": "granulated sugar",
+          "amount": "3/4 cup"
+        },
+        {
+          "item": "brown sugar, packed",
+          "amount": "3/4 cup"
+        },
+        {
+          "item": "large eggs",
+          "amount": "2"
+        },
+        {
+          "item": "vanilla extract",
+          "amount": "2 tsp"
+        },
+        {
+          "item": "chocolate chips",
+          "amount": "2 cups"
+        }
+      ],
+      "instructions": [
+        "Preheat oven to 375°F (190°C).",
+        "In a bowl, whisk together flour, baking soda, and salt. Set aside.",
+        "In a large bowl, cream together softened butter and both sugars until light and fluffy.",
+        "Beat in eggs one at a time, then add vanilla extract.",
+        "Gradually mix in the flour mixture until just combined.",
+        "Stir in chocolate chips until evenly distributed.",
+        "Drop rounded tablespoons of dough onto ungreased baking sheets, spacing 2 inches apart.",
+        "Bake for 9-11 minutes until golden brown around edges.",
+        "Cool on baking sheet for 5 minutes before transferring to wire rack."
+      ],
+      "nutrition": {
+        "calories": 180,
+        "protein": "2g",
+        "carbs": "25g", 
+        "fat": "8g"
+      },
+      "createdAt": "2024-01-20"
+    }
+  ]
+}

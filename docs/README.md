@@ -7,6 +7,7 @@ This directory contains all the documentation for the Chang Cookbook project.
 ### Setup & Configuration
 - **[ADD_YOUR_RECIPES.md](ADD_YOUR_RECIPES.md)** - Complete guide for adding recipes
 - **[RECIPE_QUICK_START.md](RECIPE_QUICK_START.md)** - Quick 5-minute recipe setup
+- **[JSON_MIGRATION_GUIDE.md](JSON_MIGRATION_GUIDE.md)** - JSON bulk import via admin panel
 - **[IMPORT_HTML_RECIPES.md](IMPORT_HTML_RECIPES.md)** - HTML recipe import instructions
 - **[LOGO_INTEGRATION_GUIDE.md](LOGO_INTEGRATION_GUIDE.md)** - Logo setup guide
 

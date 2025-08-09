@@ -96,7 +96,7 @@ export default function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                placeholder="admin@changcookbook.com"
+placeholder="Enter your email"
               />
             </div>
 
@@ -124,11 +124,6 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-chang-brown-600">
-            <p>Default credentials:</p>
-            <p><strong>Email:</strong> admin@changcookbook.com</p>
-            <p><strong>Password:</strong> admin123</p>
-          </div>
         </div>
       </div>
     </div>

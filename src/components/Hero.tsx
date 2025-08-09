@@ -16,9 +16,9 @@ interface HeroProps {
 }
 
 export default function Hero({
-  title = "Discover Delicious",
-  subtitle = "Recipes for Every",
-  description = "From quick weeknight dinners to special occasion treats, find your next favorite dish with our tested and loved recipes.",
+  title = "Cook with me and",
+  subtitle = "\"Chang Your Life\"",
+  description = "Simple to Medium difficulty recipes that I've sourced from family and friends. Join me in exploring the world of cooking with these delicious recipes.",
   primaryButtonText = "Start Cooking",
   primaryButtonHref = "/recipes",
   secondaryButtonText = "Browse Recipes",
@@ -55,7 +55,6 @@ export default function Hero({
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-chang-brown-900 leading-tight mb-6">
               {title}
               <span className="text-chang-orange-400 block">{subtitle}</span>
-              <span className="text-chang-orange-600">Occasion</span>
             </h1>
             
             <p className="text-lg sm:text-xl text-chang-brown-700 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">

@@ -1,6 +1,7 @@
 services:
   chang-cookbook:
     build: .
+    user: "0:0"
     ports:
       - "3000:3000"
     environment:
@@ -8,7 +9,7 @@ services:
     env_file:
       - .env.local
     volumes:
-      # Persist the database file only, not the entire prisma directory
+      # Persist the database file
       - ./data/database:/app/data
       # Persist uploaded images
       - ./data/uploads:/app/public/uploads

@@ -75,8 +75,11 @@ RUN mkdir -p ./public/uploads
 RUN chown -R nextjs:nodejs ./public/uploads
 
 # Create database directory with proper permissions
-RUN mkdir -p ./prisma
-RUN chown -R nextjs:nodejs ./prisma
+RUN mkdir -p ./data
+RUN chown -R nextjs:nodejs ./data
+
+# Make database init script executable
+RUN chmod +x ./scripts/init-database.sh
 
 USER nextjs
 
@@ -85,4 +88,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+# Initialize database on startup, then start the server
+CMD ["sh", "-c", "./scripts/init-database.sh && node server.js"]

@@ -63,10 +63,8 @@ docker compose up --build -d
 print_status "Waiting for application to be ready..."
 sleep 10
 
-# Run database migrations and setup
-print_status "Setting up database..."
-docker compose exec chang-cookbook npx prisma migrate deploy
-docker compose exec chang-cookbook node scripts/migrate-json-to-db.js
+# Database initialization is now handled automatically in the container startup
+print_status "Database will initialize automatically on startup..."
 
 # Check if the application is running
 print_status "Checking application health..."

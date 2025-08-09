@@ -310,5 +310,7 @@ npm run dev
 - Made security scan completely optional and informative
 - Fixed SSH private key formatting for GitHub Actions deployment
 - Resolved libcrypto errors with dynamic key reformatting
+- Updated SSH public key authorization on Digital Ocean droplet
+- Applied SSH key fixes to both deploy.yml and docker.yml workflows
 
 **Deployment Target:** https://cook.alexthip.com (Digital Ocean droplet)

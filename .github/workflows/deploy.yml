@@ -34,9 +34,13 @@ jobs:
         
         # Extract the base64 content between the markers
         KEY_CONTENT='${{ secrets.DEPLOY_SSH_KEY }}'
+        echo "Raw key content length: $(echo "$KEY_CONTENT" | wc -c)"
+        echo "Raw key first 100 chars: $(echo "$KEY_CONTENT" | head -c 100)"
         
         # Remove header/footer and get just the base64 content
         BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----//' | tr -d ' \n\r')
+        echo "Extracted base64 length: $(echo "$BASE64_CONTENT" | wc -c)"
+        echo "Base64 content sample: $(echo "$BASE64_CONTENT" | head -c 50)"
         
         # Create properly formatted private key with 64-char line breaks
         {
@@ -64,7 +68,7 @@ jobs:
         echo "NEXTAUTH_URL: [${{ secrets.NEXTAUTH_URL }}]"
         echo "DATABASE_URL: [${{ secrets.DATABASE_URL }}]"
         echo "ADMIN_EMAIL: [${{ secrets.ADMIN_EMAIL }}]"
-        echo "JWT_SECRET length: [${#{{ secrets.JWT_SECRET }}}]"
+        echo "JWT_SECRET length: [$(echo '${{ secrets.JWT_SECRET }}' | wc -c)]"
         echo "DEPLOY_SSH_KEY starts with: [$(echo '${{ secrets.DEPLOY_SSH_KEY }}' | head -c 50)]"
         echo "================================"
         

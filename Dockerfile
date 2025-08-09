@@ -39,8 +39,10 @@ RUN npm run build
 
 # Debug: List what's in the build output
 RUN echo "=== Contents of /app ===" && ls -la /app
-RUN echo "=== Contents of .next ===" && ls -la .next/ || echo "No .next directory"
+RUN echo "=== Contents of .next ===" && ls -la .next/ || echo "No .next directory"  
 RUN echo "=== Contents of public ===" && ls -la public/ || echo "No public directory"
+RUN echo "=== Public directory check ===" && [ -d "public" ] && echo "Public directory exists" || echo "Public directory missing"
+RUN echo "=== Creating public if missing ===" && mkdir -p public
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -55,8 +57,11 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy public folder from builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# For Next.js standalone builds, public files need to be copied separately  
+# Create public directory structure first
+RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
+# Try copying public directory with different approach
+COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

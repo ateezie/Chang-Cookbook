@@ -1,7 +1,7 @@
-const { PrismaClient } = require('@prisma/client')
 const fs = require('fs')
 const path = require('path')
 const bcrypt = require('bcryptjs')
+const { execSync } = require('child_process')
 
 // Function to generate URL-friendly slugs
 function generateSlug(title) {
@@ -26,6 +26,28 @@ async function initializeDatabase() {
   // Set database URL for this init process
   process.env.DATABASE_URL = 'file:/app/data/production.db'
   
+  // Generate Prisma client first
+  console.log('🔧 Generating Prisma client...')
+  try {
+    execSync('npx prisma generate', { stdio: 'inherit' })
+    console.log('✅ Prisma client generated')
+  } catch (error) {
+    console.error('❌ Failed to generate Prisma client:', error.message)
+    throw error
+  }
+
+  // Run database migrations
+  console.log('📋 Running database migrations...')
+  try {
+    execSync('npx prisma migrate deploy', { stdio: 'inherit' })
+    console.log('✅ Database migrations completed')
+  } catch (error) {
+    console.error('❌ Failed to run migrations:', error.message)
+    throw error
+  }
+
+  // Now import PrismaClient after generation
+  const { PrismaClient } = require('@prisma/client')
   const prisma = new PrismaClient()
 
   try {

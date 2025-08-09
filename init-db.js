@@ -26,6 +26,15 @@ async function initializeDatabase() {
   // Set database URL for this init process
   process.env.DATABASE_URL = 'file:/app/data/production.db'
   
+  // Ensure proper permissions on data directory
+  try {
+    execSync('chown -R nextjs:nodejs /app/data/', { stdio: 'pipe' })
+    execSync('chmod -R 755 /app/data/', { stdio: 'pipe' })
+    console.log('✅ Set proper permissions on data directory')
+  } catch (error) {
+    console.log('⚠️  Could not set permissions (may not be root):', error.message)
+  }
+  
   // Generate Prisma client first
   console.log('🔧 Generating Prisma client...')
   try {
@@ -264,6 +273,15 @@ async function initializeDatabase() {
 
     console.log('\n🎉 Database initialization completed!')
     console.log(`✅ Successfully migrated: ${migratedCount} recipes`)
+
+    // Ensure final permissions are correct
+    try {
+      execSync('chown -R nextjs:nodejs /app/data/', { stdio: 'pipe' })
+      execSync('chmod 664 /app/data/production.db', { stdio: 'pipe' })
+      console.log('✅ Final database permissions set')
+    } catch (error) {
+      console.log('⚠️  Could not set final permissions:', error.message)
+    }
 
   } catch (error) {
     console.error('❌ Database initialization failed:', error)

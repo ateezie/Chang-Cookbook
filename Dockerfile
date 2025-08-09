@@ -81,12 +81,13 @@ RUN chown -R nextjs:nodejs ./data
 # Copy database initialization script
 COPY --from=builder /app/init-db.js ./init-db.js
 
-USER nextjs
+# Install su-exec for user switching
+RUN apk add --no-cache su-exec
 
 EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Initialize database on startup, then start the server
-CMD ["sh", "-c", "node init-db.js && node server.js"]
+# Initialize database as root (for permissions), then switch to nextjs user and start server
+CMD ["sh", "-c", "node init-db.js && chown -R nextjs:nodejs /app/data && su-exec nextjs node server.js"]

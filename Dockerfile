@@ -1,5 +1,5 @@
 # Chang Cookbook - Production Dockerfile
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -55,8 +55,8 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy public folder from source (not build output)
-COPY --chown=nextjs:nodejs public ./public
+# Copy public folder from builder stage
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

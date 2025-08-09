@@ -177,8 +177,8 @@ jobs:
         echo "Raw key content length: $(echo "$KEY_CONTENT" | wc -c)"
         echo "Raw key first 100 chars: $(echo "$KEY_CONTENT" | head -c 100)"
         
-        # Remove header/footer and get just the base64 content  
-        BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----//' | tr -d ' \n\r')
+        # Extract just the base64 content between BEGIN and END markers
+        BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/.*-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----.*//')
         echo "Extracted base64 length: $(echo "$BASE64_CONTENT" | wc -c)"
         echo "Base64 content sample: $(echo "$BASE64_CONTENT" | head -c 50)"
         

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ChangLogo from '@/components/ChangLogo'
@@ -32,13 +32,13 @@ export default function MigratePage() {
   })
 
   // Check admin authentication
-  useState(() => {
+  useEffect(() => {
     const token = localStorage.getItem('admin_token')
     if (!token) {
       router.push('/admin')
       return
     }
-  })
+  }, [router])
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

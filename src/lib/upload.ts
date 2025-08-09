@@ -87,9 +87,13 @@ export function deleteUploadedFile(filePath: string) {
 }
 
 // Middleware wrapper for Next.js API routes
-export function runMiddleware(req: unknown, res: unknown, fn: unknown): Promise<unknown> {
+export function runMiddleware(
+  req: any, 
+  res: any, 
+  fn: (req: any, res: any, callback: (result?: any) => void) => void
+): Promise<unknown> {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result: unknown) => {
+    fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result)
       }

@@ -46,7 +46,7 @@ export default function EditRecipe() {
     slug: '',
     description: '',
     category: '',
-    difficulty: 'easy' as const,
+    difficulty: 'easy' as 'easy' | 'medium' | 'hard',
     prepTime: 0,
     cookTime: 0,
     servings: 4,

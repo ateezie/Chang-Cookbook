@@ -25,8 +25,7 @@ jobs:
       run: npm ci
       
     - name: 🔍 Run TypeScript check
-      run: npx tsc --noEmit || echo "TypeScript issues found but continuing..."
-      continue-on-error: true
+      run: npx tsc --noEmit
       
     - name: 🧹 Run ESLint
       run: npm run lint || echo "ESLint issues found but continuing..."
@@ -105,11 +104,13 @@ jobs:
       run: npm ci
       
     - name: 🔍 Audit dependencies
-      run: npm audit --audit-level=high || echo "Audit found issues but continuing..."
+      run: npm audit --audit-level=high
       
     - name: 🔒 Check for secrets
       uses: trufflesecurity/trufflehog@main
       with:
         path: ./
-        extra_args: --debug --only-verified --no-update
+        base: main
+        head: HEAD
+        extra_args: --only-verified
       continue-on-error: true

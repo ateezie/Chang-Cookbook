@@ -31,7 +31,9 @@
       "Bash(cp:*)",
       "Bash(chmod:*)",
       "Bash(git stash:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(npm audit:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

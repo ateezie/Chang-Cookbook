@@ -38,6 +38,8 @@ export default function EditRecipe() {
   const [saving, setSaving] = useState(false)
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [error, setError] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState('')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -101,6 +103,7 @@ export default function EditRecipe() {
         })
         setIngredients(recipe.ingredients)
         setInstructions(recipe.instructions)
+        setImagePreview(recipe.image)
       } else {
         setError('Recipe not found')
       }
@@ -195,6 +198,60 @@ export default function EditRecipe() {
       i === index ? value : inst
     )
     setInstructions(updated)
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError('Please select an image file')
+      return
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image must be less than 5MB')
+      return
+    }
+
+    setUploading(true)
+    setError('')
+
+    try {
+      const uploadFormData = new FormData()
+      uploadFormData.append('file', file)
+      uploadFormData.append('type', 'recipe')
+
+      const token = localStorage.getItem('admin_token')
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: uploadFormData
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        const imageUrl = data.path
+        setFormData(prev => ({ ...prev, image: imageUrl }))
+        setImagePreview(imageUrl)
+      } else {
+        setError(data.error || 'Failed to upload image')
+      }
+    } catch (error) {
+      setError('Error uploading image')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, image: '' }))
+    setImagePreview('')
   }
 
   if (loading) {
@@ -398,15 +455,70 @@ export default function EditRecipe() {
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-chang-brown-700 mb-2">
-                  Image URL
+                  Recipe Image
                 </label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                  placeholder="https://example.com/image.jpg (optional)"
-                />
+                
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div className="mb-4">
+                    <div className="relative inline-block">
+                      <img 
+                        src={imagePreview} 
+                        alt="Recipe preview" 
+                        className="w-32 h-32 object-cover rounded-lg border border-chang-neutral-300"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Upload Button */}
+                <div className="flex items-center gap-4">
+                  <label className="cursor-pointer">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                    <div className="px-4 py-2 bg-chang-orange-600 text-white rounded-md hover:bg-chang-orange-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                      {uploading ? (
+                        <>
+                          <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          📁 Choose Image
+                        </>
+                      )}
+                    </div>
+                  </label>
+                  
+                  {/* Manual URL Input */}
+                  <span className="text-chang-brown-500">or</span>
+                  <input
+                    type="text"
+                    value={formData.image}
+                    onChange={(e) => {
+                      setFormData({...formData, image: e.target.value})
+                      setImagePreview(e.target.value)
+                    }}
+                    className="flex-1 px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
+                    placeholder="Or paste image URL here"
+                  />
+                </div>
+                
+                <p className="mt-2 text-xs text-chang-brown-500">
+                  Upload an image file (max 5MB) or paste an image URL. Supported formats: JPG, PNG, WebP, GIF.
+                </p>
               </div>
 
               <div className="md:col-span-2">

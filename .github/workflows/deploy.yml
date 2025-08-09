@@ -18,9 +18,7 @@ jobs:
   deploy:
     name: 🚀 Deploy to Digital Ocean
     runs-on: ubuntu-latest
-    environment: 
-      name: ${{ github.event.inputs.environment || 'production' }}
-      url: ${{ secrets.DEPLOYMENT_URL }}
+    environment: ${{ github.event.inputs.environment || 'production' }}
     
     steps:
     - name: 📥 Checkout repository

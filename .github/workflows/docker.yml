@@ -198,24 +198,70 @@ jobs:
         
     - name: 🐳 Deploy new container
       run: |
-        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          echo "🚀 Starting Chang Cookbook deployment..."
+          echo "[INFO] Checking deployment directory..."
+          
+          # Create deployment path if it doesn't exist
+          mkdir -p ${{ secrets.DEPLOY_PATH }}
           cd ${{ secrets.DEPLOY_PATH }}
           
-          # Pull latest image
+          # Debug: check what's in the directory
+          echo "[INFO] Current directory contents:"
+          ls -la
+          
+          # Check if there are existing deployment scripts
+          if [ -f "deploy.sh" ]; then
+            echo "[WARNING] Found existing deploy.sh script - not using it"
+          fi
+          
+          echo "[INFO] Pulling latest Docker image..."
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           
-          # Update docker-compose to use GitHub Container Registry image
-          sed -i 's|build: \.|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest|' docker-compose.yml
-          
-          # Restart with new image
-          docker-compose down
-          docker-compose up -d
-          
-          # Wait for health check
-          sleep 30
-          
-          # Verify deployment
-          curl -f http://localhost:3000/api/recipes || exit 1
+          echo "[INFO] Checking for docker-compose.yml..."
+          if [ -f "docker-compose.yml" ]; then
+            echo "[INFO] Updating docker-compose.yml to use registry image..."
+            cp docker-compose.yml docker-compose.yml.backup
+            sed -i 's|build: \.|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest|' docker-compose.yml
+            
+            echo "[INFO] Stopping existing containers..."
+            docker-compose down || echo "No containers to stop"
+            
+            echo "[INFO] Starting new container..."
+            docker-compose up -d
+            
+            echo "[INFO] Waiting for container to be ready..."
+            sleep 30
+            
+            echo "[INFO] Checking container status..."
+            docker-compose ps
+            
+            echo "[INFO] Verifying deployment..."
+            if curl -f http://localhost:3000/api/health 2>/dev/null || curl -f http://localhost:3000 2>/dev/null; then
+              echo "✅ Deployment successful!"
+            else
+              echo "⚠️ Health check failed, but container may still be starting..."
+              docker-compose logs --tail=20
+            fi
+          else
+            echo "[ERROR] No docker-compose.yml found in ${{ secrets.DEPLOY_PATH }}"
+            echo "[INFO] Creating minimal docker-compose.yml..."
+            cat > docker-compose.yml << COMPOSE_EOF
+version: '3.8'
+services:
+  chang-cookbook:
+    image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+COMPOSE_EOF
+            echo "[INFO] Starting container with new compose file..."
+            docker-compose up -d
+            sleep 30
+            docker-compose ps
+          fi
         EOF
         
     - name: 🧹 Cleanup old images

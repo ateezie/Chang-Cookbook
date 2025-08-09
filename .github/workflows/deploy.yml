@@ -25,21 +25,48 @@ jobs:
       uses: actions/checkout@v4
       
     - name: 🔐 Setup SSH
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+      run: |
+        # Create SSH directory
+        mkdir -p ~/.ssh
+        
+        # Write SSH key to file with proper formatting (handle base64 if needed)
+        echo "${{ secrets.DEPLOY_SSH_KEY }}" | tr ' ' '\n' > ~/.ssh/deploy_key_raw
+        
+        # Check if it's base64 encoded or already formatted
+        if grep -q "BEGIN OPENSSH PRIVATE KEY" ~/.ssh/deploy_key_raw; then
+          # Already properly formatted
+          cp ~/.ssh/deploy_key_raw ~/.ssh/deploy_key
+        else
+          # Try to decode from base64 or fix formatting
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----/&\n/' | sed 's/-----END OPENSSH PRIVATE KEY-----/\n&/' | sed 's/\([A-Za-z0-9+\/]\{64\}\)/&\n/g' > ~/.ssh/deploy_key
+        fi
+        
+        # Ensure proper line endings
+        sed -i 's/\r$//' ~/.ssh/deploy_key
+        
+        # Set proper permissions
+        chmod 600 ~/.ssh/deploy_key
+        
+        # Debug: check key format
+        echo "SSH key format check:"
+        head -1 ~/.ssh/deploy_key
+        tail -1 ~/.ssh/deploy_key
+        
+        # Add host to known_hosts to avoid prompts
+        ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
         
     - name: 🔍 Verify server connection
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "echo 'Connection successful'"
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "echo 'Connection successful'"
         
     - name: 📤 Deploy application
       run: |
         # Create deployment directory if it doesn't exist
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ${{ secrets.DEPLOY_PATH }}"
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ${{ secrets.DEPLOY_PATH }}"
         
         # Sync files to server (excluding sensitive files)
         rsync -avz --delete \
+          -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
           --exclude '.git' \
           --exclude 'node_modules' \
           --exclude '.env*' \
@@ -50,7 +77,7 @@ jobs:
           
     - name: 🔧 Setup environment and deploy
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           cd ${{ secrets.DEPLOY_PATH }}
           
           # Create environment file from secrets
@@ -83,7 +110,7 @@ jobs:
         
     - name: 📊 Post-deployment cleanup
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           # Clean up old Docker images
           docker system prune -f
           

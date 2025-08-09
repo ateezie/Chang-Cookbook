@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository_owner }}/chang-cookbook
 
 jobs:
   build-and-push:
@@ -67,6 +67,18 @@ jobs:
     - name: 📥 Checkout repository
       uses: actions/checkout@v4
       
+    - name: 🔐 Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🔍 Verify image exists
+      run: |
+        echo "Checking if image exists: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+        docker manifest inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest || exit 1
+        
     - name: 🔍 Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:

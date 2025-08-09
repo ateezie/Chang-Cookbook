@@ -33,6 +33,9 @@ export default function Hero({
   const recipeName = featuredRecipe?.title || "Featured Recipe"
   const recipeRating = featuredRecipe?.rating || 4.5
   const recipeLink = featuredRecipe ? `/recipes/${featuredRecipe.id}` : "/recipes"
+  
+  // Check if this is a locally uploaded image
+  const isLocalUpload = heroImage.startsWith('/images/recipes/') || heroImage.startsWith('/images/chefs/')
   return (
     <section className={`relative bg-gradient-to-r from-chang-orange-50 to-chang-orange-100 overflow-hidden ${className}`}>
       {/* Background Pattern */}
@@ -83,6 +86,8 @@ export default function Hero({
                 className="w-full h-auto object-cover aspect-video"
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                // Disable optimization for local uploads to prevent Next.js image optimization errors
+                unoptimized={isLocalUpload}
               />
               
               {/* Image Overlay */}

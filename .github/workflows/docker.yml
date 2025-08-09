@@ -165,13 +165,36 @@ jobs:
     
     steps:
     - name: 🔐 Setup SSH
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+      run: |
+        # Create SSH directory
+        mkdir -p ~/.ssh
+        
+        # Fix SSH key formatting - GitHub secrets lose line breaks
+        echo "Formatting SSH private key from secret..."
+        
+        # Extract the base64 content between the markers
+        KEY_CONTENT='${{ secrets.DEPLOY_SSH_KEY }}'
+        
+        # Remove header/footer and get just the base64 content
+        BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----//' | tr -d ' \n\r')
+        
+        # Create properly formatted private key with 64-char line breaks
+        {
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----"
+          echo "$BASE64_CONTENT" | fold -w 64
+          echo "-----END OPENSSH PRIVATE KEY-----"
+        } > ~/.ssh/deploy_key
+        
+        # Ensure proper line endings and permissions
+        sed -i 's/\r$//' ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+        
+        # Add host to known_hosts
+        ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts || echo "ssh-keyscan failed, continuing anyway"
         
     - name: 🐳 Deploy new container
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           cd ${{ secrets.DEPLOY_PATH }}
           
           # Pull latest image
@@ -193,7 +216,7 @@ jobs:
         
     - name: 🧹 Cleanup old images
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           # Remove old images (keep last 3)
           docker images ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}" | tail -n +4 | awk '{print $2}' | xargs -r docker rmi
           

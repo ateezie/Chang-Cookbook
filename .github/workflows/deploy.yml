@@ -52,9 +52,17 @@ jobs:
         head -1 ~/.ssh/deploy_key
         tail -1 ~/.ssh/deploy_key
         
-        # Debug environment variables
-        echo "DEPLOY_HOST value: [${{ secrets.DEPLOY_HOST }}]"
-        echo "DEPLOY_USER value: [${{ secrets.DEPLOY_USER }}]"
+        # Debug all secrets to identify naming issues
+        echo "=== Available Secret Values ==="
+        echo "DEPLOY_HOST: [${{ secrets.DEPLOY_HOST }}]"
+        echo "DEPLOY_USER: [${{ secrets.DEPLOY_USER }}]" 
+        echo "DEPLOY_PATH: [${{ secrets.DEPLOY_PATH }}]"
+        echo "NEXTAUTH_URL: [${{ secrets.NEXTAUTH_URL }}]"
+        echo "DATABASE_URL: [${{ secrets.DATABASE_URL }}]"
+        echo "ADMIN_EMAIL: [${{ secrets.ADMIN_EMAIL }}]"
+        echo "JWT_SECRET length: [${#{{ secrets.JWT_SECRET }}}]"
+        echo "DEPLOY_SSH_KEY starts with: [$(echo '${{ secrets.DEPLOY_SSH_KEY }}' | head -c 50)]"
+        echo "================================"
         
         # Add host to known_hosts to avoid prompts
         HOST_IP="${{ secrets.DEPLOY_HOST }}"
@@ -63,7 +71,26 @@ jobs:
         
     - name: 🔍 Verify server connection
       run: |
-        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "echo 'Connection successful'"
+        # Debug: Show what the SSH command will be
+        USER="${{ secrets.DEPLOY_USER }}"
+        HOST="${{ secrets.DEPLOY_HOST }}"
+        echo "SSH connection attempt:"
+        echo "User: [$USER]"
+        echo "Host: [$HOST]"
+        echo "Full command: ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no $USER@$HOST"
+        
+        # Verify secrets are not empty
+        if [ -z "$USER" ]; then
+          echo "ERROR: DEPLOY_USER secret is empty or not set"
+          exit 1
+        fi
+        if [ -z "$HOST" ]; then
+          echo "ERROR: DEPLOY_HOST secret is empty or not set"
+          exit 1
+        fi
+        
+        # Attempt SSH connection
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$USER@$HOST" "echo 'Connection successful'"
         
     - name: 📤 Deploy application
       run: |

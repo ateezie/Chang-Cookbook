@@ -29,17 +29,21 @@ jobs:
         # Create SSH directory
         mkdir -p ~/.ssh
         
-        # Write SSH key to file with proper formatting (handle base64 if needed)
-        echo "${{ secrets.DEPLOY_SSH_KEY }}" | tr ' ' '\n' > ~/.ssh/deploy_key_raw
+        # Fix SSH key formatting - GitHub secrets lose line breaks
+        echo "Formatting SSH private key from secret..."
         
-        # Check if it's base64 encoded or already formatted
-        if grep -q "BEGIN OPENSSH PRIVATE KEY" ~/.ssh/deploy_key_raw; then
-          # Already properly formatted
-          cp ~/.ssh/deploy_key_raw ~/.ssh/deploy_key
-        else
-          # Try to decode from base64 or fix formatting
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----/&\n/' | sed 's/-----END OPENSSH PRIVATE KEY-----/\n&/' | sed 's/\([A-Za-z0-9+\/]\{64\}\)/&\n/g' > ~/.ssh/deploy_key
-        fi
+        # Extract the base64 content between the markers
+        KEY_CONTENT='${{ secrets.DEPLOY_SSH_KEY }}'
+        
+        # Remove header/footer and get just the base64 content
+        BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----//' | tr -d ' \n\r')
+        
+        # Create properly formatted private key with 64-char line breaks
+        {
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----"
+          echo "$BASE64_CONTENT" | fold -w 64
+          echo "-----END OPENSSH PRIVATE KEY-----"
+        } > ~/.ssh/deploy_key
         
         # Ensure proper line endings
         sed -i 's/\r$//' ~/.ssh/deploy_key

@@ -265,9 +265,15 @@ COMPOSE_EOF
           if curl -f http://localhost:3000 2>/dev/null; then
             echo "✅ Deployment successful - Chang Cookbook is running!"
           else
-            echo "⚠️ Health check failed, checking logs..."
-            docker-compose logs --tail=20 chang-cookbook
-            echo "Container may still be starting up..."
+            echo "❌ Health check failed, debugging container..."
+            echo "[DEBUG] Container logs:"
+            docker-compose logs --tail=50 chang-cookbook
+            echo "[DEBUG] Container inspect:"
+            docker inspect chang-cookbook || echo "Container inspect failed"
+            echo "[DEBUG] Network connectivity:"
+            docker-compose exec -T chang-cookbook curl -f http://localhost:3000 || echo "Internal connectivity failed"
+            echo "Container startup issues detected - check logs above"
+            exit 1
           fi
         EOF
         

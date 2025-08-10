@@ -227,8 +227,20 @@ jobs:
           echo "    restart: unless-stopped" >> docker-compose.yml
           echo "    pull_policy: always" >> docker-compose.yml
           
-          echo "[INFO] Deploying from registry image (no build)..."
-          timeout 300 docker compose pull --quiet || echo "Pull completed or timed out"
+          echo "[INFO] Authenticating with GitHub Container Registry..."
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+          echo "[INFO] Deploying from registry image with fallback..."
+          # Try to pull from registry, if fails use existing working image
+          if timeout 300 docker compose pull --quiet; then
+            echo "✅ Registry pull successful"
+          else
+            echo "⚠️ Registry pull failed, using existing working image"
+            if docker images chang-cookbook:working >/dev/null 2>&1; then
+              docker tag chang-cookbook:working ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+              echo "✅ Tagged existing working image as latest"
+            fi
+          fi
           docker compose up -d
           
           echo "[INFO] Quick deployment verification..."

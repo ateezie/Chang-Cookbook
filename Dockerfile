@@ -14,14 +14,20 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
-RUN npm ci && npm cache clean --force
+# Use npm ci with better caching and combine operations
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --only=production && \
+    npm cache clean --force
 
-# Install dev dependencies for build stage
+# Install dev dependencies for build stage  
 FROM base AS dev-deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci --include=dev && npm cache clean --force
+# Use cache mount for dev dependencies too
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci && \
+    npm cache clean --force
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -41,18 +47,12 @@ RUN npx prisma generate
 
 # Optimize build for different architectures
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-      echo "Building for ARM64 - using optimized settings" && \
       NODE_OPTIONS="--max-old-space-size=2048" npm run build; \
     else \
-      npm run build; \
-    fi
-
-# Debug: List what's in the build output
-RUN echo "=== Contents of /app ===" && ls -la /app
-RUN echo "=== Contents of .next ===" && ls -la .next/ || echo "No .next directory"  
-RUN echo "=== Contents of public ===" && ls -la public/ || echo "No public directory"
-RUN echo "=== Public directory check ===" && [ -d "public" ] && echo "Public directory exists" || echo "Public directory missing"
-RUN echo "=== Creating public if missing ===" && mkdir -p public
+      NODE_OPTIONS="--max-old-space-size=4096" npm run build; \
+    fi && \
+    # Verify build completed successfully \
+    [ -d ".next" ] && echo "✅ Build completed successfully" || exit 1
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -68,17 +68,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # For Next.js standalone builds, public files need to be copied separately  
-# Create public directory structure first with proper permissions
 RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
-# Copy public directory contents with verbose logging
 COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
-# Verify critical files are present
-RUN echo "=== Verifying public files ===" && \
-    ls -la ./public/ && \
-    echo "=== Logo files ===" && \
-    ls -la ./public/images/logo/ 2>/dev/null || echo "Logo directory missing" && \
-    echo "=== OG files ===" && \
-    ls -la ./public/images/og/ 2>/dev/null || echo "OG directory missing"
+# Quick verification without verbose output
+RUN [ -f "./public/images/logo/chang-logo.svg" ] && echo "✅ Assets verified" || echo "⚠️ Some assets missing"
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

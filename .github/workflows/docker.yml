@@ -63,10 +63,19 @@ jobs:
           --allow-insecure-entitlement=security.insecure
         config-inline: |
           [worker.oci]
-            max-parallelism = 2
-          [worker.containerd]
-            max-parallelism = 2
+            max-parallelism = 4
+          [worker.containerd] 
+            max-parallelism = 4
+          [registry."docker.io"]
+            mirrors = ["mirror.gcr.io"]
       
+    - name: 🔥 Pre-warm build cache
+      run: |
+        # Pull existing images for better cache utilization
+        docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest || true
+        docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-amd64 || true
+        echo "Cache pre-warming completed"
+    
     - name: ⏱️ Record build start time
       run: echo "BUILD_START=$(date +%s)" >> $GITHUB_ENV
     
@@ -81,12 +90,15 @@ jobs:
         cache-from: |
           type=gha
           type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-amd64
+          type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         cache-to: |
           type=gha,mode=max
           type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-amd64,mode=max
         build-args: |
           BUILDKIT_INLINE_CACHE=1
           NODE_VERSION=20
+        provenance: false
+        sbom: false
           
     - name: 🐳 Build ARM64 image (Background - Weekly)
       if: github.event_name != 'pull_request' && (contains(github.event.head_commit.message, '[arm64]') || github.event.schedule)
@@ -115,15 +127,25 @@ jobs:
         BUILD_MINUTES=$((BUILD_TIME / 60))
         BUILD_SECONDS=$((BUILD_TIME % 60))
         
-        echo "### ⏱️ Build Performance"
+        echo "### ⏱️ Build Performance (AMD64 Optimized)"
         echo "🕐 Total build time: ${BUILD_MINUTES}m ${BUILD_SECONDS}s"
         
-        if [ "$BUILD_TIME" -gt 600 ]; then
-          echo "⚠️ Build took over 10 minutes - consider optimizations"
+        if [ "$BUILD_TIME" -gt 900 ]; then
+          echo "🐌 Build took over 15 minutes - needs optimization"
+        elif [ "$BUILD_TIME" -gt 600 ]; then
+          echo "⚠️ Build took over 10 minutes - checking cache efficiency"
         elif [ "$BUILD_TIME" -gt 300 ]; then
-          echo "✅ Build time is reasonable (under 10 minutes)"
+          echo "✅ Build time is good (5-10 minutes)"
         else
           echo "🚀 Excellent build time (under 5 minutes)!"
+        fi
+        
+        # Performance analysis
+        if [ "$BUILD_TIME" -gt 300 ]; then
+          echo "💡 Performance tips:"
+          echo "- Cache hit rate may be low"
+          echo "- Consider using Fast Deploy workflow for urgent updates"
+          echo "- Check if dependencies changed significantly"
         fi
         
   security-scan:

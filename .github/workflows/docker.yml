@@ -214,7 +214,7 @@ jobs:
           fi
           
           echo "[INFO] Creating streamlined docker-compose.yml..."
-          cat > docker-compose.yml << 'COMPOSE_EOF'
+          cat > docker-compose.yml << COMPOSEEOF
 services:
   chang-cookbook:
     image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
@@ -227,7 +227,7 @@ services:
       - ./data:/app/data
     restart: unless-stopped
     pull_policy: always
-COMPOSE_EOF
+COMPOSEEOF
           
           echo "[INFO] Deploying from registry image (no build)..."
           timeout 300 docker compose pull --quiet || echo "Pull completed or timed out"

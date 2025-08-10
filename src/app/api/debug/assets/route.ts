@@ -77,6 +77,7 @@ export async function GET() {
       },
       criticalFiles: fileStatus,
       timestamp: new Date().toISOString(),
+      note: 'Server connectivity restored - debugging static files',
       environment: process.env.NODE_ENV,
       platform: process.platform
     })

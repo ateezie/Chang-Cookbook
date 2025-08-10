@@ -214,20 +214,18 @@ jobs:
           fi
           
           echo "[INFO] Creating streamlined docker-compose.yml..."
-          cat > docker-compose.yml << COMPOSEEOF
-services:
-  chang-cookbook:
-    image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-    container_name: chang-cookbook
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./data:/app/data
-    restart: unless-stopped
-    pull_policy: always
-COMPOSEEOF
+          echo "services:" > docker-compose.yml
+          echo "  chang-cookbook:" >> docker-compose.yml
+          echo "    image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> docker-compose.yml
+          echo "    container_name: chang-cookbook" >> docker-compose.yml
+          echo "    ports:" >> docker-compose.yml
+          echo "      - \"3000:3000\"" >> docker-compose.yml
+          echo "    environment:" >> docker-compose.yml
+          echo "      - NODE_ENV=production" >> docker-compose.yml
+          echo "    volumes:" >> docker-compose.yml
+          echo "      - ./data:/app/data" >> docker-compose.yml
+          echo "    restart: unless-stopped" >> docker-compose.yml
+          echo "    pull_policy: always" >> docker-compose.yml
           
           echo "[INFO] Deploying from registry image (no build)..."
           timeout 300 docker compose pull --quiet || echo "Pull completed or timed out"

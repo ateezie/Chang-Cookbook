@@ -210,16 +210,21 @@ jobs:
           echo "[INFO] Current directory contents:"
           ls -la
           
-          # CRITICAL: Remove any existing deployment scripts that might interfere
-          if [ -f "deploy.sh" ]; then
-            echo "[WARNING] Removing existing deploy.sh script to prevent conflicts"
-            mv deploy.sh deploy.sh.disabled
-          fi
+          # NUCLEAR OPTION: Remove entire deployment directory and recreate
+          echo "[CRITICAL] Removing entire deployment directory to prevent source builds..."
+          cd /
+          rm -rf ${{ secrets.DEPLOY_PATH }}
+          mkdir -p ${{ secrets.DEPLOY_PATH }}
+          cd ${{ secrets.DEPLOY_PATH }}
           
-          # Stop any existing containers from previous deployments
+          # Stop any existing containers from previous deployments  
           echo "[INFO] Stopping any existing Chang Cookbook containers..."
           docker stop $(docker ps -q --filter "name=chang-cookbook") 2>/dev/null || echo "No existing containers to stop"
           docker rm $(docker ps -aq --filter "name=chang-cookbook") 2>/dev/null || echo "No existing containers to remove"
+          
+          # Clean up any existing images to force fresh pull
+          echo "[INFO] Removing local Docker images to force registry pull..."
+          docker rmi $(docker images "*chang-cookbook*" -q) 2>/dev/null || echo "No local images to remove"
           
           echo "[INFO] Pulling latest Docker image..."
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

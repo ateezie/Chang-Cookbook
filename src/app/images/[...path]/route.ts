@@ -55,7 +55,7 @@ export async function GET(
     
     console.log(`Serving static file: ${filePath} (${mimeType}, ${fileBuffer.length} bytes)`)
     
-    return new NextResponse(fileBuffer, { headers })
+    return new Response(new Uint8Array(fileBuffer), { headers })
     
   } catch (error) {
     console.error('Error serving static file:', error)

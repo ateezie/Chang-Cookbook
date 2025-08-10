@@ -1,6 +1,11 @@
 # Chang Cookbook - Production Dockerfile
 FROM node:20-alpine AS base
 
+# Build arguments for optimization
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
+ARG NODE_VERSION=20
+
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -34,8 +39,13 @@ ENV NEXTAUTH_URL="http://localhost:3000"
 # Generate Prisma Client
 RUN npx prisma generate
 
-# Build the application
-RUN npm run build
+# Optimize build for different architectures
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+      echo "Building for ARM64 - using optimized settings" && \
+      NODE_OPTIONS="--max-old-space-size=2048" npm run build; \
+    else \
+      npm run build; \
+    fi
 
 # Debug: List what's in the build output
 RUN echo "=== Contents of /app ===" && ls -la /app

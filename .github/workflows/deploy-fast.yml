@@ -1,0 +1,128 @@
+name: 🚀 Fast Deploy (AMD64 Only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip CI tests for faster deployment'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/chang-cookbook
+
+jobs:
+  fast-deploy:
+    name: 🚀 Fast Production Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔐 Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🏗️ Set up Docker Buildx (Fast Mode)
+      uses: docker/setup-buildx-action@v3
+      with:
+        driver-opts: |
+          network=host
+        buildkitd-flags: |
+          --allow-insecure-entitlement=network.host
+        config-inline: |
+          [worker.oci]
+            max-parallelism = 4
+            
+    - name: ⏱️ Record build start time
+      run: echo "BUILD_START=$(date +%s)" >> $GITHUB_ENV
+    
+    - name: 🐳 Build and push (AMD64 only - FAST)
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fast-deploy-$(date +%s)
+        cache-from: |
+          type=gha
+          type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-amd64
+        cache-to: |
+          type=gha,mode=max
+        build-args: |
+          BUILDKIT_INLINE_CACHE=1
+          NODE_VERSION=20
+          
+    - name: ⏱️ Build performance summary
+      run: |
+        BUILD_END=$(date +%s)
+        BUILD_TIME=$((BUILD_END - BUILD_START))
+        BUILD_MINUTES=$((BUILD_TIME / 60))
+        BUILD_SECONDS=$((BUILD_TIME % 60))
+        
+        echo "### ⚡ Fast Deploy Performance"
+        echo "🕐 Total build time: ${BUILD_MINUTES}m ${BUILD_SECONDS}s"
+        echo "🎯 Target: AMD64 only for maximum speed"
+        
+        if [ "$BUILD_TIME" -gt 300 ]; then
+          echo "⚠️ Build took over 5 minutes - still optimizing"
+        else
+          echo "🚀 Excellent build time (under 5 minutes)!"
+        fi
+        
+    - name: 🔐 Setup SSH for fast deploy
+      run: |
+        mkdir -p ~/.ssh
+        
+        # Extract and format SSH key
+        KEY_CONTENT='${{ secrets.DEPLOY_SSH_KEY }}'
+        BASE64_CONTENT=$(echo "$KEY_CONTENT" | sed 's/.*-----BEGIN OPENSSH PRIVATE KEY-----//' | sed 's/-----END OPENSSH PRIVATE KEY-----.*//')
+        
+        {
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----"
+          echo "$BASE64_CONTENT" | fold -w 64
+          echo "-----END OPENSSH PRIVATE KEY-----"
+        } > ~/.ssh/deploy_key
+        
+        chmod 600 ~/.ssh/deploy_key
+        ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts || true
+        
+    - name: 🚀 Deploy to production
+      run: |
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=10 -o ConnectTimeout=30 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          set -e
+          
+          echo "🚀 Starting FAST deployment (AMD64 only)..."
+          
+          DEPLOY_DIR="/opt/chang-cookbook-registry"
+          cd "$DEPLOY_DIR"
+          
+          echo "[INFO] Stopping existing containers..."
+          docker compose down --timeout 5 || true
+          
+          echo "[INFO] Authenticating with registry..."
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+          echo "[INFO] Fast pull and deploy..."
+          docker compose pull --quiet
+          docker compose up -d
+          
+          echo "✅ Fast deployment completed!"
+        EOF
+        
+    - name: 🔗 Deployment summary
+      run: |
+        echo "### 🚀 Fast Deployment Complete"
+        echo "✅ Site: https://cook.alexthip.com"
+        echo "⚡ Build optimized for AMD64 only"
+        echo "🎯 Deployment time: < 3 minutes target"

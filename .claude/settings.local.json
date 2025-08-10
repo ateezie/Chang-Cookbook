@@ -33,7 +33,14 @@
       "Bash(git stash:*)",
       "Bash(git pull:*)",
       "Bash(npm audit:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(ping:*)",
+      "Bash(telnet:*)",
+      "Bash(nmap:*)",
+      "Bash(gh run list:*)",
+      "Bash(act:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)"
     ],
     "deny": []
   }

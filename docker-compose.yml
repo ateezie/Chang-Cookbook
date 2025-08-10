@@ -1,6 +1,11 @@
 services:
   chang-cookbook:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_VERSION=20
+    container_name: chang-cookbook
     user: "0:0"
     ports:
       - "3000:3000"

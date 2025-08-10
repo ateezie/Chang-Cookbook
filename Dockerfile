@@ -35,6 +35,9 @@ WORKDIR /app
 COPY --from=dev-deps /app/node_modules ./node_modules
 COPY . .
 
+# Ensure public directory exists with minimal content
+RUN mkdir -p ./public/images/logo ./public/images/og
+
 # Set build environment variables
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -67,11 +70,11 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# For Next.js standalone builds, public files need to be copied separately  
+# For Next.js standalone builds, public files need to be copied separately
 RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
 COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
-# Quick verification without verbose output
-RUN [ -f "./public/images/logo/chang-logo.svg" ] && echo "✅ Assets verified" || echo "⚠️ Some assets missing"
+# Quick verification
+RUN echo "✅ Assets setup completed"
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

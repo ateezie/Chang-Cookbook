@@ -36,7 +36,7 @@ export async function GET() {
       'images/og/default.jpg'
     ]
     
-    const fileStatus = {}
+    const fileStatus: Record<string, { exists: boolean; size?: number; modified?: string }> = {}
     for (const file of criticalFiles) {
       const filePath = path.join(publicPath, file)
       try {
@@ -74,7 +74,7 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({
       error: 'Failed to check assets',
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Unknown error occurred',
       timestamp: new Date().toISOString()
     }, { status: 500 })
   }

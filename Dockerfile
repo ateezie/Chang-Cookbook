@@ -34,20 +34,12 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=dev-deps /app/node_modules ./node_modules
 
-# Copy source files first
-COPY package*.json ./
-COPY src/ ./src/
-COPY prisma/ ./prisma/
-COPY scripts/ ./scripts/ 
-COPY init-db.js ./init-db.js
-COPY next.config.js ./
-COPY tailwind.config.js ./
-COPY tsconfig.json ./
-COPY postcss.config.js ./
+# Copy everything and then verify public directory
+COPY . .
 
-# Copy public directory explicitly and verify
-COPY public/ ./public/
+# Verify public directory exists and has content
 RUN echo "=== Verifying public files in builder stage ===" && \
+    ls -la . | grep public && \
     ls -la ./public/ && \
     ls -la ./public/images/ && \
     ls -la ./public/images/logo/ && \

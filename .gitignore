@@ -80,7 +80,7 @@ pids
 
 # Gatsby files
 .cache/
-public
+# public - REMOVED: Next.js needs public directory
 
 # Vuepress build output
 .vuepress/dist
@@ -136,10 +136,10 @@ prisma/migrations/dev.db*
 # HTML import directory (optional - uncomment if you don't want to track HTML files)
 # /recipes-html/
 
-# Logo uploads (users will add their own)
-/public/images/logo/chang-logo.*
+# Logo uploads - KEEPING for production deployment  
+#!/public/images/logo/chang-logo.* - REMOVED: Need logos in CI/CD
 !/public/images/logo/.gitkeep
 
-# Recipe images (users will add their own)
-/public/images/recipes/
+# Recipe images - KEEPING for production deployment
+#!/public/images/recipes/ - REMOVED: Need recipe images in CI/CD  
 !/public/images/recipes/.gitkeep

@@ -33,10 +33,26 @@ RUN --mount=type=cache,target=/root/.npm \
 FROM base AS builder
 WORKDIR /app
 COPY --from=dev-deps /app/node_modules ./node_modules
-COPY . .
 
-# Ensure public directory exists with minimal content
-RUN mkdir -p ./public/images/logo ./public/images/og
+# Copy source files first
+COPY package*.json ./
+COPY src/ ./src/
+COPY prisma/ ./prisma/
+COPY scripts/ ./scripts/ 
+COPY init-db.js ./init-db.js
+COPY next.config.js ./
+COPY tailwind.config.js ./
+COPY tsconfig.json ./
+COPY postcss.config.js ./
+
+# Copy public directory explicitly and verify
+COPY public/ ./public/
+RUN echo "=== Verifying public files in builder stage ===" && \
+    ls -la ./public/ && \
+    ls -la ./public/images/ && \
+    ls -la ./public/images/logo/ && \
+    ls -la ./public/images/og/ && \
+    ls -la ./public/images/recipes/ | head -5
 
 # Set build environment variables
 ENV NODE_ENV=production
@@ -72,9 +88,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # For Next.js standalone builds, public files need to be copied separately
 RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
+# Copy public directory with explicit verification
 COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
-# Quick verification
-RUN echo "✅ Assets setup completed"
+# Verify files were copied
+RUN echo "=== Verifying public files in runner stage ===" && \
+    ls -la ./public/ && \
+    ls -la ./public/images/logo/ && \
+    ls -la ./public/images/og/ && \
+    ls -la ./public/images/recipes/ | head -3 && \
+    echo "✅ Assets verification completed"
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma
@@ -85,8 +107,9 @@ COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy scripts for database setup
+# Copy scripts and init files
 COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/init-db.js ./init-db.js
 
 # Create uploads directory
 RUN mkdir -p ./public/uploads
@@ -95,9 +118,6 @@ RUN chown -R nextjs:nodejs ./public/uploads
 # Create database directory with proper permissions
 RUN mkdir -p ./data
 RUN chown -R nextjs:nodejs ./data
-
-# Copy database initialization script
-COPY --from=builder /app/init-db.js ./init-db.js
 
 # Install su-exec for user switching
 RUN apk add --no-cache su-exec

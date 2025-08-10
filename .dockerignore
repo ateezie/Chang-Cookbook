@@ -32,3 +32,15 @@ LOGO_INTEGRATION_GUIDE.md
 RECIPE_QUICK_START.md
 UNSPLASH_SETUP.md
 recipe-website-prompt.md
+CI_CD_STRATEGY.md
+GITHUB_ACTIONS_SETUP.md
+
+# CI/CD files (not needed in container)
+.github/
+validate-recipe.js
+import-html-recipes.js
+
+# Large dev files
+data/backups/
+*.tar.gz
+*.zip

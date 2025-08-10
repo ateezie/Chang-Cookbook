@@ -40,7 +40,9 @@
       "Bash(gh run list:*)",
       "Bash(act:*)",
       "Bash(docker:*)",
-      "Bash(docker-compose:*)"
+      "Bash(docker-compose:*)",
+      "Bash(where gh)",
+      "WebFetch(domain:cook.alexthip.com)"
     ],
     "deny": []
   }

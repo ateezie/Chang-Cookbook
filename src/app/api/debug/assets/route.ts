@@ -53,7 +53,7 @@ export async function GET() {
     
     // Check working directory and server structure
     const workingDir = process.cwd()
-    const serverStructure = await fs.readdir(workingDir).catch(() => [])
+    const serverStructure: string[] = await fs.readdir(workingDir).catch(() => [])
     
     return NextResponse.json({
       status: 'success',

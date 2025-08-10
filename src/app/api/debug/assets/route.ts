@@ -51,8 +51,18 @@ export async function GET() {
       }
     }
     
+    // Check working directory and server structure
+    const workingDir = process.cwd()
+    const serverStructure = await fs.readdir(workingDir).catch(() => [])
+    
     return NextResponse.json({
       status: 'success',
+      server: {
+        workingDirectory: workingDir,
+        filesInRoot: serverStructure,
+        hasServerJs: serverStructure.includes('server.js'),
+        hasPublicDir: serverStructure.includes('public')
+      },
       public: {
         path: publicPath,
         exists: publicExists

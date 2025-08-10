@@ -74,21 +74,27 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built application
+# Copy built application (standalone mode)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# For Next.js standalone builds, public files need to be copied separately
-RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
-# Copy public directory with explicit verification
-COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
-# Verify files were copied
-RUN echo "=== Verifying public files in runner stage ===" && \
+# For Next.js standalone builds, public files must be in the root directory alongside server.js
+# This is critical - standalone mode expects public files at the same level as server.js
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Verify the public directory structure for standalone mode
+RUN echo "=== Verifying Next.js standalone public directory structure ===" && \
+    ls -la . | grep -E "(server.js|public)" && \
+    echo "=== Public directory contents ===" && \
     ls -la ./public/ && \
+    ls -la ./public/images/ && \
+    echo "=== Logo files ===" && \
     ls -la ./public/images/logo/ && \
+    echo "=== OG files ===" && \
     ls -la ./public/images/og/ && \
+    echo "=== Recipe images (sample) ===" && \
     ls -la ./public/images/recipes/ | head -3 && \
-    echo "✅ Assets verification completed"
+    echo "✅ Next.js standalone assets setup completed"
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

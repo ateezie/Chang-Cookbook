@@ -44,3 +44,9 @@ import-html-recipes.js
 data/backups/
 *.tar.gz
 *.zip
+
+# Essential files to KEEP (override other ignores)
+!public/images/logo/*
+!public/images/og/*
+!public/images/recipes/*
+!public/.gitkeep

@@ -5,7 +5,8 @@ const siteConfig = {
   name: 'Chang Cookbook',
   description: 'Discover delicious recipes for every occasion. From quick weeknight dinners to special treats, find your next favorite dish with our tested and loved recipes.',
   url: 'https://cook.alexthip.com',
-  ogImage: '/images/og/default.jpg',
+  ogImage: '/images/og/default.svg',
+  ogImageAlt: '/images/og/default.jpg', // Fallback for systems that don't support SVG
   creator: '@changcookbook',
   keywords: ['recipes', 'cooking', 'food', 'dinner', 'desserts', 'healthy', 'quick meals', 'italian', 'asian', 'mediterranean']
 }
@@ -57,6 +58,13 @@ export function generateSiteMetadata(): Metadata {
       images: [
         {
           url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} - Delicious Recipes`,
+        },
+        // Fallback image for better compatibility
+        {
+          url: siteConfig.ogImageAlt,
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} - Delicious Recipes`,

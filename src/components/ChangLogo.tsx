@@ -9,7 +9,8 @@ interface ChangLogoProps {
 }
 
 export default function ChangLogo({ size = 'medium', className = '' }: ChangLogoProps) {
-  const [hasError, setHasError] = useState(false)
+  const [currentLogoIndex, setCurrentLogoIndex] = useState(0)
+  const [hasExhaustedSources, setHasExhaustedSources] = useState(false)
   
   const sizeClasses = {
     small: 'w-8 h-8',
@@ -23,15 +24,30 @@ export default function ChangLogo({ size = 'medium', className = '' }: ChangLogo
     large: 64
   }
 
+  // Multiple logo sources to try in order
+  const logoSources = [
+    '/images/logo/chang-logo.svg',
+    '/images/logo/chang-logo.png', 
+    '/images/logo/chang-logo-small.png'
+  ]
+
   // Fallback placeholder logo
   const PlaceholderLogo = () => (
     <div className="w-full h-full rounded-full bg-gradient-to-br from-chang-orange-400 to-chang-orange-600 border-2 border-chang-brown-700 flex items-center justify-center shadow-lg">
-      <span className="text-white font-bold text-xl">👨‍🍳</span>
+      <span className="text-white font-bold text-xl animate-pulse">👨‍🍳</span>
     </div>
   )
 
-  // Try to load your uploaded logo first, fallback to placeholder
-  if (hasError) {
+  const handleImageError = () => {
+    if (currentLogoIndex < logoSources.length - 1) {
+      setCurrentLogoIndex(currentLogoIndex + 1)
+    } else {
+      setHasExhaustedSources(true)
+    }
+  }
+
+  // Show placeholder if all sources failed
+  if (hasExhaustedSources) {
     return (
       <div className={`${sizeClasses[size]} ${className}`}>
         <PlaceholderLogo />
@@ -41,14 +57,13 @@ export default function ChangLogo({ size = 'medium', className = '' }: ChangLogo
 
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
-      {/* Your logo - will automatically use your uploaded file */}
       <Image
-        src="/images/logo/chang-logo.svg"
+        src={logoSources[currentLogoIndex]}
         alt="Chang Cookbook"
         width={sizePixels[size]}
         height={sizePixels[size]}
         className="w-full h-full object-contain"
-        onError={() => setHasError(true)}
+        onError={handleImageError}
         priority={size === 'medium'} // Prioritize header logo
       />
     </div>

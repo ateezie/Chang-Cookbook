@@ -68,10 +68,17 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # For Next.js standalone builds, public files need to be copied separately  
-# Create public directory structure first
+# Create public directory structure first with proper permissions
 RUN mkdir -p ./public/images/recipes ./public/images/chefs ./public/images/logo ./public/images/og
-# Try copying public directory with different approach
+# Copy public directory contents with verbose logging
 COPY --from=builder --chown=nextjs:nodejs /app/public/. ./public/
+# Verify critical files are present
+RUN echo "=== Verifying public files ===" && \
+    ls -la ./public/ && \
+    echo "=== Logo files ===" && \
+    ls -la ./public/images/logo/ 2>/dev/null || echo "Logo directory missing" && \
+    echo "=== OG files ===" && \
+    ls -la ./public/images/og/ 2>/dev/null || echo "OG directory missing"
 
 # Copy Prisma files
 COPY --from=builder /app/prisma ./prisma

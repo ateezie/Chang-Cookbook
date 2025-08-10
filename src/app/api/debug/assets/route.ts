@@ -1,0 +1,87 @@
+import { NextResponse } from 'next/server'
+import { promises as fs } from 'fs'
+import path from 'path'
+
+// Debug endpoint to check if assets are properly available
+export async function GET() {
+  try {
+    const publicPath = path.join(process.cwd(), 'public')
+    
+    // Check if public directory exists
+    const publicExists = await fs.access(publicPath).then(() => true).catch(() => false)
+    
+    if (!publicExists) {
+      return NextResponse.json({
+        error: 'Public directory not found',
+        publicPath,
+        timestamp: new Date().toISOString()
+      }, { status: 404 })
+    }
+    
+    // Check logo files
+    const logoPath = path.join(publicPath, 'images', 'logo')
+    const logoFiles = await fs.readdir(logoPath).catch(() => [])
+    
+    // Check OG files  
+    const ogPath = path.join(publicPath, 'images', 'og')
+    const ogFiles = await fs.readdir(ogPath).catch(() => [])
+    
+    // Check if specific files exist
+    const criticalFiles = [
+      'images/logo/chang-logo.svg',
+      'images/logo/chang-logo.png', 
+      'images/logo/chang-logo-small.png',
+      'images/logo/chang-logo-favicon.png',
+      'images/og/default.svg',
+      'images/og/default.jpg'
+    ]
+    
+    const fileStatus = {}
+    for (const file of criticalFiles) {
+      const filePath = path.join(publicPath, file)
+      try {
+        const stats = await fs.stat(filePath)
+        fileStatus[file] = {
+          exists: true,
+          size: stats.size,
+          modified: stats.mtime.toISOString()
+        }
+      } catch {
+        fileStatus[file] = { exists: false }
+      }
+    }
+    
+    return NextResponse.json({
+      status: 'success',
+      public: {
+        path: publicPath,
+        exists: publicExists
+      },
+      logo: {
+        path: logoPath,
+        files: logoFiles
+      },
+      og: {
+        path: ogPath, 
+        files: ogFiles
+      },
+      criticalFiles: fileStatus,
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV,
+      platform: process.platform
+    })
+    
+  } catch (error) {
+    return NextResponse.json({
+      error: 'Failed to check assets',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    }, { status: 500 })
+  }
+}
+
+export async function POST() {
+  return NextResponse.json({
+    message: 'Use GET to check asset status'
+  }, { status: 405 })
+}

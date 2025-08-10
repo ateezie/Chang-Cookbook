@@ -2,27 +2,29 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Handle static image requests by ensuring they're routed correctly
-  if (request.nextUrl.pathname.startsWith('/images/')) {
-    // Log the request for debugging
-    console.log('Static image request:', request.nextUrl.pathname)
+  // In standalone mode, Next.js handles static files automatically
+  // Don't intercept static file requests - let Next.js handle them natively
+  
+  // Only handle non-static requests for now
+  if (!request.nextUrl.pathname.startsWith('/images/') && 
+      !request.nextUrl.pathname.startsWith('/_next/') &&
+      !request.nextUrl.pathname.startsWith('/favicon')) {
     
-    // Let Next.js handle it normally, but ensure proper headers
     const response = NextResponse.next()
     
-    // Add cache headers for images
-    if (request.nextUrl.pathname.match(/\.(jpg|jpeg|png|svg|gif|webp)$/i)) {
-      response.headers.set('Cache-Control', 'public, max-age=31536000')
-    }
+    // Add security headers for non-static requests
+    response.headers.set('X-Content-Type-Options', 'nosniff')
+    response.headers.set('X-Frame-Options', 'DENY')
     
     return response
   }
   
+  // For static files, let Next.js handle them completely
   return NextResponse.next()
 }
 
 export const config = {
   matcher: [
-    '/images/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
   ]
 }

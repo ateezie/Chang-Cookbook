@@ -224,6 +224,9 @@ jobs:
           echo "[INFO] Pulling latest Docker image..."
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           
+          echo "[INFO] Removing ALL existing Docker files to prevent conflicts..."
+          rm -f docker-compose.yml docker-compose.yaml Dockerfile .dockerignore 2>/dev/null || true
+          
           echo "[INFO] Creating fresh docker-compose.yml for registry image..."
           # Always create a fresh docker-compose.yml to ensure we use the registry image
           cat > docker-compose.yml << COMPOSE_EOF

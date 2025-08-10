@@ -1,8 +1,6 @@
 name: 🚀 Deploy to Digital Ocean
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
       environment:

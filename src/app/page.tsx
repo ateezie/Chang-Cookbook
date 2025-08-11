@@ -47,8 +47,8 @@ export default function HomePage() {
 
   // Remove synchronous calls - data now fetched via API
   
-  // Get the first featured recipe for the hero (or fallback to first recipe)
-  const heroFeaturedRecipe = featuredRecipes[0] || recipes[0]
+  // Get the hero featured recipe (or fallback to first featured, then first recipe)
+  const heroFeaturedRecipe = recipes.find(recipe => recipe.heroFeatured) || featuredRecipes[0] || recipes[0]
 
   if (loading) {
     return (

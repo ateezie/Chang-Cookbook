@@ -55,6 +55,7 @@ export async function GET(
       imageCredit: recipe.imageCredit,
       unsplashId: recipe.unsplashId,
       featured: recipe.featured,
+      heroFeatured: recipe.heroFeatured,
       createdAt: recipe.createdAt.toISOString().split('T')[0],
       chef: {
         name: recipe.chef.name,
@@ -166,6 +167,7 @@ export async function PUT(
           ...(data.equipment !== undefined && { equipment: data.equipment ? JSON.stringify(data.equipment) : null }),
           ...(data.notes !== undefined && { notes: data.notes }),
           ...(data.featured !== undefined && { featured: data.featured }),
+          ...(data.heroFeatured !== undefined && { heroFeatured: data.heroFeatured }),
           chefId
         }
       })

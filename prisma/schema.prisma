@@ -90,6 +90,7 @@ model Recipe {
   equipment    String? // JSON array of equipment items
   notes        String? // Additional notes and tips
   featured     Boolean  @default(false)
+  heroFeatured Boolean  @default(false) // For homepage hero section
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

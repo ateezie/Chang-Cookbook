@@ -116,7 +116,7 @@ export default function LoginPageComponent() {
               Welcome Back
             </h2>
             <p className="mt-2 text-chang-brown-600">
-              Sign in to your Chang Cookbook account
+              Sign in to your Chang's Cookbook account
             </p>
           </div>
 
@@ -214,13 +214,7 @@ export default function LoginPageComponent() {
 
               <div className="text-center">
                 <p className="text-sm text-chang-brown-600">
-                  Don't have an account?{' '}
-                  <Link 
-                    href="/register" 
-                    className="font-medium text-chang-orange-600 hover:text-chang-orange-500 transition-colors"
-                  >
-                    Create one here
-                  </Link>
+                  Need access? Contact us to receive an invitation to join our chef community.
                 </p>
               </div>
             </form>

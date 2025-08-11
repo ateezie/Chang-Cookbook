@@ -88,7 +88,7 @@ export default function RecipeCard({ recipe, className = '', featured = false }:
         </div>
 
         {/* Chef Info */}
-        <div className="flex items-center pt-3 border-t border-chang-neutral-200 mt-auto">
+        <div className="flex items-center justify-between pt-3 border-t border-chang-neutral-200 mt-auto">
           <div className="flex items-center text-xs text-chang-brown-600 font-body">
             <RecipeImage
               src={recipe.chef.avatar}
@@ -98,6 +98,13 @@ export default function RecipeCard({ recipe, className = '', featured = false }:
               className="rounded-full mr-2 border border-chang-neutral-200"
             />
             <span>{recipe.chef.name}</span>
+          </div>
+          <div className="text-xs text-chang-brown-500 font-body">
+            {new Date(recipe.createdAt).toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric', 
+              year: 'numeric' 
+            })}
           </div>
         </div>
 

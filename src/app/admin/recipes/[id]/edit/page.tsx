@@ -52,7 +52,8 @@ export default function EditRecipe() {
     tags: '',
     chefName: '',
     chefAvatar: '',
-    featured: false
+    featured: false,
+    heroFeatured: false
   })
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([])
@@ -104,7 +105,8 @@ export default function EditRecipe() {
           tags: recipe.tags.join(', '),
           chefName: recipe.chef.name,
           chefAvatar: recipe.chef.avatar,
-          featured: recipe.featured
+          featured: recipe.featured,
+          heroFeatured: recipe.heroFeatured || false
         })
         setIngredients(recipe.ingredients)
         setInstructions(recipe.instructions)
@@ -140,6 +142,7 @@ export default function EditRecipe() {
         servings: formData.servings,
         image: formData.image,
         featured: formData.featured,
+        heroFeatured: formData.heroFeatured,
         chef: {
           name: formData.chefName,
           avatar: formData.chefAvatar
@@ -554,7 +557,7 @@ export default function EditRecipe() {
                 />
               </div>
 
-              <div className="md:col-span-2">
+              <div className="md:col-span-1">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -563,6 +566,18 @@ export default function EditRecipe() {
                     className="mr-2 rounded border-chang-neutral-300 text-chang-orange-600 focus:ring-chang-orange-500"
                   />
                   <span className="text-sm font-medium text-chang-brown-700">Featured Recipe</span>
+                </label>
+              </div>
+
+              <div className="md:col-span-1">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.heroFeatured}
+                    onChange={(e) => setFormData({...formData, heroFeatured: e.target.checked})}
+                    className="mr-2 rounded border-chang-neutral-300 text-red-600 focus:ring-red-500"
+                  />
+                  <span className="text-sm font-medium text-chang-brown-700">🏆 Hero Featured (Homepage)</span>
                 </label>
               </div>
             </div>

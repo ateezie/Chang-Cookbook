@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { Recipe, Category } from '@/types'
 
 const siteConfig = {
-  name: 'Chang Cookbook',
+  name: 'Chang\'s Cookbook',
   description: 'Discover delicious recipes for every occasion. From quick weeknight dinners to special treats, find your next favorite dish with our tested and loved recipes.',
   url: 'https://cook.alexthip.com',
   ogImage: '/images/og/default.jpg', // Custom Open Graph image
@@ -18,9 +18,9 @@ export function generateSiteMetadata(): Metadata {
     },
     description: siteConfig.description,
     keywords: siteConfig.keywords,
-    authors: [{ name: 'Chang Cookbook Team' }],
-    creator: 'Chang Cookbook',
-    publisher: 'Chang Cookbook',
+    authors: [{ name: 'Chang\'s Cookbook Team' }],
+    creator: 'Chang\'s Cookbook',
+    publisher: 'Chang\'s Cookbook',
     formatDetection: {
       email: false,
       address: false,

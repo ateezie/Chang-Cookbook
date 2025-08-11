@@ -19,6 +19,7 @@ export interface Recipe {
   equipment?: string[]
   notes?: string
   featured: boolean
+  heroFeatured?: boolean
   createdAt: string
 }
 

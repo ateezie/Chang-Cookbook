@@ -74,7 +74,7 @@ export default function AdminLogin() {
               <ChangLogo className="h-16 w-16" />
             </div>
             <h1 className="text-2xl font-bold text-chang-brown-800 mb-2">
-              Chang Cookbook Admin
+              Chang's Cookbook Admin
             </h1>
             <p className="text-chang-brown-600">
               Sign in to manage recipes

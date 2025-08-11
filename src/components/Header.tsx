@@ -67,7 +67,6 @@ export default function Header() {
     { href: '/', label: 'Home' },
     { href: '/recipes', label: 'Recipes' },
     { href: '/categories', label: 'Categories' },
-    { href: '/about', label: 'About' },
   ]
 
   return (
@@ -87,7 +86,7 @@ export default function Header() {
             <div className="pl-24">
               <Link href="/">
                 <h1 className="text-lg sm:text-2xl font-heading font-bold text-chang-brown-900 hover:text-chang-orange-600 transition-colors duration-200 whitespace-nowrap">
-                  Chang Cookbook
+                  Chang's Cookbook
                 </h1>
               </Link>
             </div>
@@ -112,14 +111,15 @@ export default function Header() {
                 placeholder="Search recipes..."
               />
             </div>
-            <button 
+            <Link
+              href="/login"
               className="text-chang-brown-800 hover:text-chang-orange-400 transition-colors duration-200 p-2"
-              aria-label="User profile"
+              aria-label="User login"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}

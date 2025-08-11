@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [recipesLoading, setRecipesLoading] = useState(true)
   const [sortConfig, setSortConfig] = useState<{
-    key: 'recipe' | 'category' | 'difficulty' | 'featured' | null
+    key: 'recipe' | 'category' | 'difficulty' | 'featured' | 'heroFeatured' | null
     direction: 'asc' | 'desc'
   }>({ key: 'recipe', direction: 'asc' })
   const [stats, setStats] = useState({
@@ -55,11 +55,15 @@ export default function AdminDashboard() {
           aValue = a.featured
           bValue = b.featured
           break
+        case 'heroFeatured':
+          aValue = a.heroFeatured || false
+          bValue = b.heroFeatured || false
+          break
         default:
           return 0
       }
 
-      if (key === 'featured') {
+      if (key === 'featured' || key === 'heroFeatured') {
         // For featured: featured items first when desc, non-featured first when asc
         if (direction === 'desc') {
           return (bValue as boolean) ? 1 : (aValue as boolean) ? -1 : 0
@@ -186,6 +190,26 @@ export default function AdminDashboard() {
     }
   }
 
+  const toggleHeroFeatured = async (recipe: Recipe) => {
+    try {
+      const token = localStorage.getItem('admin_token')
+      const response = await fetch(`/api/recipes/${recipe.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ heroFeatured: !recipe.heroFeatured })
+      })
+
+      if (response.ok) {
+        loadRecipes() // Reload recipes
+      }
+    } catch (error) {
+      console.error('Error toggling hero featured status:', error)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-chang-neutral-50 flex items-center justify-center">
@@ -206,7 +230,7 @@ export default function AdminDashboard() {
             <div className="flex items-center">
               <ChangLogo className="h-8 w-8 mr-3" />
               <h1 className="text-xl font-bold text-chang-brown-800">
-                Chang Cookbook Admin
+                Chang's Cookbook Admin
               </h1>
             </div>
             <div className="flex items-center space-x-4">
@@ -334,6 +358,19 @@ export default function AdminDashboard() {
                         )}
                       </button>
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
+                      <button
+                        onClick={() => handleSort('heroFeatured')}
+                        className="flex items-center space-x-1 hover:text-chang-orange-600 transition-colors"
+                      >
+                        <span>Hero</span>
+                        {sortConfig.key === 'heroFeatured' && (
+                          <span className="text-chang-orange-500">
+                            {sortConfig.direction === 'desc' ? '🏆' : '🏅'}
+                          </span>
+                        )}
+                      </button>
+                    </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
                       Actions
                     </th>
@@ -383,6 +420,18 @@ export default function AdminDashboard() {
                           }`}
                         >
                           {recipe.featured ? '⭐ Featured' : '☆ Feature'}
+                        </button>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => toggleHeroFeatured(recipe)}
+                          className={`text-sm font-medium ${
+                            recipe.heroFeatured 
+                              ? 'text-red-600 hover:text-red-700'
+                              : 'text-chang-brown-400 hover:text-chang-brown-600'
+                          }`}
+                        >
+                          {recipe.heroFeatured ? '🏆 Hero' : '🏅 Set Hero'}
                         </button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">

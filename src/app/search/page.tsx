@@ -45,18 +45,32 @@ function SearchContent() {
 
   // Get search results
   useEffect(() => {
-    if (filters.searchQuery) {
-      const results = searchRecipes(filters.searchQuery)
-      setSearchResults(results)
-    } else {
-      setSearchResults([])
+    const fetchSearchResults = async () => {
+      if (filters.searchQuery) {
+        const results = await searchRecipes(filters.searchQuery)
+        setSearchResults(results)
+      } else {
+        setSearchResults([])
+      }
+      setCurrentPage(1) // Reset to first page on new search
     }
-    setCurrentPage(1) // Reset to first page on new search
+    
+    fetchSearchResults()
   }, [filters.searchQuery])
 
   // Get filtered and sorted results
   const filteredAndSortedResults = useMemo(() => {
-    const filtered = filterRecipes(searchResults, filters)
+    const filtered = searchResults.filter(recipe => {
+      // Filter by category
+      if (filters.category && filters.category !== 'all' && recipe.category !== filters.category) {
+        return false
+      }
+      // Filter by difficulty
+      if (filters.difficulty && filters.difficulty !== 'all' && recipe.difficulty !== filters.difficulty) {
+        return false
+      }
+      return true
+    })
     return sortRecipes(filtered, sortOptions)
   }, [searchResults, filters, sortOptions])
 
@@ -112,8 +126,26 @@ function SearchContent() {
     }
   }
 
-  const categories = getAllCategories()
-  const popularTags = getPopularTags(8)
+  const [categories, setCategories] = useState<any[]>([])
+  const [popularTags, setPopularTags] = useState<any[]>([])
+  
+  // Load categories and popular tags
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [categoriesData, tagsData] = await Promise.all([
+          getAllCategories(),
+          getPopularTags(8)
+        ])
+        setCategories(categoriesData)
+        setPopularTags(tagsData)
+      } catch (error) {
+        console.error('Error loading categories/tags:', error)
+      }
+    }
+    
+    loadData()
+  }, [])
   const hasActiveFilters = filters.category !== 'all' || filters.difficulty !== 'all'
   const hasResults = searchResults.length > 0
   const hasQuery = (filters.searchQuery || '').trim().length > 0

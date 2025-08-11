@@ -99,6 +99,7 @@ export async function GET(request: NextRequest) {
       imageCredit: recipe.imageCredit,
       unsplashId: recipe.unsplashId,
       featured: recipe.featured,
+      heroFeatured: recipe.heroFeatured,
       createdAt: recipe.createdAt.toISOString().split('T')[0],
       chef: {
         name: recipe.chef.name,
@@ -208,6 +209,7 @@ export async function POST(request: NextRequest) {
           equipment: data.equipment ? JSON.stringify(data.equipment) : null,
           notes: data.notes || null,
           featured: data.featured,
+          heroFeatured: data.heroFeatured || false,
           chefId: chef!.id,
           authorId: user.id
         }

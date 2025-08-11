@@ -27,10 +27,60 @@
     font-weight: 600;
   }
 
-  /* Focus styles for accessibility */
+  /* Focus styles for accessibility - underline style */
   *:focus {
-    outline: 2px solid #ff9966; /* chang-orange-400 */
-    outline-offset: 2px;
+    outline: none;
+  }
+  
+  /* Links and interactive elements get underline focus */
+  a:focus,
+  button:focus:not(.btn-primary):not(.btn-secondary):not(.btn-ghost),
+  [role="button"]:focus,
+  .nav-link:focus {
+    text-decoration: underline;
+    text-decoration-color: #ff9966; /* chang-orange-400 */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  
+  /* Input fields keep a subtle border focus */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 1px solid #ff9966; /* chang-orange-400 */
+    outline-offset: 1px;
+  }
+  
+  /* Active states also get underlines */
+  a:active,
+  button:active:not(.btn-primary):not(.btn-secondary):not(.btn-ghost),
+  [role="button"]:active,
+  .nav-link:active {
+    text-decoration: underline;
+    text-decoration-color: #e6824e; /* chang-orange-600 - darker for active */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  
+  .btn-primary:active {
+    text-decoration: underline;
+    text-decoration-color: white;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  
+  .btn-secondary:active {
+    text-decoration: underline;
+    text-decoration-color: #4a3429; /* chang-brown-800 */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  
+  .btn-ghost:active {
+    text-decoration: underline;
+    text-decoration-color: #e6824e; /* chang-orange-600 */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 }
 
@@ -38,15 +88,36 @@
 @layer components {
   /* Chang Cookbook Button styles */
   .btn-primary {
-    @apply bg-chang-orange-400 hover:bg-chang-orange-600 active:bg-chang-orange-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chang-orange-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-chang-orange-400/20 hover:shadow-chang-orange-600/20;
+    @apply bg-chang-orange-400 hover:bg-chang-orange-600 active:bg-chang-orange-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-chang-orange-400/20 hover:shadow-chang-orange-600/20;
+  }
+  
+  .btn-primary:focus {
+    text-decoration: underline;
+    text-decoration-color: white;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
   .btn-secondary {
-    @apply bg-white border-2 border-chang-brown-800 text-chang-brown-800 hover:bg-chang-brown-50 active:bg-chang-brown-100 font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chang-brown-800 focus:ring-offset-2 shadow-md shadow-chang-brown-800/10;
+    @apply bg-white border-2 border-chang-brown-800 text-chang-brown-800 hover:bg-chang-brown-50 active:bg-chang-brown-100 font-medium py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none shadow-md shadow-chang-brown-800/10;
+  }
+  
+  .btn-secondary:focus {
+    text-decoration: underline;
+    text-decoration-color: #4a3429; /* chang-brown-800 */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
   .btn-ghost {
-    @apply text-chang-brown-800 hover:text-chang-orange-400 hover:bg-chang-orange-50 active:bg-chang-orange-100 font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chang-orange-400 focus:ring-offset-2;
+    @apply text-chang-brown-800 hover:text-chang-orange-400 hover:bg-chang-orange-50 active:bg-chang-orange-100 font-medium py-2 px-4 rounded-md transition-all duration-200 focus:outline-none;
+  }
+  
+  .btn-ghost:focus {
+    text-decoration: underline;
+    text-decoration-color: #ff9966; /* chang-orange-400 */
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
   /* Chang Cookbook Card styles */
@@ -60,11 +131,11 @@
 
   /* Chang Cookbook Form styles */
   .input-field {
-    @apply w-full px-4 py-3 border border-chang-neutral-300 rounded-lg focus:ring-2 focus:ring-chang-orange-400 focus:border-chang-orange-400 transition-colors duration-200 bg-white text-chang-brown-950 placeholder-chang-neutral-500;
+    @apply w-full px-4 py-3 border border-chang-neutral-300 rounded-lg focus:border-chang-orange-400 transition-colors duration-200 bg-white text-chang-brown-950 placeholder-chang-neutral-500;
   }
 
   .search-input {
-    @apply pl-10 pr-4 py-3 w-full border border-chang-neutral-300 rounded-lg focus:ring-2 focus:ring-chang-orange-400 focus:border-chang-orange-400 transition-colors duration-200 bg-white text-chang-brown-950 placeholder-chang-neutral-500;
+    @apply pl-10 pr-4 py-3 w-full border border-chang-neutral-300 rounded-lg focus:border-chang-orange-400 transition-colors duration-200 bg-white text-chang-brown-950 placeholder-chang-neutral-500;
   }
 
   /* Chang Cookbook Filter styles */

@@ -31,6 +31,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
         reviewCount: recipe.reviewCount,
         image: recipe.image || '',
         featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
         createdAt: recipe.createdAt.toISOString().split('T')[0],
         chef: {
           name: recipe.chef.name,
@@ -103,6 +104,7 @@ export async function getRecipeById(id: string): Promise<Recipe | undefined> {
         reviewCount: recipe.reviewCount,
         image: recipe.image || '',
         featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
         createdAt: recipe.createdAt.toISOString().split('T')[0],
         chef: {
           name: recipe.chef.name,
@@ -155,6 +157,7 @@ export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]
         reviewCount: recipe.reviewCount,
         image: recipe.image || '',
         featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
         createdAt: recipe.createdAt.toISOString().split('T')[0],
         chef: {
           name: recipe.chef.name,
@@ -172,6 +175,58 @@ export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]
     },
     buildTimeFallbacks.recipes.filter((recipe: any) => recipe.category === categoryId),
     'get recipes by category'
+  )
+}
+
+// Get hero featured recipe (for homepage hero section)
+export async function getHeroFeaturedRecipe(): Promise<Recipe | undefined> {
+  return await safeDbOperation(
+    async () => {
+      const recipe = await prisma.recipe.findFirst({
+        where: { heroFeatured: true },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      if (!recipe) return undefined
+      
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map((ing: any) => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
+      }
+    },
+    undefined, // No fallback for hero featured recipe
+    'get hero featured recipe'
   )
 }
 
@@ -205,6 +260,7 @@ export async function getFeaturedRecipes(): Promise<Recipe[]> {
         reviewCount: recipe.reviewCount,
         image: recipe.image || '',
         featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
         createdAt: recipe.createdAt.toISOString().split('T')[0],
         chef: {
           name: recipe.chef.name,
@@ -265,6 +321,7 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
         reviewCount: recipe.reviewCount,
         image: recipe.image || '',
         featured: recipe.featured,
+        heroFeatured: recipe.heroFeatured,
         createdAt: recipe.createdAt.toISOString().split('T')[0],
         chef: {
           name: recipe.chef.name,

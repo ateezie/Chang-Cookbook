@@ -6,6 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Layout from '@/components/Layout'
 import ChangLogo from '@/components/ChangLogo'
 
+// Force dynamic rendering to prevent prerender issues
+export const dynamic = 'force-dynamic'
+
 interface FormErrors {
   email?: string
   password?: string

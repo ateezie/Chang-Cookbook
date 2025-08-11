@@ -6,6 +6,9 @@ import Link from 'next/link'
 import Layout from '@/components/Layout'
 import ChangLogo from '@/components/ChangLogo'
 
+// Force dynamic rendering to prevent prerender issues
+export const dynamic = 'force-dynamic'
+
 interface User {
   id: string
   email: string

@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ChangLogo from '@/components/ChangLogo'
 
+// Force dynamic rendering to prevent prerender issues
+export const dynamic = 'force-dynamic'
+
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

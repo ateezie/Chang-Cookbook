@@ -77,7 +77,7 @@ export default function Header() {
           {/* Logo and title positioned together */}
           <div className="flex items-center relative">
             {/* Absolute positioned logo that can expand outside header */}
-            <div className="absolute w-24 h-24 z-20" style={{ top: '-18px', left: '0' }}>
+            <div className="absolute z-20" style={{ top: '-19px', left: '10px', width: '5.5rem', height: '5.5rem' }}>
               <Link href="/" className="block">
                 <ChangLogo size="large" className="w-full h-full drop-shadow-lg hover:scale-110 transition-transform duration-200" />
               </Link>

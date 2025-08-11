@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Layout from '@/components/Layout'
 import RecipeCard from '@/components/RecipeCard'
 import ChangLogo from '@/components/ChangLogo'
+import { Recipe } from '@/types'
 
 // Force dynamic rendering to prevent prerender issues
 export const dynamic = 'force-dynamic'
@@ -22,23 +23,7 @@ interface User {
   } | null
 }
 
-interface Recipe {
-  id: string
-  title: string
-  slug: string
-  description: string
-  category: string
-  difficulty: string
-  prepTime: number
-  cookTime: number
-  totalTime: number
-  servings: number
-  rating: number
-  reviewCount: number
-  image?: string
-  featured: boolean
-  createdAt: string
-}
+// Using Recipe type from @/types
 
 export default function MyRecipesPage() {
   const router = useRouter()

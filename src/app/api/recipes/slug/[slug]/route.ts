@@ -56,12 +56,12 @@ export async function GET(
         name: recipe.chef.name,
         avatar: recipe.chef.avatar || ''
       },
-      ingredients: recipe.ingredients.map(ing => ({
+      ingredients: recipe.ingredients.map((ing: any) => ({
         item: ing.item,
         amount: ing.amount
       })),
-      instructions: recipe.instructions.map(inst => inst.step),
-      tags: recipe.tags.map(t => t.tag.name)
+      instructions: recipe.instructions.map((inst: any) => inst.step),
+      tags: recipe.tags.map((t: any) => t.tag.name)
     }
 
     return NextResponse.json({ recipe: transformedRecipe })

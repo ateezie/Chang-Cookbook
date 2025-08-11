@@ -16,7 +16,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
         }
       })
       
-      return recipes.map(recipe => ({
+      return recipes.map((recipe: any) => ({
         id: recipe.id,
         title: recipe.title,
         slug: recipe.slug,
@@ -36,12 +36,12 @@ export async function getAllRecipes(): Promise<Recipe[]> {
           name: recipe.chef.name,
           avatar: recipe.chef.avatar || ''
         },
-        ingredients: recipe.ingredients.map(ing => ({
+        ingredients: recipe.ingredients.map((ing: any) => ({
           item: ing.item,
           amount: ing.amount
         })),
-        instructions: recipe.instructions.map(inst => inst.step),
-        tags: recipe.tags.map(t => t.tag.name)
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name)
       }))
     },
     buildTimeFallbacks.recipes,
@@ -57,7 +57,7 @@ export async function getAllCategories(): Promise<Category[]> {
         orderBy: { name: 'asc' }
       })
       
-      return categories.map(category => ({
+      return categories.map((category: any) => ({
         id: category.id,
         name: category.name,
         description: category.description,
@@ -106,12 +106,12 @@ export async function getRecipeById(id: string): Promise<Recipe | undefined> {
           name: recipe.chef.name,
           avatar: recipe.chef.avatar || ''
         },
-        ingredients: recipe.ingredients.map(ing => ({
+        ingredients: recipe.ingredients.map((ing: any) => ({
           item: ing.item,
           amount: ing.amount
         })),
-        instructions: recipe.instructions.map(inst => inst.step),
-        tags: recipe.tags.map(t => t.tag.name)
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name)
       }
     },
     buildTimeFallbacks.recipes.find(recipe => recipe.id === id),
@@ -136,7 +136,7 @@ export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]
         }
       })
       
-      return recipes.map(recipe => ({
+      return recipes.map((recipe: any) => ({
         id: recipe.id,
         title: recipe.title,
         slug: recipe.slug,
@@ -156,12 +156,12 @@ export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]
           name: recipe.chef.name,
           avatar: recipe.chef.avatar || ''
         },
-        ingredients: recipe.ingredients.map(ing => ({
+        ingredients: recipe.ingredients.map((ing: any) => ({
           item: ing.item,
           amount: ing.amount
         })),
-        instructions: recipe.instructions.map(inst => inst.step),
-        tags: recipe.tags.map(t => t.tag.name)
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name)
       }))
     },
     buildTimeFallbacks.recipes.filter(recipe => recipe.category === categoryId),
@@ -184,7 +184,7 @@ export async function getFeaturedRecipes(): Promise<Recipe[]> {
         }
       })
       
-      return recipes.map(recipe => ({
+      return recipes.map((recipe: any) => ({
         id: recipe.id,
         title: recipe.title,
         slug: recipe.slug,
@@ -204,12 +204,12 @@ export async function getFeaturedRecipes(): Promise<Recipe[]> {
           name: recipe.chef.name,
           avatar: recipe.chef.avatar || ''
         },
-        ingredients: recipe.ingredients.map(ing => ({
+        ingredients: recipe.ingredients.map((ing: any) => ({
           item: ing.item,
           amount: ing.amount
         })),
-        instructions: recipe.instructions.map(inst => inst.step),
-        tags: recipe.tags.map(t => t.tag.name)
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name)
       }))
     },
     buildTimeFallbacks.recipes.filter(recipe => recipe.featured),
@@ -242,7 +242,7 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
         }
       })
       
-      return recipes.map(recipe => ({
+      return recipes.map((recipe: any) => ({
         id: recipe.id,
         title: recipe.title,
         slug: recipe.slug,
@@ -262,20 +262,20 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
           name: recipe.chef.name,
           avatar: recipe.chef.avatar || ''
         },
-        ingredients: recipe.ingredients.map(ing => ({
+        ingredients: recipe.ingredients.map((ing: any) => ({
           item: ing.item,
           amount: ing.amount
         })),
-        instructions: recipe.instructions.map(inst => inst.step),
-        tags: recipe.tags.map(t => t.tag.name)
+        instructions: recipe.instructions.map((inst: any) => inst.step),
+        tags: recipe.tags.map((t: any) => t.tag.name)
       }))
     },
     buildTimeFallbacks.recipes.filter(recipe => {
       const searchTerm = query.toLowerCase()
       return recipe.title.toLowerCase().includes(searchTerm) ||
              recipe.description.toLowerCase().includes(searchTerm) ||
-             recipe.ingredients.some(ingredient => ingredient.item.toLowerCase().includes(searchTerm)) ||
-             recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+             recipe.ingredients.some((ingredient: any) => ingredient.item.toLowerCase().includes(searchTerm)) ||
+             recipe.tags.some((tag: any) => tag.toLowerCase().includes(searchTerm)) ||
              recipe.chef.name.toLowerCase().includes(searchTerm)
     }),
     'search recipes'
@@ -411,7 +411,7 @@ export async function getPopularTags(limit: number = 10): Promise<Array<{ tag: s
         take: limit
       })
       
-      return tags.map(tag => ({
+      return tags.map((tag: any) => ({
         tag: tag.name,
         count: tag._count.recipes
       }))
@@ -420,7 +420,7 @@ export async function getPopularTags(limit: number = 10): Promise<Array<{ tag: s
     (() => {
       const tagCounts = new Map<string, number>()
       buildTimeFallbacks.recipes.forEach(recipe => {
-        recipe.tags.forEach(tag => {
+        recipe.tags.forEach((tag: any) => {
           tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
         })
       })

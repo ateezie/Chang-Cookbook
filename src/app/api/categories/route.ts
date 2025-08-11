@@ -24,7 +24,7 @@ export async function GET() {
         }
       })
 
-      return dbCategories.map(category => ({
+      return dbCategories.map((category: any) => ({
         id: category.id,
         name: category.name,
         description: category.description,

@@ -51,8 +51,9 @@ export default function RecipePageContent({ slug }: RecipePageContentProps) {
         const data = await response.json()
         setRecipe(data.recipe)
         
-        // For now, use related recipes from JSON until we implement API-based related recipes
-        setRelatedRecipes(getRelatedRecipes(data.recipe, 4))
+        // Get related recipes (now async)
+        const related = await getRelatedRecipes(data.recipe, 4)
+        setRelatedRecipes(related)
       } catch (error) {
         console.error('Error fetching recipe:', error)
         router.push('/recipes')

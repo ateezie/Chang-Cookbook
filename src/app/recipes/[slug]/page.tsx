@@ -9,7 +9,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const recipe = getRecipeById(slug)
+  const recipe = await getRecipeById(slug)
   
   if (!recipe) {
     return {

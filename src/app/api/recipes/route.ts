@@ -136,10 +136,17 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    // Return fallback empty data during build time or database connection issues
+    return NextResponse.json({
+      recipes: [],
+      pagination: {
+        currentPage: 1,
+        totalPages: 0,
+        totalCount: 0,
+        hasNextPage: false,
+        hasPreviousPage: false
+      }
+    })
   }
 }
 

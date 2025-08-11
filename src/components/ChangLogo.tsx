@@ -65,6 +65,7 @@ export default function ChangLogo({ size = 'medium', className = '' }: ChangLogo
         className="w-full h-full object-contain"
         onError={handleImageError}
         priority={size === 'medium'} // Prioritize header logo
+        unoptimized={true} // Disable optimization for logo images
       />
     </div>
   )

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { authenticateAdmin } from '@/lib/auth'
+import { safeDbOperation, buildTimeFallbacks } from '@/lib/build-safe-db'
 import { z } from 'zod'
 
 const CategorySchema = z.object({
@@ -12,41 +13,30 @@ const CategorySchema = z.object({
 
 // GET /api/categories - List all categories
 export async function GET() {
-  try {
-    const categories = await prisma.category.findMany({
-      orderBy: { name: 'asc' },
-      include: {
-        _count: {
-          select: { recipes: true }
+  const categories = await safeDbOperation(
+    async () => {
+      const dbCategories = await prisma.category.findMany({
+        orderBy: { name: 'asc' },
+        include: {
+          _count: {
+            select: { recipes: true }
+          }
         }
-      }
-    })
+      })
 
-    const transformedCategories = categories.map(category => ({
-      id: category.id,
-      name: category.name,
-      description: category.description,
-      emoji: category.emoji,
-      count: category._count.recipes
-    }))
+      return dbCategories.map(category => ({
+        id: category.id,
+        name: category.name,
+        description: category.description,
+        emoji: category.emoji,
+        count: category._count.recipes
+      }))
+    },
+    buildTimeFallbacks.categories,
+    'fetch categories'
+  )
 
-    return NextResponse.json({ categories: transformedCategories })
-
-  } catch (error) {
-    console.error('Error fetching categories:', error)
-    
-    // Return fallback categories during build time or database connection issues
-    const fallbackCategories = [
-      { id: 'main-course', name: 'Main Course', description: 'Main dishes and entrees', emoji: '🍽️', count: 0 },
-      { id: 'appetizers', name: 'Appetizers', description: 'Starters and appetizers', emoji: '🥗', count: 0 },
-      { id: 'desserts', name: 'Desserts', description: 'Sweet treats and desserts', emoji: '🍰', count: 0 },
-      { id: 'quick-meals', name: 'Quick Meals', description: 'Fast and easy meals', emoji: '⚡', count: 0 },
-      { id: 'snacks', name: 'Snacks', description: 'Quick bites and snacks', emoji: '🍿', count: 0 },
-      { id: 'breakfast', name: 'Breakfast', description: 'Morning meals and brunch', emoji: '🥞', count: 0 }
-    ]
-    
-    return NextResponse.json({ categories: fallbackCategories })
-  }
+  return NextResponse.json({ categories })
 }
 
 // POST /api/categories - Create new category (Admin only)

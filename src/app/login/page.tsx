@@ -1,27 +1,29 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
+import NextDynamic from 'next/dynamic'
 
-// Temporary simple redirect to prevent build issues during PostgreSQL migration
-export default function LoginPage() {
-  const router = useRouter()
-  
-  useEffect(() => {
-    // For now, redirect to home page
-    // This prevents build-time prerender issues during deployment
-    router.push('/')
-  }, [router])
-
-  return (
+// Dynamically import the login component with SSR disabled to prevent build issues
+const LoginComponent = NextDynamic(() => import('./login-page'), {
+  ssr: false,
+  loading: () => (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-chang-orange-500 mx-auto mb-4"></div>
-        <p className="text-chang-brown-600">Redirecting...</p>
-      </div>
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-chang-orange-500"></div>
     </div>
   )
-}
+})
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-chang-orange-500"></div>
+      </div>
+    }>
+      <LoginComponent />
+    </Suspense>
+  )
+}

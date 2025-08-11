@@ -71,23 +71,26 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white shadow-sm border-b border-chang-neutral-200 sticky top-0 z-50 relative">
-      {/* Absolute positioned larger logo */}
-      <div className="absolute left-4 top-0 transform -translate-y-2 z-10">
-        <Link href="/" className="block">
-          <ChangLogo size="large" className="w-20 h-20 drop-shadow-lg hover:scale-105 transition-transform duration-200" />
-        </Link>
-      </div>
-      
+    <header className="bg-white shadow-sm border-b border-chang-neutral-200 sticky top-0 z-50 relative overflow-visible">      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo space holder and title */}
-          <div className="flex items-center pl-24">
-            <Link href="/">
-              <h1 className="text-xl sm:text-2xl font-heading font-bold text-chang-brown-900 hover:text-chang-orange-600 transition-colors duration-200">
-                Chang Cookbook
-              </h1>
-            </Link>
+          {/* Logo and title positioned together */}
+          <div className="flex items-center relative">
+            {/* Absolute positioned logo that can expand outside header */}
+            <div className="absolute w-24 h-24 z-20" style={{ top: '-18px', left: '0' }}>
+              <Link href="/" className="block">
+                <ChangLogo size="large" className="w-full h-full drop-shadow-lg hover:scale-110 transition-transform duration-200" />
+              </Link>
+            </div>
+            
+            {/* Title with proper spacing for logo */}
+            <div className="pl-24">
+              <Link href="/">
+                <h1 className="text-lg sm:text-2xl font-heading font-bold text-chang-brown-900 hover:text-chang-orange-600 transition-colors duration-200 whitespace-nowrap">
+                  Chang Cookbook
+                </h1>
+              </Link>
+            </div>
           </div>
 
           {/* Desktop Navigation */}

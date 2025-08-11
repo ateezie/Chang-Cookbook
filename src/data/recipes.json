@@ -64,7 +64,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "brown-sugar-dijon-chicken-thighs"
     },
     {
       "id": "korean-bulgogi-recipe",
@@ -143,7 +144,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "korean-bulgogi-recipe"
     },
     {
       "id": "creamy-romesco-chicken-garlic-bread-blue-apron-recipe",
@@ -223,7 +225,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "creamy-romesco-chicken-garlic-bread-blue-apron-recipe"
     },
     {
       "id": "egg-roll-in-a-bowl",
@@ -302,7 +305,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "egg-roll-in-a-bowl"
     },
     {
       "id": "modern-recipe-template",
@@ -377,7 +381,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "modern-recipe-template"
     },
     {
       "id": "fontina-cheeseburgers-blue-apron-recipe",
@@ -449,7 +454,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "fontina-cheeseburgers-blue-apron-recipe"
     },
     {
       "id": "gourmet-ham-cheese-sandwich",
@@ -516,7 +522,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "gourmet-ham-cheese-sandwich"
     },
     {
       "id": "honey-butter-chicken-recipe",
@@ -630,7 +637,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "honey-butter-chicken-recipe"
     },
     {
       "id": "mango-sticky-rice-recipes",
@@ -713,7 +721,8 @@
         "fat": "10g"
       },
       "featured": true,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "mango-sticky-rice-recipes"
     },
     {
       "id": "momofuku-noodle-ramen-recipes",
@@ -841,7 +850,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "momofuku-noodle-ramen-recipes"
     },
     {
       "id": "moo-ping-thai-grilled-pork-skewers",
@@ -949,7 +959,8 @@
         "fat": "10g"
       },
       "featured": true,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "moo-ping-thai-grilled-pork-skewers"
     },
     {
       "id": "pad-ka-prao-thai-basil-stir-fry-recipe",
@@ -1037,7 +1048,8 @@
         "fat": "10g"
       },
       "featured": true,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "pad-ka-prao-thai-basil-stir-fry-recipe"
     },
     {
       "id": "authentic-pad-thai-traditional-thai-recipe",
@@ -1130,7 +1142,8 @@
         "fat": "10g"
       },
       "featured": true,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "authentic-pad-thai-traditional-thai-recipe"
     },
     {
       "id": "moms-peanut-sauce-recipe",
@@ -1196,7 +1209,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "moms-peanut-sauce-recipe"
     },
     {
       "id": "tender-braised-pork-belly-with-savory-napa-cabbage",
@@ -1276,7 +1290,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "tender-braised-pork-belly-with-savory-napa-cabbage"
     },
     {
       "id": "som-tum-green-papaya-salad",
@@ -1350,7 +1365,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "som-tum-green-papaya-salad"
     },
     {
       "id": "som-tum-moms-version",
@@ -1428,7 +1444,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "som-tum-moms-version"
     },
     {
       "id": "steak-cheese-rice",
@@ -1518,7 +1535,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "steak-cheese-rice"
     },
     {
       "id": "thai-tea-recipe-traditional-iced-tea",
@@ -1588,7 +1606,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "thai-tea-recipe-traditional-iced-tea"
     },
     {
       "id": "thai-coconut-shrimp-tom-yum-recipe",
@@ -1667,7 +1686,8 @@
         "fat": "10g"
       },
       "featured": false,
-      "createdAt": "2025-08-08"
+      "createdAt": "2025-08-08",
+      "slug": "thai-coconut-shrimp-tom-yum-recipe"
     }
   ],
   "categories": [

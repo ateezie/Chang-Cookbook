@@ -50,7 +50,8 @@
       "Bash(curl:*)",
       "Bash(timeout 5s npx prisma studio)",
       "Bash(npx prisma:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(timeout 120 npm run build)"
     ],
     "deny": []
   }

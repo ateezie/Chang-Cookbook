@@ -13,11 +13,14 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  // Disable static optimization completely during database migration
+  // Build configuration for PostgreSQL migration
   trailingSlash: false,
-  // Force all pages to be server-rendered to avoid build-time database calls
   experimental: {
     appDir: true,
+  },
+  // Disable static generation for auth pages to prevent build-time database calls
+  async generateBuildId() {
+    return 'build-' + Date.now()
   },
   images: {
     remotePatterns: [

@@ -29,15 +29,14 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('auth_token')
-      const storedUser = localStorage.getItem('user')
       
-      if (!token || !storedUser) {
+      if (!token) {
         router.push('/login')
         return
       }
 
       try {
-        // Verify token is still valid by fetching profile
+        // Always fetch fresh user data from server to get latest profile updates
         const response = await fetch('/api/auth/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -47,6 +46,8 @@ export default function DashboardPage() {
         if (response.ok) {
           const data = await response.json()
           setUser(data.user)
+          // Update localStorage with fresh user data
+          localStorage.setItem('user', JSON.stringify(data.user))
         } else {
           // Token is invalid, redirect to login
           localStorage.removeItem('auth_token')
@@ -67,6 +68,44 @@ export default function DashboardPage() {
 
     checkAuth()
   }, [router])
+
+  // Listen for storage changes (when user updates profile in another tab)
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUser = localStorage.getItem('user')
+      if (storedUser) {
+        setUser(JSON.parse(storedUser))
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Also listen for focus events to refresh when coming back from profile page
+    const handleFocus = async () => {
+      const token = localStorage.getItem('auth_token')
+      if (token) {
+        try {
+          const response = await fetch('/api/auth/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          if (response.ok) {
+            const data = await response.json()
+            setUser(data.user)
+            localStorage.setItem('user', JSON.stringify(data.user))
+          }
+        } catch (error) {
+          console.error('Failed to refresh user data:', error)
+        }
+      }
+    }
+
+    window.addEventListener('focus', handleFocus)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('auth_token')

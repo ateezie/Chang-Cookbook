@@ -1,62 +1,289 @@
 import { Recipe, Category, FilterOptions, SortOptions } from '@/types'
-import recipesData from '@/data/recipes.json'
+import { prisma } from '@/lib/prisma'
+import { safeDbOperation, buildTimeFallbacks } from '@/lib/build-safe-db'
 
 // Get all recipes
-export function getAllRecipes(): Recipe[] {
-  return recipesData.recipes as Recipe[]
+export async function getAllRecipes(): Promise<Recipe[]> {
+  return await safeDbOperation(
+    async () => {
+      const recipes = await prisma.recipe.findMany({
+        orderBy: { createdAt: 'desc' },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      return recipes.map(recipe => ({
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map(ing => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map(inst => inst.step),
+        tags: recipe.tags.map(t => t.tag.name)
+      }))
+    },
+    buildTimeFallbacks.recipes,
+    'get all recipes'
+  )
 }
 
 // Get all categories
-export function getAllCategories(): Category[] {
-  return recipesData.categories as Category[]
+export async function getAllCategories(): Promise<Category[]> {
+  return await safeDbOperation(
+    async () => {
+      const categories = await prisma.category.findMany({
+        orderBy: { name: 'asc' }
+      })
+      
+      return categories.map(category => ({
+        id: category.id,
+        name: category.name,
+        description: category.description,
+        emoji: category.emoji,
+        count: category.count
+      }))
+    },
+    buildTimeFallbacks.categories,
+    'get all categories'
+  )
 }
 
 // Get recipe by ID
-export function getRecipeById(id: string): Recipe | undefined {
-  return (recipesData.recipes as Recipe[]).find(recipe => recipe.id === id)
+export async function getRecipeById(id: string): Promise<Recipe | undefined> {
+  return await safeDbOperation(
+    async () => {
+      const recipe = await prisma.recipe.findUnique({
+        where: { id },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      if (!recipe) return undefined
+      
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map(ing => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map(inst => inst.step),
+        tags: recipe.tags.map(t => t.tag.name)
+      }
+    },
+    buildTimeFallbacks.recipes.find(recipe => recipe.id === id),
+    'get recipe by ID'
+  )
 }
 
 // Get recipes by category
-export function getRecipesByCategory(categoryId: string): Recipe[] {
-  if (categoryId === 'all') return getAllRecipes()
-  return (recipesData.recipes as Recipe[]).filter(recipe => recipe.category === categoryId)
+export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]> {
+  if (categoryId === 'all') return await getAllRecipes()
+  
+  return await safeDbOperation(
+    async () => {
+      const recipes = await prisma.recipe.findMany({
+        where: { categoryId },
+        orderBy: { createdAt: 'desc' },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      return recipes.map(recipe => ({
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map(ing => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map(inst => inst.step),
+        tags: recipe.tags.map(t => t.tag.name)
+      }))
+    },
+    buildTimeFallbacks.recipes.filter(recipe => recipe.category === categoryId),
+    'get recipes by category'
+  )
 }
 
 // Get featured recipes
-export function getFeaturedRecipes(): Recipe[] {
-  return (recipesData.recipes as Recipe[]).filter(recipe => recipe.featured)
+export async function getFeaturedRecipes(): Promise<Recipe[]> {
+  return await safeDbOperation(
+    async () => {
+      const recipes = await prisma.recipe.findMany({
+        where: { featured: true },
+        orderBy: { createdAt: 'desc' },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      return recipes.map(recipe => ({
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map(ing => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map(inst => inst.step),
+        tags: recipe.tags.map(t => t.tag.name)
+      }))
+    },
+    buildTimeFallbacks.recipes.filter(recipe => recipe.featured),
+    'get featured recipes'
+  )
 }
 
 // Search recipes by query
-export function searchRecipes(query: string): Recipe[] {
-  if (!query.trim()) return getAllRecipes()
+export async function searchRecipes(query: string): Promise<Recipe[]> {
+  if (!query.trim()) return await getAllRecipes()
   
-  const searchTerm = query.toLowerCase()
-  
-  return (recipesData.recipes as Recipe[]).filter(recipe => {
-    // Search in title
-    if (recipe.title.toLowerCase().includes(searchTerm)) return true
-    
-    // Search in description
-    if (recipe.description.toLowerCase().includes(searchTerm)) return true
-    
-    // Search in ingredients
-    if (recipe.ingredients.some(ingredient => 
-      ingredient.item.toLowerCase().includes(searchTerm)
-    )) return true
-    
-    // Search in tags
-    if (recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm))) return true
-    
-    // Search in chef name
-    if (recipe.chef.name.toLowerCase().includes(searchTerm)) return true
-    
-    return false
-  })
+  return await safeDbOperation(
+    async () => {
+      const recipes = await prisma.recipe.findMany({
+        where: {
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { description: { contains: query, mode: 'insensitive' } },
+            { ingredients: { some: { item: { contains: query, mode: 'insensitive' } } } },
+            { tags: { some: { tag: { name: { contains: query, mode: 'insensitive' } } } } },
+            { chef: { name: { contains: query, mode: 'insensitive' } } }
+          ]
+        },
+        orderBy: { createdAt: 'desc' },
+        include: {
+          chef: true,
+          ingredients: { orderBy: { order: 'asc' } },
+          instructions: { orderBy: { order: 'asc' } },
+          tags: { include: { tag: true } }
+        }
+      })
+      
+      return recipes.map(recipe => ({
+        id: recipe.id,
+        title: recipe.title,
+        slug: recipe.slug,
+        description: recipe.description,
+        category: recipe.categoryId,
+        difficulty: recipe.difficulty as 'easy' | 'medium' | 'hard',
+        prepTime: recipe.prepTime,
+        cookTime: recipe.cookTime,
+        totalTime: recipe.totalTime,
+        servings: recipe.servings,
+        rating: recipe.rating,
+        reviewCount: recipe.reviewCount,
+        image: recipe.image || '',
+        featured: recipe.featured,
+        createdAt: recipe.createdAt.toISOString().split('T')[0],
+        chef: {
+          name: recipe.chef.name,
+          avatar: recipe.chef.avatar || ''
+        },
+        ingredients: recipe.ingredients.map(ing => ({
+          item: ing.item,
+          amount: ing.amount
+        })),
+        instructions: recipe.instructions.map(inst => inst.step),
+        tags: recipe.tags.map(t => t.tag.name)
+      }))
+    },
+    buildTimeFallbacks.recipes.filter(recipe => {
+      const searchTerm = query.toLowerCase()
+      return recipe.title.toLowerCase().includes(searchTerm) ||
+             recipe.description.toLowerCase().includes(searchTerm) ||
+             recipe.ingredients.some(ingredient => ingredient.item.toLowerCase().includes(searchTerm)) ||
+             recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+             recipe.chef.name.toLowerCase().includes(searchTerm)
+    }),
+    'search recipes'
+  )
 }
 
 // Filter recipes
-export function filterRecipes(recipes: Recipe[], filters: FilterOptions): Recipe[] {
+export async function filterRecipes(recipes: Recipe[], filters: FilterOptions): Promise<Recipe[]> {
   let filtered = [...recipes]
   
   // Filter by category
@@ -83,7 +310,7 @@ export function filterRecipes(recipes: Recipe[], filters: FilterOptions): Recipe
   
   // Filter by search query
   if (filters.searchQuery) {
-    const searchResults = searchRecipes(filters.searchQuery)
+    const searchResults = await searchRecipes(filters.searchQuery)
     const searchIds = searchResults.map(recipe => recipe.id)
     filtered = filtered.filter(recipe => searchIds.includes(recipe.id))
   }
@@ -133,8 +360,8 @@ export function sortRecipes(recipes: Recipe[], sortOptions: SortOptions): Recipe
 }
 
 // Get recipe suggestions based on current recipe
-export function getRelatedRecipes(currentRecipe: Recipe, limit: number = 4): Recipe[] {
-  const allRecipes = getAllRecipes().filter(recipe => recipe.id !== currentRecipe.id)
+export async function getRelatedRecipes(currentRecipe: Recipe, limit: number = 4): Promise<Recipe[]> {
+  const allRecipes = (await getAllRecipes()).filter(recipe => recipe.id !== currentRecipe.id)
   
   // Score recipes based on similarity
   const scored = allRecipes.map(recipe => {
@@ -167,24 +394,48 @@ export function getRelatedRecipes(currentRecipe: Recipe, limit: number = 4): Rec
 }
 
 // Get popular tags
-export function getPopularTags(limit: number = 10): Array<{ tag: string, count: number }> {
-  const tagCounts = new Map<string, number>()
-  
-  getAllRecipes().forEach(recipe => {
-    recipe.tags.forEach(tag => {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
-    })
-  })
-  
-  return Array.from(tagCounts.entries())
-    .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, limit)
+export async function getPopularTags(limit: number = 10): Promise<Array<{ tag: string, count: number }>> {
+  return await safeDbOperation(
+    async () => {
+      const tags = await prisma.tag.findMany({
+        include: {
+          _count: {
+            select: { recipes: true }
+          }
+        },
+        orderBy: {
+          recipes: {
+            _count: 'desc'
+          }
+        },
+        take: limit
+      })
+      
+      return tags.map(tag => ({
+        tag: tag.name,
+        count: tag._count.recipes
+      }))
+    },
+    // Fallback: calculate from JSON data
+    (() => {
+      const tagCounts = new Map<string, number>()
+      buildTimeFallbacks.recipes.forEach(recipe => {
+        recipe.tags.forEach(tag => {
+          tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+        })
+      })
+      return Array.from(tagCounts.entries())
+        .map(([tag, count]) => ({ tag, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, limit)
+    })(),
+    'get popular tags'
+  )
 }
 
 // Get recipe statistics
-export function getRecipeStats() {
-  const recipes = getAllRecipes()
+export async function getRecipeStats() {
+  const recipes = await getAllRecipes()
   
   return {
     total: recipes.length,

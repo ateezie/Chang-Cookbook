@@ -6,8 +6,7 @@ import Layout from '@/components/Layout'
 import RecipeCard from '@/components/RecipeCard'
 import CategoryFilter from '@/components/CategoryFilter'
 import { RecipeGridSkeleton } from '@/components/Loading'
-import { getAllRecipes, getAllCategories, filterRecipes, sortRecipes } from '@/lib/recipes'
-import { Recipe, FilterOptions, SortOptions } from '@/types'
+import { Recipe, FilterOptions, SortOptions, Category } from '@/types'
 
 const RECIPES_PER_PAGE = 12
 
@@ -15,6 +14,7 @@ function RecipesContent() {
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(true)
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   
@@ -35,23 +35,26 @@ function RecipesContent() {
 
   // Initialize data and filters from URL params
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/recipes?limit=100') // Get all recipes
+        // Fetch recipes and categories concurrently
+        const [recipesResponse, categoriesResponse] = await Promise.all([
+          fetch('/api/recipes?limit=100'),
+          fetch('/api/categories')
+        ])
         
-        if (response.ok) {
-          const data = await response.json()
-          setRecipes(data.recipes)
-        } else {
-          // Fallback to JSON file if API fails
-          const allRecipes = getAllRecipes()
-          setRecipes(allRecipes)
+        if (recipesResponse.ok) {
+          const recipesData = await recipesResponse.json()
+          setRecipes(recipesData.recipes)
+        }
+        
+        if (categoriesResponse.ok) {
+          const categoriesData = await categoriesResponse.json()
+          setCategories(categoriesData.categories)
         }
       } catch (error) {
-        console.error('Error fetching recipes:', error)
-        // Fallback to JSON file
-        const allRecipes = getAllRecipes()
-        setRecipes(allRecipes)
+        console.error('Error fetching data:', error)
+        // No fallback - rely on API endpoints
       }
       
       // Set filters from URL params
@@ -69,22 +72,60 @@ function RecipesContent() {
       setLoading(false)
     }
 
-    fetchRecipes()
+    fetchData()
   }, [searchParams])
 
-  // Get all categories
-  const categories = getAllCategories()
+  // Categories are now loaded from state
 
   // Apply filters and sorting
   const filteredAndSortedRecipes = useMemo(() => {
-    let filtered = filterRecipes(recipes, filters)
+    let filtered = [...recipes]
+    
+    // Filter by category
+    if (filters.category && filters.category !== 'all') {
+      filtered = filtered.filter(recipe => recipe.category === filters.category)
+    }
+    
+    // Filter by difficulty
+    if (filters.difficulty && filters.difficulty !== 'all') {
+      filtered = filtered.filter(recipe => recipe.difficulty === filters.difficulty)
+    }
+    
+    // Filter by search query
+    if (filters.searchQuery) {
+      const searchTerm = filters.searchQuery.toLowerCase()
+      filtered = filtered.filter(recipe => 
+        recipe.title.toLowerCase().includes(searchTerm) ||
+        recipe.description.toLowerCase().includes(searchTerm) ||
+        recipe.ingredients.some(ingredient => ingredient.item.toLowerCase().includes(searchTerm)) ||
+        recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+      )
+    }
     
     // Special handling for featured recipes
     if (searchParams.get('featured') === 'true') {
       filtered = filtered.filter(recipe => recipe.featured)
     }
     
-    return sortRecipes(filtered, sortOptions)
+    // Apply sorting
+    const sorted = [...filtered]
+    
+    switch (sortOptions.sortBy) {
+      case 'newest':
+        sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        break
+      case 'prepTime':
+        sorted.sort((a, b) => a.totalTime - b.totalTime)
+        break
+      default:
+        sorted.sort((a, b) => {
+          if (a.featured && !b.featured) return -1
+          if (!a.featured && b.featured) return 1
+          return b.rating - a.rating
+        })
+    }
+    
+    return sorted
   }, [recipes, filters, sortOptions, searchParams])
 
   // Pagination

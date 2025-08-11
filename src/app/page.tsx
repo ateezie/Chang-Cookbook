@@ -7,43 +7,45 @@ import Hero from '@/components/Hero'
 import RecipeCard from '@/components/RecipeCard'
 import { Recipe } from '@/types'
 // import CategoryFilter from '@/components/CategoryFilter' // Currently unused
-import { getAllCategories, getFeaturedRecipes, getAllRecipes, getRecipeStats } from '@/lib/recipes'
+import { Category } from '@/types'
 
 export default function HomePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [featuredRecipes, setFeaturedRecipes] = useState<Recipe[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchData = async () => {
       try {
-        // Fetch all recipes from API
-        const response = await fetch('/api/recipes?limit=50')
+        // Fetch recipes and categories concurrently
+        const [recipesResponse, categoriesResponse] = await Promise.all([
+          fetch('/api/recipes?limit=50'),
+          fetch('/api/categories')
+        ])
         
-        if (response.ok) {
-          const data = await response.json()
-          setRecipes(data.recipes)
-          setFeaturedRecipes(data.recipes.filter((recipe: Recipe) => recipe.featured))
-        } else {
-          // Fallback to JSON file
-          setRecipes(getAllRecipes())
-          setFeaturedRecipes(getFeaturedRecipes())
+        if (recipesResponse.ok) {
+          const recipesData = await recipesResponse.json()
+          setRecipes(recipesData.recipes)
+          setFeaturedRecipes(recipesData.recipes.filter((recipe: Recipe) => recipe.featured))
+        }
+        
+        if (categoriesResponse.ok) {
+          const categoriesData = await categoriesResponse.json()
+          setCategories(categoriesData.categories)
         }
       } catch (error) {
-        console.error('Error fetching recipes:', error)
-        // Fallback to JSON file
-        setRecipes(getAllRecipes())
-        setFeaturedRecipes(getFeaturedRecipes())
+        console.error('Error fetching data:', error)
+        // No fallback - rely on API endpoints
       } finally {
         setLoading(false)
       }
     }
 
-    fetchRecipes()
+    fetchData()
   }, [])
 
-  const categories = getAllCategories()
-  const stats = getRecipeStats()
+  // Remove synchronous calls - data now fetched via API
   
   // Get the first featured recipe for the hero (or fallback to first recipe)
   const heroFeaturedRecipe = featuredRecipes[0] || recipes[0]

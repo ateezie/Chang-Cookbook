@@ -5,8 +5,8 @@ const siteConfig = {
   name: 'Chang Cookbook',
   description: 'Discover delicious recipes for every occasion. From quick weeknight dinners to special treats, find your next favorite dish with our tested and loved recipes.',
   url: 'https://cook.alexthip.com',
-  ogImage: '/images/og/default.svg',
-  ogImageAlt: '/images/og/default.jpg', // Fallback for systems that don't support SVG
+  ogImage: '/images/og/default.jpg', // Custom Open Graph image
+  ogImageAlt: '/images/og/default.svg', // SVG fallback
   creator: '@changcookbook',
   keywords: ['recipes', 'cooking', 'food', 'dinner', 'desserts', 'healthy', 'quick meals', 'italian', 'asian', 'mediterranean']
 }

@@ -49,7 +49,7 @@ RUN echo "=== Verifying public files in builder stage ===" && \
 # Set build environment variables
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_URL="file:./data/production.db"
+ENV DATABASE_URL="file:/app/data/production.db"
 ENV JWT_SECRET="build-time-secret"
 ENV NEXTAUTH_URL="http://localhost:3000"
 

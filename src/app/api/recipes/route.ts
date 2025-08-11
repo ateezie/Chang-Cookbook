@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { authenticateAdmin } from '@/lib/auth'
+import { PrismaClient } from '@prisma/client'
+import { requireAuth, AuthError } from '@/lib/auth'
 import { CreateRecipeSchema, RecipeQuerySchema } from '@/lib/validations/recipe'
 import { z } from 'zod'
 
 // GET /api/recipes - List recipes with filtering and pagination
 export async function GET(request: NextRequest) {
+  const prisma = new PrismaClient()
+  
   try {
     const { searchParams } = new URL(request.url)
     const query = RecipeQuerySchema.parse({
@@ -71,7 +73,6 @@ export async function GET(request: NextRequest) {
           instructions: {
             orderBy: { order: 'asc' }
           },
-          nutrition: true,
           tags: {
             include: { tag: true }
           }
@@ -108,17 +109,13 @@ export async function GET(request: NextRequest) {
         amount: ing.amount
       })),
       instructions: recipe.instructions.map(inst => inst.step),
-      nutrition: recipe.nutrition ? {
-        calories: recipe.nutrition.calories,
-        protein: recipe.nutrition.protein,
-        carbs: recipe.nutrition.carbs,
-        fat: recipe.nutrition.fat
-      } : undefined,
       tags: recipe.tags.map(t => t.tag.name)
     }))
 
     const totalPages = Math.ceil(totalCount / limit)
 
+    await prisma.$disconnect()
+    
     return NextResponse.json({
       recipes: transformedRecipes,
       totalCount,
@@ -129,6 +126,7 @@ export async function GET(request: NextRequest) {
     })
 
   } catch (error) {
+    await prisma.$disconnect()
     console.error('Error fetching recipes:', error)
     
     if (error instanceof z.ZodError) {
@@ -145,43 +143,37 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/recipes - Create new recipe (Admin only)
+// POST /api/recipes - Create new recipe (Authenticated users)
 export async function POST(request: NextRequest) {
+  const prisma = new PrismaClient()
+  
   try {
-    // Authenticate admin
-    const adminUser = await authenticateAdmin(request)
-    if (!adminUser) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Admin access required' },
-        { status: 401 }
-      )
-    }
+    // Authenticate user (any logged-in user can create recipes)
+    const user = await requireAuth(request)
 
     const body = await request.json()
     const data = CreateRecipeSchema.parse(body)
 
-    // Check if recipe ID already exists
+    // Check if recipe slug already exists
     const existingRecipe = await prisma.recipe.findUnique({
-      where: { id: data.id }
+      where: { slug: data.slug }
     })
 
     if (existingRecipe) {
       return NextResponse.json(
-        { error: 'Recipe with this ID already exists' },
+        { error: 'Recipe with this URL slug already exists' },
         { status: 409 }
       )
     }
 
-    // Create or find chef
-    let chef = await prisma.chef.findFirst({
-      where: { name: data.chef.name }
-    })
-
+    // Use the user's chef profile or create one if it doesn't exist
+    let chef = user.chef
     if (!chef) {
+      // This shouldn't happen since we create chef profiles on registration, but just in case
       chef = await prisma.chef.create({
         data: {
-          name: data.chef.name,
-          avatar: data.chef.avatar
+          name: user.name,
+          userId: user.id
         }
       })
     }
@@ -206,7 +198,7 @@ export async function POST(request: NextRequest) {
           unsplashId: data.unsplashId,
           featured: data.featured,
           chefId: chef!.id,
-          authorId: adminUser.userId
+          authorId: user.id
         }
       })
 
@@ -229,18 +221,6 @@ export async function POST(request: NextRequest) {
         }))
       })
 
-      // Create nutrition if provided
-      if (data.nutrition) {
-        await tx.nutrition.create({
-          data: {
-            recipeId: newRecipe.id,
-            calories: data.nutrition.calories,
-            protein: data.nutrition.protein,
-            carbs: data.nutrition.carbs,
-            fat: data.nutrition.fat
-          }
-        })
-      }
 
       // Handle tags
       if (data.tags.length > 0) {
@@ -267,13 +247,23 @@ export async function POST(request: NextRequest) {
       return newRecipe
     })
 
+    await prisma.$disconnect()
+    
     return NextResponse.json(
       { message: 'Recipe created successfully', id: recipe.id },
       { status: 201 }
     )
 
   } catch (error) {
+    await prisma.$disconnect()
     console.error('Error creating recipe:', error)
+    
+    if (error instanceof AuthError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.statusCode }
+      )
+    }
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(

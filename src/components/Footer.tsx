@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import ChangLogo from './ChangLogo'
 
 interface FooterLinkProps {
@@ -33,14 +36,44 @@ function FooterSection({ title, children }: FooterSectionProps) {
   )
 }
 
+interface Category {
+  id: string
+  name: string
+  emoji: string
+}
+
 export default function Footer() {
   // Use a static year to avoid hydration mismatch
   const currentYear = 2025
+  const [categories, setCategories] = useState<Category[]>([])
+  
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories')
+        if (response.ok) {
+          const data = await response.json()
+          setCategories(data.categories || [])
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+        // Fallback to basic categories if API fails
+        setCategories([
+          { id: 'main-course', name: 'Main Course', emoji: '🍽️' },
+          { id: 'appetizers', name: 'Appetizers', emoji: '🥗' },
+          { id: 'desserts', name: 'Desserts', emoji: '🍰' },
+          { id: 'quick-meals', name: 'Quick Meals', emoji: '⚡' },
+        ])
+      }
+    }
+    
+    fetchCategories()
+  }, [])
 
   return (
     <footer className="bg-chang-brown-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
@@ -98,26 +131,24 @@ export default function Footer() {
             <li><FooterLink href="/recipes">All Recipes</FooterLink></li>
             <li><FooterLink href="/recipes?category=quick-meals">Quick & Easy</FooterLink></li>
             <li><FooterLink href="/recipes?difficulty=easy">Beginner Friendly</FooterLink></li>
-            <li><FooterLink href="/recipes?category=desserts">Desserts</FooterLink></li>
             <li><FooterLink href="/recipes?featured=true">Featured Recipes</FooterLink></li>
+            <li><FooterLink href="/search">Search Recipes</FooterLink></li>
           </FooterSection>
           
-          {/* Categories Section */}
+          {/* Dynamic Categories Section */}
           <FooterSection title="Categories">
-            <li><FooterLink href="/recipes?category=pasta">Pasta</FooterLink></li>
-            <li><FooterLink href="/recipes?category=salads">Salads</FooterLink></li>
-            <li><FooterLink href="/recipes?category=main-course">Main Courses</FooterLink></li>
-            <li><FooterLink href="/recipes?category=soups">Soups</FooterLink></li>
-            <li><FooterLink href="/recipes?category=asian-fusion">Asian Fusion</FooterLink></li>
-          </FooterSection>
-          
-          {/* Company Section */}
-          <FooterSection title="Company">
-            <li><FooterLink href="/about">About Us</FooterLink></li>
-            <li><FooterLink href="/contact">Contact</FooterLink></li>
-            <li><FooterLink href="/newsletter">Newsletter</FooterLink></li>
-            <li><FooterLink href="/privacy">Privacy Policy</FooterLink></li>
-            <li><FooterLink href="/terms">Terms of Service</FooterLink></li>
+            {categories.slice(0, 6).map((category) => (
+              <li key={category.id}>
+                <FooterLink href={`/recipes?category=${category.id}`}>
+                  {category.emoji} {category.name}
+                </FooterLink>
+              </li>
+            ))}
+            {categories.length > 6 && (
+              <li>
+                <FooterLink href="/recipes">View All Categories</FooterLink>
+              </li>
+            )}
           </FooterSection>
         </div>
         

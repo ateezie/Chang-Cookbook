@@ -16,7 +16,6 @@ export interface Recipe {
   tags: string[]
   ingredients: Ingredient[]
   instructions: string[]
-  nutrition: Nutrition
   featured: boolean
   createdAt: string
 }
@@ -29,13 +28,6 @@ export interface Chef {
 export interface Ingredient {
   item: string
   amount: string
-}
-
-export interface Nutrition {
-  calories: number
-  protein: string
-  carbs: string
-  fat: string
 }
 
 export interface Category {

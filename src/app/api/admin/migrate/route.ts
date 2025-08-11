@@ -212,19 +212,6 @@ export async function POST(request: NextRequest) {
               })
             }
 
-            // Create nutrition
-            if (recipe.nutrition) {
-              await tx.nutrition.create({
-                data: {
-                  recipeId: newRecipe.id,
-                  calories: recipe.nutrition.calories || 0,
-                  protein: recipe.nutrition.protein || '',
-                  carbs: recipe.nutrition.carbs || '',
-                  fat: recipe.nutrition.fat || ''
-                }
-              })
-            }
-
             // Create tags
             if (recipe.tags && recipe.tags.length > 0) {
               for (const tagName of recipe.tags) {

@@ -42,7 +42,15 @@
       "Bash(docker:*)",
       "Bash(docker-compose:*)",
       "Bash(where gh)",
-      "WebFetch(domain:cook.alexthip.com)"
+      "WebFetch(domain:cook.alexthip.com)",
+      "Bash(gh:*)",
+      "Bash(scp:*)",
+      "Bash(copy:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl:*)",
+      "Bash(timeout 5s npx prisma studio)",
+      "Bash(npx prisma:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }

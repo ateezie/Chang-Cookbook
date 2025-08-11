@@ -653,9 +653,102 @@ git push  # Triggers both AMD64 + ARM64 builds
 
 ---
 
-**Chang Cookbook CI/CD Pipeline: WORLD-CLASS PERFORMANCE** 🍳✨
+## 🎉 MAJOR BREAKTHROUGH - Database & Production Issues RESOLVED (August 11, 2025)
 
-**Last Updated**: August 10, 2025  
-**Status**: 🚀 OPTIMIZED - Fast builds, reliable deployments, excellent UX
-**Total Pipeline Time**: ~8-13 minutes (was 18+ minutes)
-**Emergency Deploy**: < 3 minutes available
+### **🔧 Critical Database Fix - COMPLETED**
+
+#### **Issue Resolved**: SQLite "Error code 14: Unable to open the database file"
+After extensive debugging, discovered the root cause was **DATABASE_URL path resolution** in containerized environment.
+
+**Problem**: Relative path `file:./data/production.db` caused different path resolution between:
+- ✅ Database initialization script (working) 
+- ❌ Running Next.js application (failing)
+
+**Solution**: Changed to absolute path `file:/app/data/production.db` in:
+- `Dockerfile` build environment
+- `.env.local` runtime environment
+
+#### **Resolution Steps Completed**:
+1. ✅ **Path Analysis**: Debugged with container filesystem inspection
+2. ✅ **Absolute Path Fix**: Updated DATABASE_URL to `/app/data/production.db`  
+3. ✅ **Container Restart**: Required `docker compose down/up` to reload environment
+4. ✅ **Production Testing**: Database queries and login now working
+5. ✅ **Local Setup**: Production database synced to local development
+
+### **🖼️ Open Graph Image Enhancement**
+
+#### **Custom OG Image Implementation**:
+- ✅ **Updated metadata.ts**: Now uses custom `default.jpg` as primary OG image
+- ✅ **Social Media Ready**: Better preview experience for sharing
+- ✅ **SVG Fallback**: Maintains compatibility with fallback system
+
+### **🗄️ Backup & Restore System**
+
+#### **Production Database Management**:
+```bash
+# Production backup location
+/opt/chang-cookbook/backups/production_20250811_004831.db
+
+# Local development database
+E:\Projects\chang-cookbook\data\production.db
+```
+
+#### **Restore Procedures Created**:
+- ✅ **Emergency Restore**: Step-by-step recovery process
+- ✅ **Local Development**: Production data sync workflow  
+- ✅ **Permission Management**: Automated chmod/chown procedures
+- ✅ **Documentation**: Complete backup/restore guide (`BACKUP_RESTORE.md`)
+
+### **🚀 Production Status - FULLY OPERATIONAL**
+
+#### **What's Working Now**:
+- ✅ **Database Queries**: All recipe API endpoints functional
+- ✅ **Admin Login**: Authentication system working
+- ✅ **Image Serving**: Logos, recipes, Open Graph images all operational
+- ✅ **Recipe Updates**: Admin panel for live content management
+- ✅ **CI/CD Pipeline**: Automated deployments with correct paths
+
+#### **Technical Resolution**:
+```yaml
+# Working Configuration
+DATABASE_URL: "file:/app/data/production.db"  # Absolute path
+Container Restart: docker compose down/up     # Environment reload
+File Permissions: 1001:1001 (nextjs user)    # Proper ownership
+```
+
+### **📈 Debugging Process - Knowledge Gained**
+
+#### **Container Environment Lessons**:
+1. **Path Resolution**: Relative paths can resolve differently in containerized apps
+2. **Environment Loading**: `docker compose` required to reload `.env.local` changes
+3. **User Permissions**: Container processes run as specific users (nextjs:1001)
+4. **Database Access**: SQLite file permissions critical in multi-user containers
+5. **Initialization vs Runtime**: Different processes may have different working directories
+
+#### **Production Deployment Insights**:
+- **Volume Mount Issues**: Removed problematic `/public/images` mount
+- **Nginx Configuration**: Properly proxies `/images/` to container
+- **Container Naming**: CI/CD creates different container names than docker-compose
+
+### **🛠️ Tools & Procedures Established**
+
+#### **Database Management Workflow**:
+1. **Live Updates**: Via admin panel at https://cook.alexthip.com/admin
+2. **Backup Creation**: Automated timestamped backups
+3. **Local Development**: Production database sync via SCP
+4. **Emergency Restore**: Documented recovery procedures
+
+#### **Monitoring & Debugging**:
+- **Debug API**: `/api/debug/assets` for container file verification
+- **Container Logs**: `docker logs chang-cookbook-chang-cookbook-1`
+- **Environment Check**: `docker exec ... env | grep DATABASE_URL`
+- **File Permissions**: `docker exec ... stat /app/data/production.db`
+
+---
+
+**Chang Cookbook: PRODUCTION-READY WITH FULL DATABASE FUNCTIONALITY** 🍳✨
+
+**Last Updated**: August 11, 2025  
+**Status**: 🎉 FULLY OPERATIONAL - Database, Images, CI/CD, Backup System Complete
+**Major Breakthrough**: SQLite path resolution issue resolved after extensive debugging
+**Database Status**: ✅ Production working ✅ Local development ready ✅ Backup system operational

@@ -518,6 +518,136 @@ docker inspect your-app
 
 ---
 
+## 🔄 Chang Cookbook Implementation Lessons (August 11, 2025)
+
+### **Critical Production Issues Resolved**
+
+#### **Database Path Resolution Issue**
+**Problem:** SQLite "Error code 14: Unable to open the database file"
+- **Root Cause:** Relative path `file:./data/production.db` resolved differently between initialization script and Next.js runtime
+- **Solution:** Use absolute path `file:/app/data/production.db` in both Dockerfile and runtime environment
+- **Key Learning:** Containerized applications need consistent absolute paths for database access
+
+#### **Environment Variable Loading**
+**Problem:** Container not loading updated `.env.local` variables
+- **Root Cause:** `docker start` doesn't reload environment files
+- **Solution:** Must use `docker compose down && docker compose up -d` to reload `.env.local`
+- **Key Learning:** Environment changes require full compose restart, not just container restart
+
+#### **Volume Mount Conflicts**
+**Problem:** Images 404ing after deployments
+- **Root Cause:** Volume mounts overriding built-in container files
+- **Solution:** Remove problematic volume mounts, serve images from container
+- **Configuration:** nginx proxies `/images/` requests to container instead of filesystem
+
+### **Production Deployment Strategy - Chang Cookbook Specific**
+
+#### **Working Architecture:**
+```yaml
+# docker-compose.yml
+services:
+  chang-cookbook:
+    image: ghcr.io/ateezie/chang-cookbook:latest
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/production.db  # Absolute path critical
+    env_file:
+      - .env.local  # Loaded only with docker compose up
+    volumes:
+      - ./data/database:/app/data  # Database persistence
+      - ./data/uploads:/app/public/uploads  # Upload persistence
+      # NOTE: NO volume mount for /public/images (causes 404s)
+    restart: unless-stopped
+```
+
+#### **Nginx Configuration:**
+```nginx
+# Proxy images to container (not filesystem)
+location /images/ {
+    proxy_pass http://localhost:3000;
+    proxy_set_header Host $host;
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+
+# Everything else to Next.js
+location / {
+    proxy_pass http://localhost:3000;
+    # ... standard proxy headers
+}
+```
+
+### **Database Management Workflow**
+
+#### **Backup Procedures:**
+```bash
+# Production backup
+BACKUP_DIR="/opt/chang-cookbook/backups/$(date +%Y%m%d_%H%M%S)_updated"
+mkdir -p "$BACKUP_DIR"
+cp ./data/database/production.db "$BACKUP_DIR/production.db"
+
+# Local sync
+scp "root@157.230.61.255:/opt/chang-cookbook/backups/BACKUP.db" "E:\Projects\chang-cookbook\data\production.db"
+```
+
+#### **Emergency Restore:**
+```bash
+# Stop container
+docker compose down
+
+# Restore database
+cp "./backups/BACKUP.db" "./data/database/production.db"
+sudo chown 1001:1001 ./data/database/production.db
+sudo chmod 664 ./data/database/production.db
+
+# Restart with environment reload
+docker compose up -d
+```
+
+### **Debugging Tools Established**
+
+#### **Container Inspection:**
+```bash
+# Environment check
+docker exec chang-cookbook-chang-cookbook-1 env | grep DATABASE_URL
+
+# File access test
+docker exec chang-cookbook-chang-cookbook-1 ls -la /app/data/production.db
+
+# Database connectivity test
+curl http://localhost:3000/api/recipes
+
+# Debug asset availability
+curl http://localhost:3000/api/debug/assets
+```
+
+#### **Common Resolution Steps:**
+1. **Database Issues:** Check absolute path in DATABASE_URL
+2. **Environment Issues:** Restart with `docker compose down/up`
+3. **Image Issues:** Verify nginx proxy configuration
+4. **Permission Issues:** Fix with `chown 1001:1001` for nextjs user
+
+### **Performance Metrics - Chang Cookbook**
+
+✅ **Database Resolution:** Fixed after extensive debugging  
+✅ **Image Serving:** Working via container + nginx proxy  
+✅ **CI/CD Pipeline:** ~8-13 minutes total deployment time  
+✅ **Container Restart:** ~30 seconds with environment reload  
+✅ **Admin Panel:** Fully functional for live content updates  
+✅ **Local Development:** Production database sync established  
+
+### **Critical Success Factors**
+
+1. **Absolute Database Paths:** Essential for containerized SQLite
+2. **Environment Reloading:** `docker compose` required for `.env.local` changes
+3. **Volume Mount Strategy:** Built-in container files > host mounts for static assets
+4. **nginx Proxy Configuration:** Route dynamic requests to container
+5. **Backup System:** Automated timestamped backups with restore procedures
+6. **Debugging APIs:** Custom endpoints for container asset verification
+
+---
+
 **Created:** August 10, 2025  
-**Status:** ✅ Production Ready  
-**Last Updated:** Successfully deployed Chang Cookbook
+**Status:** ✅ Production Ready with Database Functionality  
+**Last Updated:** August 11, 2025 - Major database path resolution breakthrough  
+**Implementation:** Chang Cookbook successfully deployed with full functionality

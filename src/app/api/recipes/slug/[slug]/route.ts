@@ -20,7 +20,6 @@ export async function GET(
         instructions: {
           orderBy: { order: 'asc' }
         },
-        nutrition: true,
         tags: {
           include: { tag: true }
         }
@@ -62,12 +61,6 @@ export async function GET(
         amount: ing.amount
       })),
       instructions: recipe.instructions.map(inst => inst.step),
-      nutrition: recipe.nutrition ? {
-        calories: recipe.nutrition.calories,
-        protein: recipe.nutrition.protein,
-        carbs: recipe.nutrition.carbs,
-        fat: recipe.nutrition.fat
-      } : undefined,
       tags: recipe.tags.map(t => t.tag.name)
     }
 

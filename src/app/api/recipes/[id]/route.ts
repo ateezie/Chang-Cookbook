@@ -24,7 +24,6 @@ export async function GET(
         instructions: {
           orderBy: { order: 'asc' }
         },
-        nutrition: true,
         tags: {
           include: { tag: true }
         }
@@ -66,12 +65,6 @@ export async function GET(
         amount: ing.amount
       })),
       instructions: recipe.instructions.map(inst => inst.step),
-      nutrition: recipe.nutrition ? {
-        calories: recipe.nutrition.calories,
-        protein: recipe.nutrition.protein,
-        carbs: recipe.nutrition.carbs,
-        fat: recipe.nutrition.fat
-      } : undefined,
       tags: recipe.tags.map(t => t.tag.name)
     }
 
@@ -111,7 +104,6 @@ export async function PUT(
       include: {
         ingredients: true,
         instructions: true,
-        nutrition: true,
         tags: true
       }
     })
@@ -196,26 +188,6 @@ export async function PUT(
             step: instruction,
             order: index
           }))
-        })
-      }
-
-      // Update nutrition if provided
-      if (data.nutrition) {
-        await tx.nutrition.upsert({
-          where: { recipeId: id },
-          create: {
-            recipeId: id,
-            calories: data.nutrition.calories,
-            protein: data.nutrition.protein,
-            carbs: data.nutrition.carbs,
-            fat: data.nutrition.fat
-          },
-          update: {
-            calories: data.nutrition.calories,
-            protein: data.nutrition.protein,
-            carbs: data.nutrition.carbs,
-            fat: data.nutrition.fat
-          }
         })
       }
 

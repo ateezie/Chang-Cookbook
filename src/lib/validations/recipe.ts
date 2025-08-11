@@ -10,13 +10,6 @@ export const InstructionSchema = z.object({
   order: z.number().int().min(0)
 })
 
-export const NutritionSchema = z.object({
-  calories: z.number().int().min(0),
-  protein: z.string(),
-  carbs: z.string(),
-  fat: z.string()
-})
-
 export const ChefSchema = z.object({
   name: z.string().min(1, 'Chef name is required'),
   avatar: z.string().optional()
@@ -40,7 +33,6 @@ export const CreateRecipeSchema = z.object({
   chef: ChefSchema,
   ingredients: z.array(IngredientSchema).min(1, 'At least one ingredient is required'),
   instructions: z.array(z.string()).min(1, 'At least one instruction is required'),
-  nutrition: NutritionSchema.optional(),
   tags: z.array(z.string()).default([])
 })
 

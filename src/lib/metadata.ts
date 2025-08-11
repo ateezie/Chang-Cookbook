@@ -159,13 +159,6 @@ export function generateRecipeMetadata(recipe: Recipe): Metadata {
         recipeCuisine: recipe.tags.find(tag => ['italian', 'asian', 'mexican', 'mediterranean'].includes(tag)) || 'International',
         difficulty: recipe.difficulty,
         keywords: recipe.tags.join(', '),
-        nutrition: {
-          '@type': 'NutritionInformation',
-          calories: `${recipe.nutrition.calories} calories`,
-          proteinContent: recipe.nutrition.protein,
-          carbohydrateContent: recipe.nutrition.carbs,
-          fatContent: recipe.nutrition.fat
-        },
         recipeIngredient: recipe.ingredients.map(ing => `${ing.amount} ${ing.item}`),
         recipeInstructions: recipe.instructions.map((instruction, index) => ({
           '@type': 'HowToStep',

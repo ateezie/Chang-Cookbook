@@ -6,22 +6,52 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Admin user model for authentication
+// User account model for authentication and profiles
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
   name      String
-  role      String   @default("admin")
+  role      String   @default("chef") // "admin", "chef"
+  status    String   @default("active") // "active", "inactive", "pending"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  
+  // Profile information
+  bio          String?
+  website      String?
+  socialLinks  Json? // {twitter, instagram, facebook, etc.}
+  
+  // Chef profile (one-to-one relationship)
+  chef         Chef?
+  
   // Relations
-  recipes   Recipe[]
+  recipes      Recipe[]
+  sentInvites  Invitation[] @relation("InvitedBy")
+  receivedInvite Invitation? @relation("InvitedUser")
+
+  @@map("users")
+}
+
+// Chef invitation system
+model Invitation {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  invitedBy   User     @relation("InvitedBy", fields: [invitedById], references: [id], onDelete: Cascade)
+  invitedById String
+  invitedUser User?    @relation("InvitedUser", fields: [invitedUserId], references: [id])
+  invitedUserId String? @unique
+  status      String   @default("pending") // "pending", "accepted", "expired", "revoked"
+  token       String   @unique // Invitation token
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("invitations")
 }
 
 // Recipe categories
@@ -67,7 +97,6 @@ model Recipe {
   chefId       String
   ingredients  Ingredient[]
   instructions Instruction[]
-  nutrition    Nutrition?
   tags         RecipeTag[]
 
   // Created by admin user
@@ -84,6 +113,10 @@ model Chef {
   avatar    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // User relationship (one-to-one)
+  userId    String? @unique
+  user      User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   // Relations
   recipes Recipe[]
@@ -116,21 +149,6 @@ model Instruction {
   recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   @@map("instructions")
-}
-
-// Nutrition information
-model Nutrition {
-  id       String @id @default(cuid())
-  recipeId String @unique
-  calories Int
-  protein  String
-  carbs    String
-  fat      String
-
-  // Relations
-  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-
-  @@map("nutrition")
 }
 
 // Tags system

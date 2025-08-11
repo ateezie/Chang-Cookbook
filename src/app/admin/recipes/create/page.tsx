@@ -1,10 +1,22 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ChangLogo from '@/components/ChangLogo'
-import { Recipe, Ingredient } from '@/types/recipe'
+import { Ingredient } from '@/types/recipe'
+
+interface User {
+  id: string
+  email: string
+  name: string
+  role: string
+  chef?: {
+    id: string
+    name: string
+    avatar?: string | null
+  } | null
+}
 
 interface Category {
   id: string
@@ -26,15 +38,12 @@ function generateSlug(title: string): string {
     .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
 }
 
-export default function EditRecipe() {
+export default function CreateRecipe() {
   const router = useRouter()
-  const params = useParams()
-  const recipeId = params?.id as string
-
+  const [user, setUser] = useState<User | null>(null)
+  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [recipe, setRecipe] = useState<Recipe | null>(null)
-  const [categories, setCategories] = useState<Category[]>([])
   const [error, setError] = useState('')
   const [uploading, setUploading] = useState(false)
   const [imagePreview, setImagePreview] = useState('')
@@ -50,118 +59,129 @@ export default function EditRecipe() {
     servings: 4,
     image: '',
     tags: '',
-    chefName: '',
-    chefAvatar: '',
     featured: false
   })
 
-  const [ingredients, setIngredients] = useState<Ingredient[]>([])
-  const [instructions, setInstructions] = useState<string[]>([])
+  const [ingredients, setIngredients] = useState<Ingredient[]>([{ item: '', amount: '' }])
+  const [instructions, setInstructions] = useState<string[]>([''])
 
   useEffect(() => {
-    const token = localStorage.getItem('admin_token')
-    if (!token) {
-      router.push('/admin')
-      return
-    }
-
-    loadRecipe()
-    loadCategories()
-  }, [recipeId, router])
-
-  const loadCategories = async () => {
-    try {
-      const response = await fetch('/api/categories')
-      if (response.ok) {
-        const data = await response.json()
-        setCategories(data.categories || [])
+    const checkAuth = async () => {
+      const token = localStorage.getItem('auth_token')
+      const storedUser = localStorage.getItem('user')
+      
+      if (!token || !storedUser) {
+        router.push('/login')
+        return
       }
-    } catch (error) {
-      console.error('Error loading categories:', error)
-    }
-  }
 
-  const loadRecipe = async () => {
-    try {
-      const response = await fetch(`/api/recipes/${recipeId}`)
-      const data = await response.json()
+      try {
+        // Verify token is still valid and fetch categories
+        const [profileResponse, categoriesResponse] = await Promise.all([
+          fetch('/api/auth/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }),
+          fetch('/api/categories')
+        ])
 
-      if (response.ok) {
-        const recipe = data.recipe
-        setRecipe(recipe)
-        setFormData({
-          title: recipe.title,
-          slug: recipe.slug,
-          description: recipe.description,
-          category: recipe.category,
-          difficulty: recipe.difficulty,
-          prepTime: recipe.prepTime,
-          cookTime: recipe.cookTime,
-          servings: recipe.servings,
-          image: recipe.image,
-          tags: recipe.tags.join(', '),
-          chefName: recipe.chef.name,
-          chefAvatar: recipe.chef.avatar,
-          featured: recipe.featured
-        })
-        setIngredients(recipe.ingredients)
-        setInstructions(recipe.instructions)
-        setImagePreview(recipe.image)
-      } else {
-        setError('Recipe not found')
+        if (profileResponse.ok) {
+          const data = await profileResponse.json()
+          setUser(data.user)
+        } else {
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('user')
+          router.push('/login')
+          return
+        }
+
+        if (categoriesResponse.ok) {
+          const categoriesData = await categoriesResponse.json()
+          setCategories(categoriesData.categories || [])
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error)
+        router.push('/login')
+        return
       }
-    } catch (error) {
-      setError('Error loading recipe')
-    } finally {
+
       setLoading(false)
     }
-  }
+
+    checkAuth()
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
     setError('')
 
+    // Validation
+    if (!formData.title.trim()) {
+      setError('Recipe title is required')
+      setSaving(false)
+      return
+    }
+
+    if (!formData.category) {
+      setError('Category is required')
+      setSaving(false)
+      return
+    }
+
+    if (ingredients.filter(ing => ing.item.trim() && ing.amount.trim()).length === 0) {
+      setError('At least one ingredient is required')
+      setSaving(false)
+      return
+    }
+
+    if (instructions.filter(inst => inst.trim()).length === 0) {
+      setError('At least one instruction is required')
+      setSaving(false)
+      return
+    }
+
     try {
-      const token = localStorage.getItem('admin_token')
-      const updatedRecipe = {
-        title: formData.title,
-        slug: formData.slug,
-        description: formData.description,
+      const token = localStorage.getItem('auth_token')
+      
+      // Generate a unique ID for the recipe
+      const recipeId = `${formData.slug || generateSlug(formData.title)}-${Date.now()}`
+
+      const newRecipe = {
+        id: recipeId,
+        title: formData.title.trim(),
+        slug: formData.slug || generateSlug(formData.title),
+        description: formData.description.trim(),
         categoryId: formData.category,
         difficulty: formData.difficulty,
         prepTime: formData.prepTime,
         cookTime: formData.cookTime,
         totalTime: formData.prepTime + formData.cookTime,
         servings: formData.servings,
-        image: formData.image,
+        image: formData.image.trim(),
         featured: formData.featured,
-        chef: {
-          name: formData.chefName,
-          avatar: formData.chefAvatar
-        },
-        ingredients,
-        instructions,
+        ingredients: ingredients.filter(ing => ing.item.trim() && ing.amount.trim()),
+        instructions: instructions.filter(inst => inst.trim()),
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       }
 
-      const response = await fetch(`/api/recipes/${recipeId}`, {
-        method: 'PUT',
+      const response = await fetch('/api/recipes', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(updatedRecipe)
+        body: JSON.stringify(newRecipe)
       })
 
       if (response.ok) {
-        router.push('/admin/dashboard')
+        router.push('/dashboard')
       } else {
         const data = await response.json()
-        setError(data.error || 'Error saving recipe')
+        setError(data.error || 'Error creating recipe')
       }
     } catch (error) {
-      setError('Error saving recipe')
+      console.error('Error creating recipe:', error)
+      setError('Error creating recipe')
     } finally {
       setSaving(false)
     }
@@ -221,7 +241,7 @@ export default function EditRecipe() {
       uploadFormData.append('file', file)
       uploadFormData.append('type', 'recipe')
 
-      const token = localStorage.getItem('admin_token')
+      const token = localStorage.getItem('auth_token')
       const response = await fetch('/api/upload', {
         method: 'POST',
         headers: {
@@ -256,26 +276,14 @@ export default function EditRecipe() {
       <div className="min-h-screen bg-chang-neutral-50 flex items-center justify-center">
         <div className="text-center">
           <ChangLogo className="h-16 w-16 mx-auto mb-4 animate-pulse" />
-          <p className="text-chang-brown-600">Loading recipe...</p>
+          <p className="text-chang-brown-600">Loading...</p>
         </div>
       </div>
     )
   }
 
-  if (error && !recipe) {
-    return (
-      <div className="min-h-screen bg-chang-neutral-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error}</p>
-          <Link 
-            href="/admin/dashboard"
-            className="text-chang-orange-600 hover:text-chang-orange-700"
-          >
-            Back to Dashboard
-          </Link>
-        </div>
-      </div>
-    )
+  if (!user) {
+    return null // Will redirect to login
   }
 
   return (
@@ -287,11 +295,11 @@ export default function EditRecipe() {
             <div className="flex items-center">
               <ChangLogo className="h-8 w-8 mr-3" />
               <h1 className="text-xl font-bold text-chang-brown-800">
-                Edit Recipe: {recipe?.title}
+                Create New Recipe
               </h1>
             </div>
             <Link
-              href="/admin/dashboard"
+              href="/dashboard"
               className="text-sm text-chang-brown-600 hover:text-chang-brown-700"
             >
               ← Back to Dashboard
@@ -580,6 +588,7 @@ export default function EditRecipe() {
                     type="button"
                     onClick={() => removeIngredient(index)}
                     className="text-red-600 hover:text-red-700 px-2"
+                    disabled={ingredients.length === 1}
                   >
                     Remove
                   </button>
@@ -617,6 +626,7 @@ export default function EditRecipe() {
                     type="button"
                     onClick={() => removeInstruction(index)}
                     className="text-red-600 hover:text-red-700 px-2 mt-2"
+                    disabled={instructions.length === 1}
                   >
                     Remove
                   </button>
@@ -625,41 +635,10 @@ export default function EditRecipe() {
             </div>
           </div>
 
-          {/* Chef Information */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-chang-brown-800 mb-4">Chef Information</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-chang-brown-700 mb-2">
-                  Chef Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.chefName}
-                  onChange={(e) => setFormData({...formData, chefName: e.target.value})}
-                  className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-chang-brown-700 mb-2">
-                  Chef Avatar URL
-                </label>
-                <input
-                  type="text"
-                  value={formData.chefAvatar}
-                  onChange={(e) => setFormData({...formData, chefAvatar: e.target.value})}
-                  className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                  placeholder="https://example.com/avatar.jpg (optional)"
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Submit Buttons */}
           <div className="flex justify-end space-x-4">
             <Link
-              href="/admin/dashboard"
+              href="/dashboard"
               className="px-4 py-2 text-chang-brown-600 border border-chang-brown-300 rounded-md hover:bg-chang-brown-50"
             >
               Cancel
@@ -669,7 +648,7 @@ export default function EditRecipe() {
               disabled={saving}
               className="px-4 py-2 bg-chang-orange-600 text-white rounded-md hover:bg-chang-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {saving ? 'Saving...' : 'Save Recipe'}
+              {saving ? 'Creating Recipe...' : 'Create Recipe'}
             </button>
           </div>
         </form>

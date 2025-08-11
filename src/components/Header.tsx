@@ -71,15 +71,20 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white shadow-sm border-b border-chang-neutral-200 sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b border-chang-neutral-200 sticky top-0 z-50 relative">
+      {/* Absolute positioned larger logo */}
+      <div className="absolute left-4 top-0 transform -translate-y-2 z-10">
+        <Link href="/" className="block">
+          <ChangLogo size="large" className="w-20 h-20 drop-shadow-lg hover:scale-105 transition-transform duration-200" />
+        </Link>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3">
-              {/* Chang Cookbook Logo - Replace with your uploaded logo */}
-              <ChangLogo size="medium" className="sm:w-14 sm:h-14" />
-              <h1 className="text-xl sm:text-2xl font-heading font-bold text-chang-brown-900">
+          {/* Logo space holder and title */}
+          <div className="flex items-center pl-24">
+            <Link href="/">
+              <h1 className="text-xl sm:text-2xl font-heading font-bold text-chang-brown-900 hover:text-chang-orange-600 transition-colors duration-200">
                 Chang Cookbook
               </h1>
             </Link>

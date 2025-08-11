@@ -13,6 +13,12 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  // Disable static optimization completely during database migration
+  trailingSlash: false,
+  // Force all pages to be server-rendered to avoid build-time database calls
+  experimental: {
+    appDir: true,
+  },
   images: {
     remotePatterns: [
       {

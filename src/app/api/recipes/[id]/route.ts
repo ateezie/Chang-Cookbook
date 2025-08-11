@@ -65,7 +65,9 @@ export async function GET(
         amount: ing.amount
       })),
       instructions: recipe.instructions.map((inst: any) => inst.step),
-      tags: recipe.tags.map((t: any) => t.tag.name)
+      tags: recipe.tags.map((t: any) => t.tag.name),
+      equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+      notes: recipe.notes
     }
 
     return NextResponse.json({ recipe: transformedRecipe })
@@ -161,6 +163,8 @@ export async function PUT(
           ...(data.image !== undefined && { image: data.image }),
           ...(data.imageCredit !== undefined && { imageCredit: data.imageCredit }),
           ...(data.unsplashId !== undefined && { unsplashId: data.unsplashId }),
+          ...(data.equipment !== undefined && { equipment: data.equipment ? JSON.stringify(data.equipment) : null }),
+          ...(data.notes !== undefined && { notes: data.notes }),
           ...(data.featured !== undefined && { featured: data.featured }),
           chefId
         }

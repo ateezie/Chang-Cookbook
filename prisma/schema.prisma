@@ -87,6 +87,8 @@ model Recipe {
   image        String?
   imageCredit  String?
   unsplashId   String?
+  equipment    String? // JSON array of equipment items
+  notes        String? // Additional notes and tips
   featured     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

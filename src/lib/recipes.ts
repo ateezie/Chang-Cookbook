@@ -41,7 +41,9 @@ export async function getAllRecipes(): Promise<Recipe[]> {
           amount: ing.amount
         })),
         instructions: recipe.instructions.map((inst: any) => inst.step),
-        tags: recipe.tags.map((t: any) => t.tag.name)
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
       }))
     },
     buildTimeFallbacks.recipes,
@@ -111,10 +113,12 @@ export async function getRecipeById(id: string): Promise<Recipe | undefined> {
           amount: ing.amount
         })),
         instructions: recipe.instructions.map((inst: any) => inst.step),
-        tags: recipe.tags.map((t: any) => t.tag.name)
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
       }
     },
-    buildTimeFallbacks.recipes.find(recipe => recipe.id === id),
+    buildTimeFallbacks.recipes.find((recipe: any) => recipe.id === id),
     'get recipe by ID'
   )
 }
@@ -161,10 +165,12 @@ export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]
           amount: ing.amount
         })),
         instructions: recipe.instructions.map((inst: any) => inst.step),
-        tags: recipe.tags.map((t: any) => t.tag.name)
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
       }))
     },
-    buildTimeFallbacks.recipes.filter(recipe => recipe.category === categoryId),
+    buildTimeFallbacks.recipes.filter((recipe: any) => recipe.category === categoryId),
     'get recipes by category'
   )
 }
@@ -209,10 +215,12 @@ export async function getFeaturedRecipes(): Promise<Recipe[]> {
           amount: ing.amount
         })),
         instructions: recipe.instructions.map((inst: any) => inst.step),
-        tags: recipe.tags.map((t: any) => t.tag.name)
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
       }))
     },
-    buildTimeFallbacks.recipes.filter(recipe => recipe.featured),
+    buildTimeFallbacks.recipes.filter((recipe: any) => recipe.featured),
     'get featured recipes'
   )
 }
@@ -267,10 +275,12 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
           amount: ing.amount
         })),
         instructions: recipe.instructions.map((inst: any) => inst.step),
-        tags: recipe.tags.map((t: any) => t.tag.name)
+        tags: recipe.tags.map((t: any) => t.tag.name),
+        equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+        notes: recipe.notes
       }))
     },
-    buildTimeFallbacks.recipes.filter(recipe => {
+    buildTimeFallbacks.recipes.filter((recipe: any) => {
       const searchTerm = query.toLowerCase()
       return recipe.title.toLowerCase().includes(searchTerm) ||
              recipe.description.toLowerCase().includes(searchTerm) ||
@@ -419,7 +429,7 @@ export async function getPopularTags(limit: number = 10): Promise<Array<{ tag: s
     // Fallback: calculate from JSON data
     (() => {
       const tagCounts = new Map<string, number>()
-      buildTimeFallbacks.recipes.forEach(recipe => {
+      buildTimeFallbacks.recipes.forEach((recipe: any) => {
         recipe.tags.forEach((tag: any) => {
           tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
         })

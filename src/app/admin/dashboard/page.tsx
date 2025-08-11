@@ -16,14 +16,81 @@ interface AdminUser {
 export default function AdminDashboard() {
   const [user, setUser] = useState<AdminUser | null>(null)
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [sortedRecipes, setSortedRecipes] = useState<Recipe[]>([])
   const [loading, setLoading] = useState(true)
   const [recipesLoading, setRecipesLoading] = useState(true)
+  const [sortConfig, setSortConfig] = useState<{
+    key: 'recipe' | 'category' | 'difficulty' | 'featured' | null
+    direction: 'asc' | 'desc'
+  }>({ key: 'recipe', direction: 'asc' })
   const [stats, setStats] = useState({
     total: 0,
     featured: 0,
     categories: 0
   })
   const router = useRouter()
+
+  // Sorting function
+  const sortRecipes = (recipesToSort: Recipe[], key: typeof sortConfig.key, direction: typeof sortConfig.direction) => {
+    if (!key) return recipesToSort
+
+    return [...recipesToSort].sort((a, b) => {
+      let aValue: string | boolean
+      let bValue: string | boolean
+
+      switch (key) {
+        case 'recipe':
+          aValue = a.title.toLowerCase()
+          bValue = b.title.toLowerCase()
+          break
+        case 'category':
+          aValue = a.category.toLowerCase()
+          bValue = b.category.toLowerCase()
+          break
+        case 'difficulty':
+          aValue = a.difficulty.toLowerCase()
+          bValue = b.difficulty.toLowerCase()
+          break
+        case 'featured':
+          aValue = a.featured
+          bValue = b.featured
+          break
+        default:
+          return 0
+      }
+
+      if (key === 'featured') {
+        // For featured: featured items first when desc, non-featured first when asc
+        if (direction === 'desc') {
+          return (bValue as boolean) ? 1 : (aValue as boolean) ? -1 : 0
+        } else {
+          return (aValue as boolean) ? 1 : (bValue as boolean) ? -1 : 0
+        }
+      }
+
+      // For text fields (recipe, category, difficulty)
+      if (aValue < bValue) return direction === 'asc' ? -1 : 1
+      if (aValue > bValue) return direction === 'asc' ? 1 : -1
+      return 0
+    })
+  }
+
+  // Handle sorting
+  const handleSort = (key: typeof sortConfig.key) => {
+    let direction: 'asc' | 'desc' = 'desc' // Default to descending as requested
+    
+    if (sortConfig.key === key && sortConfig.direction === 'desc') {
+      direction = 'asc'
+    }
+
+    setSortConfig({ key, direction })
+  }
+
+  // Sort recipes whenever recipes or sortConfig changes
+  useEffect(() => {
+    const sorted = sortRecipes(recipes, sortConfig.key, sortConfig.direction)
+    setSortedRecipes(sorted)
+  }, [recipes, sortConfig])
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
@@ -216,16 +283,56 @@ export default function AdminDashboard() {
                 <thead className="bg-chang-neutral-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
-                      Recipe
+                      <button
+                        onClick={() => handleSort('recipe')}
+                        className="flex items-center space-x-1 hover:text-chang-orange-600 transition-colors"
+                      >
+                        <span>Recipe</span>
+                        {sortConfig.key === 'recipe' && (
+                          <span className="text-chang-orange-500">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </button>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
-                      Category
+                      <button
+                        onClick={() => handleSort('category')}
+                        className="flex items-center space-x-1 hover:text-chang-orange-600 transition-colors"
+                      >
+                        <span>Category</span>
+                        {sortConfig.key === 'category' && (
+                          <span className="text-chang-orange-500">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </button>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
-                      Difficulty
+                      <button
+                        onClick={() => handleSort('difficulty')}
+                        className="flex items-center space-x-1 hover:text-chang-orange-600 transition-colors"
+                      >
+                        <span>Difficulty</span>
+                        {sortConfig.key === 'difficulty' && (
+                          <span className="text-chang-orange-500">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </button>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
-                      Featured
+                      <button
+                        onClick={() => handleSort('featured')}
+                        className="flex items-center space-x-1 hover:text-chang-orange-600 transition-colors"
+                      >
+                        <span>Featured</span>
+                        {sortConfig.key === 'featured' && (
+                          <span className="text-chang-orange-500">
+                            {sortConfig.direction === 'desc' ? '★' : '☆'}
+                          </span>
+                        )}
+                      </button>
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-chang-brown-700 uppercase tracking-wider">
                       Actions
@@ -233,7 +340,7 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-chang-neutral-200">
-                  {recipes.map((recipe) => (
+                  {sortedRecipes.map((recipe) => (
                     <tr key={recipe.id} className="hover:bg-chang-neutral-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">

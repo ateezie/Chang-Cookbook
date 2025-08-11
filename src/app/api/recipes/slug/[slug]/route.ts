@@ -61,7 +61,9 @@ export async function GET(
         amount: ing.amount
       })),
       instructions: recipe.instructions.map((inst: any) => inst.step),
-      tags: recipe.tags.map((t: any) => t.tag.name)
+      tags: recipe.tags.map((t: any) => t.tag.name),
+      equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+      notes: recipe.notes
     }
 
     return NextResponse.json({ recipe: transformedRecipe })

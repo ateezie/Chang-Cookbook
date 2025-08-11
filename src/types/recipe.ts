@@ -16,6 +16,8 @@ export interface Recipe {
   tags: string[]
   ingredients: Ingredient[]
   instructions: string[]
+  equipment?: string[]
+  notes?: string
   featured: boolean
   createdAt: string
 }

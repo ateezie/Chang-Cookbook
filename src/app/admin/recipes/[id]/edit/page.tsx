@@ -57,6 +57,8 @@ export default function EditRecipe() {
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [instructions, setInstructions] = useState<string[]>([])
+  const [equipment, setEquipment] = useState<string[]>([])
+  const [notes, setNotes] = useState('')
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
@@ -106,6 +108,8 @@ export default function EditRecipe() {
         })
         setIngredients(recipe.ingredients)
         setInstructions(recipe.instructions)
+        setEquipment(recipe.equipment || [])
+        setNotes(recipe.notes || '')
         setImagePreview(recipe.image)
       } else {
         setError('Recipe not found')
@@ -142,6 +146,8 @@ export default function EditRecipe() {
         },
         ingredients,
         instructions,
+        equipment,
+        notes,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       }
 
@@ -195,6 +201,21 @@ export default function EditRecipe() {
       i === index ? value : inst
     )
     setInstructions(updated)
+  }
+
+  const addEquipment = () => {
+    setEquipment([...equipment, ''])
+  }
+
+  const removeEquipment = (index: number) => {
+    setEquipment(equipment.filter((_, i) => i !== index))
+  }
+
+  const updateEquipment = (index: number, value: string) => {
+    const updated = equipment.map((item, i) => 
+      i === index ? value : item
+    )
+    setEquipment(updated)
   }
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -625,35 +646,53 @@ export default function EditRecipe() {
             </div>
           </div>
 
-          {/* Chef Information */}
+          {/* Equipment */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-chang-brown-800 mb-4">Chef Information</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-chang-brown-700 mb-2">
-                  Chef Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.chefName}
-                  onChange={(e) => setFormData({...formData, chefName: e.target.value})}
-                  className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-chang-brown-700 mb-2">
-                  Chef Avatar URL
-                </label>
-                <input
-                  type="text"
-                  value={formData.chefAvatar}
-                  onChange={(e) => setFormData({...formData, chefAvatar: e.target.value})}
-                  className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
-                  placeholder="https://example.com/avatar.jpg (optional)"
-                />
-              </div>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-chang-brown-800">Equipment</h3>
+              <button
+                type="button"
+                onClick={addEquipment}
+                className="bg-chang-orange-600 text-white px-3 py-1 rounded text-sm hover:bg-chang-orange-700"
+              >
+                Add Equipment
+              </button>
             </div>
+            <div className="space-y-3">
+              {equipment.map((item, index) => (
+                <div key={index} className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Equipment item (e.g., Large mixing bowl, Sharp knife)"
+                    value={item}
+                    onChange={(e) => updateEquipment(index, e.target.value)}
+                    className="flex-1 px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeEquipment(index)}
+                    className="text-red-600 hover:text-red-700 px-2"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Notes & Tips */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="text-lg font-medium text-chang-brown-800 mb-4">Notes & Tips</h3>
+            <textarea
+              rows={4}
+              placeholder="Add any helpful notes, tips, or variations for this recipe..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500"
+            />
+            <p className="mt-2 text-xs text-chang-brown-500">
+              Share cooking tips, ingredient substitutions, storage advice, or any other helpful information.
+            </p>
           </div>
 
           {/* Submit Buttons */}

@@ -109,7 +109,9 @@ export async function GET(request: NextRequest) {
         amount: ing.amount
       })),
       instructions: recipe.instructions.map(inst => inst.step),
-      tags: recipe.tags.map(t => t.tag.name)
+      tags: recipe.tags.map(t => t.tag.name),
+      equipment: recipe.equipment ? JSON.parse(recipe.equipment) : [],
+      notes: recipe.notes
     }))
 
     const totalPages = Math.ceil(totalCount / limit)
@@ -203,6 +205,8 @@ export async function POST(request: NextRequest) {
           image: data.image,
           imageCredit: data.imageCredit,
           unsplashId: data.unsplashId,
+          equipment: data.equipment ? JSON.stringify(data.equipment) : null,
+          notes: data.notes || null,
           featured: data.featured,
           chefId: chef!.id,
           authorId: user.id

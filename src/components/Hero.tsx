@@ -18,7 +18,7 @@ interface HeroProps {
 export default function Hero({
   title = "Cook with me and",
   subtitle = "\"Chang Your Life\"",
-  description = "Simple to Medium difficulty recipes that I've sourced from family and friends. Join me in exploring the world of cooking with these delicious recipes.",
+  description = "This serves as a repository of my favorite recipes that I've enjoyed cooking and sharing with friends.  My vision is to invite other chefs to contribute their own recipes, creating a collaborative space where we can all learn and grow together in our culinary journeys!",
   primaryButtonText = "Start Cooking",
   primaryButtonHref = "/recipes",
   secondaryButtonText = "Browse Recipes",

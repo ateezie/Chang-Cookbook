@@ -76,7 +76,7 @@ export default function HomePage() {
               Featured Recipes
             </h2>
             <p className="text-lg font-body text-chang-brown-700 max-w-2xl mx-auto">
-              Our most popular and highest-rated recipes, tested and loved by home cooks everywhere.
+              Here are four of my favorite authentic Thai recipes curated by my mother! 🥰
             </p>
           </div>
 

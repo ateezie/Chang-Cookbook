@@ -33,6 +33,7 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        logout: true
         
     - name: 📝 Extract metadata
       id: meta
@@ -168,6 +169,7 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        logout: true
         
     - name: 🔍 Debug and verify image
       run: |
@@ -267,6 +269,14 @@ jobs:
         # Show layer breakdown
         echo "### 🔍 Layer Breakdown:"
         docker history ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest --format "table {{.CreatedBy}}\t{{.Size}}" 2>/dev/null || echo "Could not analyze layers"
+        
+    - name: 🧹 Cleanup credentials
+      if: always()
+      run: |
+        echo "🔐 Cleaning up Docker credentials for security..."
+        docker logout ${{ env.REGISTRY }} 2>/dev/null || true
+        rm -f ~/.docker/config.json 2>/dev/null || true
+        echo "✅ Credentials cleaned up"
         
   deploy-container:
     name: 🚀 Deploy Container to Production
@@ -369,7 +379,7 @@ jobs:
           echo "🚀 Deployment completed in under 2 minutes!"
         EOF
         
-    - name: 🧹 Cleanup old images
+    - name: 🧹 Cleanup old images and credentials
       run: |
         ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           # Remove old images (keep last 3)
@@ -377,4 +387,8 @@ jobs:
           
           # Clean up unused resources
           docker system prune -f
+          
+          # Clean up Docker credentials for security
+          docker logout ghcr.io 2>/dev/null || true
+          rm -f ~/.docker/config.json 2>/dev/null || true
         EOF

@@ -49,7 +49,8 @@ RUN echo "=== Verifying public files in builder stage ===" && \
 # Set build environment variables
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_URL="file:/app/data/production.db"
+# Use PostgreSQL URL for production - will be overridden by deployment env vars
+ENV DATABASE_URL="postgresql://user:password@localhost:5432/changcookbook"
 ENV JWT_SECRET="build-time-secret"
 ENV NEXTAUTH_URL="http://localhost:3000"
 
@@ -113,7 +114,7 @@ COPY --from=builder /app/init-db.js ./init-db.js
 RUN mkdir -p ./public/uploads
 RUN chown -R nextjs:nodejs ./public/uploads
 
-# Create database directory with proper permissions
+# Create data directory for logs/uploads (PostgreSQL is external)
 RUN mkdir -p ./data
 RUN chown -R nextjs:nodejs ./data
 
@@ -125,5 +126,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Initialize database as root (for permissions), then switch to nextjs user and start server
-CMD ["sh", "-c", "node init-db.js && chown -R nextjs:nodejs /app/data && su-exec nextjs node server.js"]
+# Start server directly (PostgreSQL is external, no local DB initialization needed)
+CMD ["su-exec", "nextjs", "node", "server.js"]

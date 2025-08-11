@@ -57,15 +57,15 @@ export default function ChangLogo({ size = 'medium', className = '' }: ChangLogo
 
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
-      <Image
+      <img
         src={logoSources[currentLogoIndex]}
         alt="Chang Cookbook"
         width={sizePixels[size]}
         height={sizePixels[size]}
         className="w-full h-full object-contain"
         onError={handleImageError}
-        priority={size === 'medium'} // Prioritize header logo
-        unoptimized={true} // Disable optimization for logo images
+        loading={size === 'medium' ? 'eager' : 'lazy'}
+        style={{ objectFit: 'contain' }}
       />
     </div>
   )

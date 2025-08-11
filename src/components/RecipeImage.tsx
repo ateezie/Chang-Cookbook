@@ -60,21 +60,18 @@ export default function RecipeImage({
   // Check if this is a locally uploaded image that needs special handling
   const isLocalUpload = imgSrc.startsWith('/images/recipes/') || imgSrc.startsWith('/images/chefs/') || imgSrc.startsWith('/images/logo/') || imgSrc.startsWith('/images/og/')
   
+  // For mobile Safari compatibility, use regular img tag instead of Next.js Image
+  // This bypasses any Next.js image optimization issues on iOS
   return (
-    <Image
+    <img
       src={imgSrc}
       alt={alt}
       width={width}
       height={height}
       className={className}
-      priority={priority}
       onError={handleError}
-      placeholder="blur"
-      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-      // Force unoptimized for ALL local images to prevent 500 errors on mobile
-      unoptimized={true}
-      // Add sizes attribute for responsive images
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      loading={priority ? 'eager' : 'lazy'}
+      style={{ objectFit: 'cover' }}
     />
   )
 }

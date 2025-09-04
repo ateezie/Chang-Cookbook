@@ -52,7 +52,10 @@
       "Bash(npx prisma:*)",
       "Bash(find:*)",
       "Bash(timeout 120 npm run build)",
-      "Bash(timeout 30 npx prisma generate)"
+      "Bash(timeout 30 npx prisma generate)",
+      "Bash(npx playwright:*)",
+      "Bash(npm test)",
+      "Bash(npm run:*)"
     ],
     "deny": []
   }

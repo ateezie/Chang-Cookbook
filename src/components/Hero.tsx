@@ -33,6 +33,8 @@ export default function Hero({
   const recipeName = featuredRecipe?.title || "Featured Recipe"
   const recipeLink = featuredRecipe ? `/recipes/${featuredRecipe.slug}` : "/recipes"
   
+  // Hero section redesigned with cleaner bottom edge (wave SVG removed)
+  
   // Check if this is a locally uploaded image
   const isLocalUpload = heroImage.startsWith('/images/recipes/') || heroImage.startsWith('/images/chefs/')
   return (

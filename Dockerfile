@@ -126,5 +126,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Start server directly (PostgreSQL is external, no local DB initialization needed)
-CMD ["su-exec", "nextjs", "node", "server.js"]
+# Start server with Prisma client regeneration for PostgreSQL
+CMD ["sh", "-c", "npx prisma generate && su-exec nextjs node server.js"]

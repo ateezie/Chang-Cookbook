@@ -356,6 +356,11 @@ export default function CreateRecipe() {
 
     // Load the parsed data into the form
     const data = result.data
+    if (!data) {
+      setJsonError('No data received from parser')
+      return
+    }
+    
     setFormData({
       title: data.title,
       slug: data.slug,

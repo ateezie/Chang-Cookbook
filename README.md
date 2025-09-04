@@ -2,7 +2,7 @@
 
 A modern React/Next.js recipe website with a warm, personal brand identity. Features a comprehensive recipe management system, responsive design, and complete branding integration.
 
-![Chang Cookbook](https://img.shields.io/badge/Status-Production%20Ready-brightgreen) ![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black) ![React](https://img.shields.io/badge/React-19.1.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
+![Chang Cookbook](https://img.shields.io/badge/Status-Production%20Ready-brightgreen) ![CI/CD](https://github.com/ateezie/Chang-Cookbook/workflows/🧪%20CI%20-%20Test%20and%20Build/badge.svg) ![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black) ![React](https://img.shields.io/badge/React-19.1.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
 
 ## ✨ Features
 

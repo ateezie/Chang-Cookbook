@@ -36,7 +36,7 @@ jobs:
         DATABASE_URL: "file:./test.db"
       run: |
         npx prisma generate
-        npx prisma migrate deploy
+        npx prisma db push
         
     - name: 🧪 Run tests (if available)
       run: |
@@ -107,10 +107,11 @@ jobs:
       run: npm audit --audit-level=high
       
     - name: 🔒 Check for secrets
-      uses: trufflesecurity/trufflehog@main
-      with:
-        path: ./
-        base: main
-        head: HEAD
-        extra_args: --only-verified
+      run: |
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          echo "Running TruffleHog scan for pull request..."
+          docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem --only-verified /pwd
+        else
+          echo "Skipping TruffleHog scan for push events (no base/head diff available)"
+        fi
       continue-on-error: true

@@ -330,10 +330,24 @@ jobs:
           mkdir -p "$DEPLOY_DIR"
           cd "$DEPLOY_DIR"
           
-          echo "[INFO] Stopping existing containers..."
+          echo "[INFO] Aggressively stopping existing containers and freeing port 3000..."
+          
+          # Stop all containers using port 3000
+          echo "Killing any processes using port 3000..."
+          lsof -ti:3000 | xargs -r kill -9 2>/dev/null || echo "No processes on port 3000"
+          
+          # Stop and remove any existing containers
           if [ -f "docker-compose.yml" ]; then
-            docker compose down --timeout 10 || echo "No containers to stop"
+            docker compose down --timeout 10 --volumes --remove-orphans || echo "No containers to stop"
           fi
+          
+          # Force remove any chang-cookbook containers
+          docker ps -q --filter "name=chang-cookbook" | xargs -r docker stop
+          docker ps -aq --filter "name=chang-cookbook" | xargs -r docker rm -f
+          
+          # Wait a moment for port to be fully released
+          sleep 2
+          echo "Port cleanup completed"
           
           echo "[INFO] Creating streamlined docker-compose.yml..."
           echo "services:" > docker-compose.yml

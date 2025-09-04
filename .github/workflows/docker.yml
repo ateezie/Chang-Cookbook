@@ -359,9 +359,9 @@ jobs:
           echo "    environment:" >> docker-compose.yml
           echo "      - NODE_ENV=production" >> docker-compose.yml
           echo "      - DATABASE_URL=postgresql://neondb_owner:npg_6ZxEuBWpk2jP@ep-dry-shape-ae107cpv-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require" >> docker-compose.yml
-          echo "      - JWT_SECRET=${{ secrets.JWT_SECRET }}" >> docker-compose.yml
-          echo "      - ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> docker-compose.yml
-          echo "      - ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> docker-compose.yml
+          echo "      - JWT_SECRET=DFfbtoXcDf*IV9M6@c5S%OK4etWHaaOD" >> docker-compose.yml
+          echo "      - ADMIN_EMAIL=hello@alexthip.com" >> docker-compose.yml
+          echo "      - ADMIN_PASSWORD=cAEj05d7TtCf*@zD" >> docker-compose.yml
           echo "      - NEXTAUTH_URL=https://cook.alexthip.com" >> docker-compose.yml
           echo "    volumes:" >> docker-compose.yml
           echo "      - ./data:/app/data" >> docker-compose.yml

@@ -364,7 +364,7 @@ jobs:
           echo "      - ADMIN_PASSWORD=cAEj05d7TtCf*@zD" >> docker-compose.yml
           echo "      - NEXTAUTH_URL=https://cook.alexthip.com" >> docker-compose.yml
           echo "    volumes:" >> docker-compose.yml
-          echo "      - ./data:/app/data" >> docker-compose.yml
+          echo "      - ./logs:/app/logs" >> docker-compose.yml
           echo "    restart: unless-stopped" >> docker-compose.yml
           echo "    pull_policy: always" >> docker-compose.yml
           

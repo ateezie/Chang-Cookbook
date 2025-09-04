@@ -277,7 +277,7 @@ export default function AdminDashboard() {
           <h2 className="text-2xl font-bold text-chang-brown-800">Manage Recipes</h2>
           <div className="flex space-x-4">
             <Link
-              href="/admin/recipes/new"
+              href="/admin/recipes/create"
               className="bg-chang-orange-600 text-white px-4 py-2 rounded-md hover:bg-chang-orange-700"
             >
               Add New Recipe

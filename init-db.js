@@ -16,24 +16,22 @@ function generateSlug(title) {
 async function initializeDatabase() {
   console.log('🗃️ Initializing Chang Cookbook database...')
   
-  // Ensure database directory exists
-  const dbDir = '/app/data'
-  if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true })
-    console.log('✅ Created database directory')
-  }
-
-  // Set database URL for this init process
-  process.env.DATABASE_URL = 'file:/app/data/production.db'
+  // Using PostgreSQL - no local database directory needed
+  console.log('🐘 Using PostgreSQL database (Neon)')
   
-  // Ensure proper permissions on data directory
-  try {
-    execSync('chown -R nextjs:nodejs /app/data/', { stdio: 'pipe' })
-    execSync('chmod -R 755 /app/data/', { stdio: 'pipe' })
-    console.log('✅ Set proper permissions on data directory')
-  } catch (error) {
-    console.log('⚠️  Could not set permissions (may not be root):', error.message)
+  // Verify DATABASE_URL is set (should be provided by environment)
+  if (!process.env.DATABASE_URL) {
+    console.error('❌ DATABASE_URL environment variable not set!')
+    throw new Error('DATABASE_URL is required for PostgreSQL connection')
   }
+  
+  if (!process.env.DATABASE_URL.includes('postgresql://')) {
+    console.error('❌ DATABASE_URL must be a PostgreSQL connection string!')
+    console.error('Current:', process.env.DATABASE_URL)
+    throw new Error('Invalid DATABASE_URL - must be PostgreSQL')
+  }
+  
+  console.log('✅ PostgreSQL connection string verified')
   
   // Generate Prisma client first
   console.log('🔧 Generating Prisma client...')
@@ -45,13 +43,13 @@ async function initializeDatabase() {
     throw error
   }
 
-  // Run database migrations
-  console.log('📋 Running database migrations...')
+  // Push database schema (for PostgreSQL)
+  console.log('📋 Pushing database schema...')
   try {
-    execSync('npx prisma migrate deploy', { stdio: 'inherit' })
-    console.log('✅ Database migrations completed')
+    execSync('npx prisma db push', { stdio: 'inherit' })
+    console.log('✅ Database schema pushed successfully')
   } catch (error) {
-    console.error('❌ Failed to run migrations:', error.message)
+    console.error('❌ Failed to push schema:', error.message)
     throw error
   }
 
@@ -271,17 +269,9 @@ async function initializeDatabase() {
       })
     }
 
-    console.log('\n🎉 Database initialization completed!')
+    console.log('\n🎉 PostgreSQL database initialization completed!')
     console.log(`✅ Successfully migrated: ${migratedCount} recipes`)
-
-    // Ensure final permissions are correct
-    try {
-      execSync('chown -R nextjs:nodejs /app/data/', { stdio: 'pipe' })
-      execSync('chmod 664 /app/data/production.db', { stdio: 'pipe' })
-      console.log('✅ Final database permissions set')
-    } catch (error) {
-      console.log('⚠️  Could not set final permissions:', error.message)
-    }
+    console.log('🐘 All data stored in Neon PostgreSQL database')
 
   } catch (error) {
     console.error('❌ Database initialization failed:', error)

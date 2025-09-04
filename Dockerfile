@@ -114,9 +114,9 @@ COPY --from=builder /app/init-db.js ./init-db.js
 RUN mkdir -p ./public/uploads
 RUN chown -R nextjs:nodejs ./public/uploads
 
-# Create data directory for logs/uploads (PostgreSQL is external)
-RUN mkdir -p ./data
-RUN chown -R nextjs:nodejs ./data
+# Create directory for logs/temp files (PostgreSQL is external)
+RUN mkdir -p ./logs
+RUN chown -R nextjs:nodejs ./logs
 
 # Install su-exec for user switching
 RUN apk add --no-cache su-exec

@@ -33,8 +33,12 @@ jobs:
       
     - name: 🗄️ Setup test database
       env:
-        DATABASE_URL: "file:./test.db"
+        DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/test_db"
       run: |
+        # Start PostgreSQL service
+        sudo systemctl start postgresql
+        sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+        sudo -u postgres createdb test_db
         npx prisma generate
         npx prisma db push
         
@@ -66,12 +70,12 @@ jobs:
       
     - name: 🗄️ Generate Prisma client
       env:
-        DATABASE_URL: "file:./test.db"
+        DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/test_db"
       run: npx prisma generate
       
     - name: 🏗️ Build Next.js application
       env:
-        DATABASE_URL: "file:./test.db"
+        DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/test_db"
         NODE_ENV: "production"
         NEXTAUTH_URL: "http://localhost:3000"
         JWT_SECRET: "test-jwt-secret"

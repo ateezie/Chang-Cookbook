@@ -38,6 +38,71 @@ function generateSlug(title: string): string {
     .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
 }
 
+// Function to parse and validate JSON recipe
+function parseJsonRecipe(jsonString: string) {
+  try {
+    const recipe = JSON.parse(jsonString)
+    
+    // Validate required fields
+    const required = ['title', 'description', 'ingredients', 'instructions']
+    const missing = required.filter(field => !recipe[field] || (Array.isArray(recipe[field]) && recipe[field].length === 0))
+    
+    if (missing.length > 0) {
+      throw new Error(`Missing required fields: ${missing.join(', ')}`)
+    }
+    
+    // Normalize ingredients format
+    let normalizedIngredients = []
+    if (Array.isArray(recipe.ingredients)) {
+      normalizedIngredients = recipe.ingredients.map((ing: any) => {
+        if (typeof ing === 'string') {
+          // Split "1 cup flour" into amount and item
+          const parts = ing.trim().split(/\s+/)
+          if (parts.length >= 2) {
+            const amount = parts.slice(0, -1).join(' ')
+            const item = parts[parts.length - 1]
+            return { amount, item }
+          }
+          return { amount: '', item: ing }
+        }
+        return { amount: ing.amount || '', item: ing.item || ing.ingredient || '' }
+      }).filter((ing: any) => ing.item.trim())
+    }
+    
+    // Normalize instructions
+    let normalizedInstructions = []
+    if (Array.isArray(recipe.instructions)) {
+      normalizedInstructions = recipe.instructions.map((inst: any) => 
+        typeof inst === 'string' ? inst : inst.step || inst.instruction || ''
+      ).filter((inst: string) => inst.trim())
+    }
+    
+    return {
+      valid: true,
+      data: {
+        title: recipe.title?.trim() || '',
+        slug: recipe.slug || generateSlug(recipe.title || ''),
+        description: recipe.description?.trim() || '',
+        category: recipe.category || recipe.categoryId || '',
+        difficulty: recipe.difficulty || 'easy',
+        prepTime: parseInt(recipe.prepTime) || 0,
+        cookTime: parseInt(recipe.cookTime) || 0,
+        servings: parseInt(recipe.servings) || 4,
+        image: recipe.image || '',
+        tags: Array.isArray(recipe.tags) ? recipe.tags.join(', ') : (recipe.tags || ''),
+        featured: Boolean(recipe.featured),
+        ingredients: normalizedIngredients,
+        instructions: normalizedInstructions
+      }
+    }
+  } catch (error) {
+    return {
+      valid: false,
+      error: error instanceof Error ? error.message : 'Invalid JSON format'
+    }
+  }
+}
+
 export default function CreateRecipe() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -47,6 +112,9 @@ export default function CreateRecipe() {
   const [error, setError] = useState('')
   const [uploading, setUploading] = useState(false)
   const [imagePreview, setImagePreview] = useState('')
+  const [activeTab, setActiveTab] = useState<'manual' | 'json'>('manual')
+  const [jsonInput, setJsonInput] = useState('')
+  const [jsonError, setJsonError] = useState('')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -271,6 +339,53 @@ export default function CreateRecipe() {
     setImagePreview('')
   }
 
+  const handleJsonImport = () => {
+    setJsonError('')
+    
+    if (!jsonInput.trim()) {
+      setJsonError('Please enter JSON data')
+      return
+    }
+
+    const result = parseJsonRecipe(jsonInput)
+    
+    if (!result.valid) {
+      setJsonError(result.error || 'Invalid JSON')
+      return
+    }
+
+    // Load the parsed data into the form
+    const data = result.data
+    setFormData({
+      title: data.title,
+      slug: data.slug,
+      description: data.description,
+      category: data.category,
+      difficulty: data.difficulty,
+      prepTime: data.prepTime,
+      cookTime: data.cookTime,
+      servings: data.servings,
+      image: data.image,
+      tags: data.tags,
+      featured: data.featured
+    })
+    
+    setIngredients(data.ingredients.length > 0 ? data.ingredients : [{ item: '', amount: '' }])
+    setInstructions(data.instructions.length > 0 ? data.instructions : [''])
+    
+    if (data.image) {
+      setImagePreview(data.image)
+    }
+
+    // Switch to manual tab to review the imported data
+    setActiveTab('manual')
+  }
+
+  const clearJsonData = () => {
+    setJsonInput('')
+    setJsonError('')
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-chang-neutral-50 flex items-center justify-center">
@@ -316,7 +431,104 @@ export default function CreateRecipe() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Tab Navigation */}
+        <div className="mb-6 bg-white rounded-lg shadow">
+          <div className="border-b border-chang-neutral-200">
+            <nav className="flex space-x-8 px-6">
+              <button
+                onClick={() => setActiveTab('manual')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'manual'
+                    ? 'border-chang-orange-500 text-chang-orange-600'
+                    : 'border-transparent text-chang-brown-500 hover:text-chang-brown-700 hover:border-chang-brown-300'
+                }`}
+              >
+                📝 Manual Entry
+              </button>
+              <button
+                onClick={() => setActiveTab('json')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'json'
+                    ? 'border-chang-orange-500 text-chang-orange-600'
+                    : 'border-transparent text-chang-brown-500 hover:text-chang-brown-700 hover:border-chang-brown-300'
+                }`}
+              >
+                📄 JSON Import
+              </button>
+            </nav>
+          </div>
+        </div>
+
+        {/* JSON Import Tab */}
+        {activeTab === 'json' && (
+          <div className="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 className="text-lg font-medium text-chang-brown-800 mb-4">Import Recipe from JSON</h3>
+            <p className="text-chang-brown-600 mb-4">
+              Paste your recipe JSON data below. The system will parse and validate the data, then populate the manual form for review.
+            </p>
+            
+            {/* JSON Error Display */}
+            {jsonError && (
+              <div className="mb-4 bg-red-50 border border-red-200 rounded-md p-4">
+                <p className="text-red-600">{jsonError}</p>
+              </div>
+            )}
+            
+            {/* JSON Textarea */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-chang-brown-700 mb-2">
+                Recipe JSON Data
+              </label>
+              <textarea
+                value={jsonInput}
+                onChange={(e) => setJsonInput(e.target.value)}
+                placeholder={`{
+  "title": "Delicious Pasta",
+  "description": "A simple and tasty pasta dish",
+  "category": "main-course",
+  "difficulty": "easy",
+  "prepTime": 15,
+  "cookTime": 20,
+  "servings": 4,
+  "ingredients": [
+    {"amount": "1 lb", "item": "pasta"},
+    {"amount": "2 cloves", "item": "garlic"}
+  ],
+  "instructions": [
+    "Boil water and cook pasta",
+    "Sauté garlic and add pasta"
+  ]
+}`}
+                rows={20}
+                className="w-full px-3 py-2 border border-chang-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-chang-orange-500 font-mono text-sm"
+              />
+              <p className="mt-2 text-xs text-chang-brown-500">
+                Supports various JSON formats. Required fields: title, description, ingredients, instructions.
+              </p>
+            </div>
+            
+            {/* Import Actions */}
+            <div className="flex justify-end space-x-4">
+              <button
+                type="button"
+                onClick={clearJsonData}
+                className="px-4 py-2 text-chang-brown-600 border border-chang-brown-300 rounded-md hover:bg-chang-brown-50"
+              >
+                Clear
+              </button>
+              <button
+                type="button"
+                onClick={handleJsonImport}
+                className="px-4 py-2 bg-chang-orange-600 text-white rounded-md hover:bg-chang-orange-700"
+              >
+                Import & Review
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Manual Entry Form */}
+        <form onSubmit={handleSubmit} className={`space-y-8 ${activeTab === 'json' ? 'hidden' : ''}`}>
           {/* Basic Info */}
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-medium text-chang-brown-800 mb-4">Basic Information</h3>

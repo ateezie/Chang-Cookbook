@@ -50,16 +50,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid JSON format' }, { status: 400 })
     }
 
-    // Validate JSON structure
-    if (!jsonData.recipes || !Array.isArray(jsonData.recipes)) {
-      return NextResponse.json({ error: 'Missing or invalid recipes array' }, { status: 400 })
-    }
+    // Handle both single recipe and multiple recipe formats
+    let recipes: any[]
+    let categories: any[]
 
-    if (!jsonData.categories || !Array.isArray(jsonData.categories)) {
-      return NextResponse.json({ error: 'Missing or invalid categories array' }, { status: 400 })
-    }
+    // Check if it's a single recipe format (like honey.json)
+    if (jsonData.title && jsonData.ingredients && jsonData.instructions) {
+      // Single recipe format - wrap it in the expected structure
+      recipes = [jsonData]
+      categories = [{
+        id: jsonData.category || 'main-course',
+        name: jsonData.category?.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) || 'Main Course',
+        description: `Category for ${jsonData.category || 'main course'} recipes`,
+        emoji: '🍳',
+        count: 1
+      }]
+    } else {
+      // Multiple recipe format - validate structure
+      if (!jsonData.recipes || !Array.isArray(jsonData.recipes)) {
+        return NextResponse.json({ error: 'Missing or invalid recipes array' }, { status: 400 })
+      }
 
-    const { recipes, categories } = jsonData
+      if (!jsonData.categories || !Array.isArray(jsonData.categories)) {
+        return NextResponse.json({ error: 'Missing or invalid categories array' }, { status: 400 })
+      }
+
+      recipes = jsonData.recipes
+      categories = jsonData.categories
+    }
     const results = {
       recipes: 0,
       categories: 0,

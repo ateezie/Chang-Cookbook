@@ -26,6 +26,7 @@ export default function MigratePage() {
   const router = useRouter()
   const [jsonFile, setJsonFile] = useState<File | null>(null)
   const [jsonPreview, setJsonPreview] = useState<any>(null)
+  const [isDragOver, setIsDragOver] = useState(false)
   const [migrationStatus, setMigrationStatus] = useState<MigrationStatus>({
     status: 'idle',
     message: 'Ready to migrate JSON data'
@@ -40,10 +41,7 @@ export default function MigratePage() {
     }
   }, [router])
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
+  const processFile = async (file: File) => {
     if (!file.type.includes('json') && !file.name.endsWith('.json')) {
       setMigrationStatus({
         status: 'error',
@@ -62,9 +60,30 @@ export default function MigratePage() {
       const text = await file.text()
       const data = JSON.parse(text)
       
-      // Basic validation
+      // Check if it's a single recipe (like honey.json)
+      if (data.title && data.ingredients && data.instructions) {
+        // Single recipe format - wrap it in the expected structure
+        const wrappedData = {
+          recipes: [data],
+          categories: [{
+            id: data.category || 'main-course',
+            name: data.category || 'Main Course',
+            description: `Category for ${data.category || 'main course'} recipes`,
+            emoji: '🍳',
+            count: 1
+          }]
+        }
+        setJsonPreview(wrappedData)
+        setMigrationStatus({
+          status: 'idle',
+          message: `Ready to migrate 1 recipe (${data.title})`
+        })
+        return
+      }
+      
+      // Check for full format with recipes and categories arrays
       if (!data.recipes || !Array.isArray(data.recipes)) {
-        throw new Error('Invalid JSON format: missing recipes array')
+        throw new Error('Invalid JSON format: missing recipes array or single recipe format')
       }
 
       if (!data.categories || !Array.isArray(data.categories)) {
@@ -84,6 +103,40 @@ export default function MigratePage() {
       })
       setJsonFile(null)
       setJsonPreview(null)
+    }
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    await processFile(file)
+  }
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+
+    const files = e.dataTransfer.files
+    if (files.length > 0) {
+      await processFile(files[0])
     }
   }
 
@@ -187,7 +240,8 @@ export default function MigratePage() {
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
           <h2 className="text-lg font-medium text-blue-900 mb-2">📋 Migration Instructions</h2>
           <ul className="text-sm text-blue-800 space-y-1">
-            <li>• Upload a JSON file containing recipes and categories data</li>
+            <li>• <strong>Single Recipe:</strong> Upload a JSON file with a single recipe (like honey.json)</li>
+            <li>• <strong>Multiple Recipes:</strong> Upload a JSON file with recipes and categories arrays</li>
             <li>• The system will validate the format before migration</li>
             <li>• Existing recipes with the same ID will be skipped</li>
             <li>• New recipes will be added to the database</li>
@@ -266,7 +320,17 @@ export default function MigratePage() {
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h2 className="text-lg font-medium text-chang-brown-800 mb-4">Upload JSON File</h2>
           
-          <div className="border-2 border-dashed border-chang-neutral-300 rounded-lg p-8 text-center">
+          <div 
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              isDragOver 
+                ? 'border-chang-orange-400 bg-chang-orange-50' 
+                : 'border-chang-neutral-300 bg-white'
+            }`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
             <input
               type="file"
               accept=".json,application/json"
@@ -278,15 +342,32 @@ export default function MigratePage() {
             
             <label 
               htmlFor="json-file-input" 
-              className={`cursor-pointer ${migrationStatus.status === 'migrating' || migrationStatus.status === 'validating' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`cursor-pointer block ${migrationStatus.status === 'migrating' || migrationStatus.status === 'validating' ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <div className="text-6xl mb-4">📁</div>
+              <div className="text-6xl mb-4">
+                {isDragOver ? '📤' : '📁'}
+              </div>
               <p className="text-lg font-medium text-chang-brown-800 mb-2">
-                {jsonFile ? jsonFile.name : 'Choose JSON file'}
+                {isDragOver 
+                  ? 'Drop JSON file here' 
+                  : jsonFile 
+                    ? jsonFile.name 
+                    : 'Choose JSON file'
+                }
               </p>
               <p className="text-sm text-chang-brown-600">
-                {jsonFile ? `${(jsonFile.size / 1024).toFixed(1)} KB` : 'Click to select or drag and drop'}
+                {isDragOver 
+                  ? 'Release to upload'
+                  : jsonFile 
+                    ? `${(jsonFile.size / 1024).toFixed(1)} KB` 
+                    : 'Click to select or drag and drop JSON files'
+                }
               </p>
+              {!isDragOver && !jsonFile && (
+                <p className="text-xs text-chang-brown-500 mt-2">
+                  Supports single recipe JSON files (like honey.json) or full recipe collection format
+                </p>
+              )}
             </label>
           </div>
         </div>

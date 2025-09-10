@@ -145,7 +145,7 @@ export async function GET(request: NextRequest) {
     const folder = type ? `chang-cookbook/${type}s` : 'chang-cookbook'
     const result = await cloudinary.search
       .expression(`folder:${folder}/*`)
-      .sort_by([['created_at', 'desc']])
+      .sort_by('created_at', 'desc')
       .max_results(100)
       .execute()
 

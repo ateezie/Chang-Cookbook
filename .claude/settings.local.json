@@ -61,7 +61,9 @@
       "Bash(cat:*)",
       "Bash(./update-chef-names-token.sh:*)",
       "Bash(./update-featured-recipes.sh:*)",
-      "Bash(./fix-featured-recipes.sh:*)"
+      "Bash(./fix-featured-recipes.sh:*)",
+      "Bash(./fix-production-setup.sh:*)",
+      "Bash(./start-production-container.sh)"
     ],
     "deny": []
   }

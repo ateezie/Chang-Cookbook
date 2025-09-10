@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { authenticateAdmin } from '@/lib/auth'
 import { v2 as cloudinary } from 'cloudinary'
 
+// Configure runtime for larger file uploads
+export const runtime = 'nodejs'
+
+// App Router doesn't use the old config format
+// Body size limits are handled by Next.js config
+
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

@@ -16,7 +16,7 @@ const nextConfig = {
   // Build configuration for PostgreSQL migration
   trailingSlash: false,
   experimental: {
-    appDir: true,
+    // Note: appDir is default in Next.js 13+ and no longer needed
   },
   // Disable static generation for auth pages to prevent build-time database calls
   async generateBuildId() {
@@ -41,6 +41,12 @@ const nextConfig = {
         hostname: 'cook.alexthip.com',
         port: '',
         pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',
       },
     ],
     dangerouslyAllowSVG: true,

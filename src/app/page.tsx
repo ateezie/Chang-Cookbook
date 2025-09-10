@@ -80,7 +80,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 items-stretch">
             {featuredRecipes.slice(0, 4).map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} featured />
             ))}
@@ -161,7 +161,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {recipes.slice(0, 8).map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}

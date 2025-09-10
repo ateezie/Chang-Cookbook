@@ -2,6 +2,21 @@ import Link from 'next/link'
 import { RecipeCardProps } from '@/types'
 import RecipeImage from './RecipeImage'
 
+function formatDuration(minutes: number): string {
+  if (minutes < 60) {
+    return `${minutes} min`
+  }
+  
+  const hours = Math.floor(minutes / 60)
+  const remainingMinutes = minutes % 60
+  
+  if (remainingMinutes === 0) {
+    return `${hours}h`
+  }
+  
+  return `${hours}h ${remainingMinutes}m`
+}
+
 function DifficultyBadge({ difficulty }: { difficulty: string }) {
   const colors = {
     easy: 'bg-green-100 text-green-700',
@@ -20,8 +35,8 @@ function DifficultyBadge({ difficulty }: { difficulty: string }) {
 export default function RecipeCard({ recipe, className = '', featured = false }: RecipeCardProps) {
   const isListView = className.includes('sm:flex')
   const cardClasses = featured
-    ? `recipe-card ${className} transform hover:scale-[1.02]`
-    : `recipe-card ${className}`
+    ? `recipe-card ${className} transform hover:scale-[1.02] flex flex-col h-full`
+    : `recipe-card ${className} flex flex-col h-full`
 
   return (
     <Link href={`/recipes/${recipe.slug || recipe.id}`} className={cardClasses}>
@@ -53,7 +68,7 @@ export default function RecipeCard({ recipe, className = '', featured = false }:
                   <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>{recipe.totalTime} min</span>
+                  <span>{formatDuration(recipe.totalTime)}</span>
                 </div>
                 <DifficultyBadge difficulty={recipe.difficulty} />
               </div>
@@ -63,8 +78,8 @@ export default function RecipeCard({ recipe, className = '', featured = false }:
       </div>
 
       {/* Recipe Content */}
-      <div className={`${featured ? 'p-8' : 'p-6'} ${isListView ? 'sm:flex-1 sm:flex sm:flex-col sm:justify-between' : ''}`}>
-        <div>
+      <div className={`${featured ? 'p-8' : 'p-6'} ${isListView ? 'sm:flex-1 sm:flex sm:flex-col sm:justify-between' : 'flex-1 flex flex-col'}`}>
+        <div className="flex-1">
           <h3 className={`font-heading font-semibold text-chang-brown-900 mb-2 group-hover:text-chang-orange-400 transition-colors duration-200 ${featured ? 'text-2xl' : isListView ? 'text-lg sm:text-xl' : 'text-xl'}`}>
             {recipe.title}
           </h3>
@@ -80,7 +95,7 @@ export default function RecipeCard({ recipe, className = '', featured = false }:
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{recipe.totalTime} min</span>
+                <span>{formatDuration(recipe.totalTime)}</span>
               </div>
               <DifficultyBadge difficulty={recipe.difficulty} />
             </div>

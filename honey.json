@@ -1,0 +1,88 @@
+{
+  "id": "honey-garlic-glazed-chicken-thighs",
+  "title": "Honey Garlic Glazed Chicken Thighs",
+  "description": "Crispy-skinned chicken thighs with a sweet and savory honey garlic glaze that caramelizes beautifully in the oven.",
+  "category": "main-course",
+  "difficulty": "easy",
+  "prepTime": 15,
+  "cookTime": 35,
+  "totalTime": 50,
+  "servings": 4,
+  "rating": 4.7,
+  "reviewCount": 0,
+  "image": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800&q=80",
+  "chef": {
+    "name": "Home Chef",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
+  },
+  "tags": ["chicken", "honey", "garlic", "glazed", "oven-baked", "comfort-food", "family-friendly"],
+  "ingredients": [
+    {
+      "item": "bone-in, skin-on chicken thighs",
+      "amount": "6-8 pieces"
+    },
+    {
+      "item": "honey",
+      "amount": "1/3 cup"
+    },
+    {
+      "item": "soy sauce (low sodium)",
+      "amount": "1/4 cup"
+    },
+    {
+      "item": "garlic, minced",
+      "amount": "6 cloves"
+    },
+    {
+      "item": "apple cider vinegar",
+      "amount": "2 tbsp"
+    },
+    {
+      "item": "brown sugar",
+      "amount": "1 tbsp"
+    },
+    {
+      "item": "fresh ginger, grated",
+      "amount": "1 tsp"
+    },
+    {
+      "item": "red pepper flakes",
+      "amount": "1/2 tsp (optional)"
+    },
+    {
+      "item": "olive oil",
+      "amount": "2 tbsp"
+    },
+    {
+      "item": "salt and pepper",
+      "amount": "to taste"
+    },
+    {
+      "item": "green onions for garnish",
+      "amount": "chopped"
+    },
+    {
+      "item": "sesame seeds for garnish",
+      "amount": "for sprinkling"
+    }
+  ],
+  "instructions": [
+    "Preheat oven to 425°F and season chicken thighs generously with salt and pepper on both sides.",
+    "Heat olive oil in an oven-safe skillet over medium-high heat until shimmering.",
+    "Sear chicken thighs skin-side down for 6-7 minutes until golden brown and crispy, then flip and cook for 2-3 minutes more.",
+    "Meanwhile, whisk together honey, soy sauce, minced garlic, apple cider vinegar, brown sugar, grated ginger, and red pepper flakes in a bowl.",
+    "Remove chicken thighs temporarily from the pan and pour off excess fat, leaving about 1 tablespoon in the pan.",
+    "Return chicken thighs to the pan and pour half of the honey garlic glaze over the chicken.",
+    "Transfer the skillet to the preheated oven and bake for 20-25 minutes, basting with the remaining glaze halfway through cooking.",
+    "For extra caramelization, broil for 2-3 minutes at the end, watching carefully to prevent burning.",
+    "Remove from oven and garnish with chopped green onions and sesame seeds before serving."
+  ],
+  "nutrition": {
+    "calories": 420,
+    "protein": "32g",
+    "carbs": "18g",
+    "fat": "24g"
+  },
+  "featured": false,
+  "createdAt": "2025-09-04"
+}

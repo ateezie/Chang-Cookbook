@@ -1,0 +1,32 @@
+{
+  "title": "Test Recipe for JSON Import",
+  "description": "A delicious test recipe to verify the JSON import functionality works correctly",
+  "category": "appetizers",
+  "difficulty": "easy",
+  "prepTime": 15,
+  "cookTime": 20,
+  "servings": 4,
+  "rating": 4.5,
+  "image": "/images/recipes/test-recipe.jpg",
+  "chef": {
+    "name": "Chef Test",
+    "avatar": "/images/chefs/chef-test.jpg"
+  },
+  "tags": ["quick", "easy", "test"],
+  "ingredients": [
+    {"item": "Test ingredient 1", "amount": "2 cups"},
+    {"item": "Test ingredient 2", "amount": "1 tablespoon"},
+    {"item": "Test ingredient 3", "amount": "1/2 teaspoon"}
+  ],
+  "instructions": [
+    "First test instruction step",
+    "Second test instruction step",
+    "Third test instruction step"
+  ],
+  "nutrition": {
+    "calories": 250,
+    "protein": "12g",
+    "carbs": "30g",
+    "fat": "8g"
+  }
+}

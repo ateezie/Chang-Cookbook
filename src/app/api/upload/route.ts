@@ -89,6 +89,14 @@ export async function POST(request: NextRequest) {
     // Return the URL path (not file system path)
     const imageUrl = `/images/${type === 'recipe' ? 'recipes' : 'chefs'}/${fileName}`
 
+    console.log('File uploaded successfully:', {
+      filename: fileName,
+      path: imageUrl,
+      filePath: filePath,
+      size: file.size,
+      type: file.type
+    })
+
     return NextResponse.json({
       message: 'File uploaded successfully',
       filename: fileName,

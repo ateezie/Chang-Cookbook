@@ -90,7 +90,7 @@ function parseJsonRecipe(jsonString: string) {
         servings: parseInt(recipe.servings) || 4,
         image: recipe.image || '',
         tags: Array.isArray(recipe.tags) ? recipe.tags.join(', ') : (recipe.tags || ''),
-        featured: Boolean(recipe.featured),
+        featured: false, // Always default to false to prevent unwanted featured recipes
         ingredients: normalizedIngredients,
         instructions: normalizedInstructions
       }

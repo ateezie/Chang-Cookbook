@@ -182,9 +182,15 @@ export async function POST(request: NextRequest) {
       // This shouldn't happen since we create chef profiles on registration, but just in case
       chef = await prisma.chef.create({
         data: {
-          name: user.name,
+          name: 'Chef Chang', // Always use "Chef Chang" for user uploads
           userId: user.id
         }
+      })
+    } else {
+      // Update existing chef to use "Chef Chang" name for consistency
+      chef = await prisma.chef.update({
+        where: { id: chef.id },
+        data: { name: 'Chef Chang' }
       })
     }
 

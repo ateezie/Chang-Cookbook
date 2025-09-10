@@ -1,24 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { authenticateAdmin } from '@/lib/auth'
-import { writeFile } from 'fs/promises'
-import { existsSync, mkdirSync } from 'fs'
-import path from 'path'
+import { v2 as cloudinary } from 'cloudinary'
 
-// Ensure upload directories exist
-function ensureUploadDirs() {
-  const dirs = [
-    './public/images/recipes',
-    './public/images/chefs'
-  ]
-  
-  dirs.forEach(dir => {
-    if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true })
-    }
-  })
-}
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
-// POST /api/upload - Upload images (Admin only)
+// POST /api/upload - Upload images to Cloudinary (Admin only)
 export async function POST(request: NextRequest) {
   try {
     // Authenticate admin
@@ -49,10 +40,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif']
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only JPEG, PNG and WebP images are allowed.' },
+        { error: 'Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed.' },
         { status: 400 }
       )
     }
@@ -67,54 +58,68 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Ensure directories exist
-    ensureUploadDirs()
-
-    // Generate unique filename
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '')
-    const extension = path.extname(sanitizedName)
-    const baseName = path.basename(sanitizedName, extension)
-    const fileName = `${type}-${uniqueSuffix}-${baseName}${extension}`
-
-    // Determine upload path
-    const uploadDir = `./public/images/${type === 'recipe' ? 'recipes' : 'chefs'}`
-    const filePath = path.join(uploadDir, fileName)
-
-    // Convert file to buffer and save
+    // Convert file to buffer
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    await writeFile(filePath, buffer)
 
-    // Return the URL path (not file system path)
-    const imageUrl = `/images/${type === 'recipe' ? 'recipes' : 'chefs'}/${fileName}`
+    // Upload to Cloudinary
+    const uploadResult = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          resource_type: 'image',
+          folder: `chang-cookbook/${type}s`, // recipes or chefs folder
+          format: 'webp', // Convert to WebP for better compression
+          quality: 'auto:good', // Automatic quality optimization
+          fetch_format: 'auto', // Automatic format selection
+          transformation: [
+            {
+              width: type === 'recipe' ? 800 : 400, // Recipe images larger than chef avatars
+              height: type === 'recipe' ? 600 : 400,
+              crop: 'fill',
+              gravity: 'center',
+              quality: 'auto:good'
+            }
+          ]
+        },
+        (error, result) => {
+          if (error) reject(error)
+          else resolve(result)
+        }
+      ).end(buffer)
+    })
 
-    console.log('File uploaded successfully:', {
-      filename: fileName,
-      path: imageUrl,
-      filePath: filePath,
-      size: file.size,
-      type: file.type
+    const result = uploadResult as any
+
+    console.log('Image uploaded to Cloudinary:', {
+      public_id: result.public_id,
+      secure_url: result.secure_url,
+      format: result.format,
+      bytes: result.bytes,
+      width: result.width,
+      height: result.height
     })
 
     return NextResponse.json({
-      message: 'File uploaded successfully',
-      filename: fileName,
-      path: imageUrl,
-      size: file.size,
-      type: file.type
+      message: 'Image uploaded successfully to Cloudinary',
+      filename: result.public_id,
+      path: result.secure_url,
+      size: result.bytes,
+      type: result.format,
+      width: result.width,
+      height: result.height,
+      cloudinary_id: result.public_id
     })
 
   } catch (error) {
-    console.error('Error uploading file:', error)
+    console.error('Error uploading to Cloudinary:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to upload image' },
       { status: 500 }
     )
   }
 }
 
-// GET /api/upload - List uploaded files (Admin only)
+// GET /api/upload - List uploaded images from Cloudinary (Admin only)
 export async function GET(request: NextRequest) {
   try {
     // Authenticate admin
@@ -136,46 +141,31 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const fs = await import('fs/promises')
-    const files: { name: string; path: string; type: string }[] = []
+    // Get images from Cloudinary
+    const folder = type ? `chang-cookbook/${type}s` : 'chang-cookbook'
+    const result = await cloudinary.search
+      .expression(`folder:${folder}/*`)
+      .sort_by([['created_at', 'desc']])
+      .max_results(100)
+      .execute()
 
-    const directories = type ? 
-      [{ dir: `./public/images/${type === 'recipe' ? 'recipes' : 'chefs'}`, type }] :
-      [
-        { dir: './public/images/recipes', type: 'recipe' },
-        { dir: './public/images/chefs', type: 'chef' }
-      ]
-
-    for (const { dir, type: dirType } of directories) {
-      try {
-        if (existsSync(dir)) {
-          const dirFiles = await fs.readdir(dir)
-          
-          for (const file of dirFiles) {
-            const isImage = /\.(jpg|jpeg|png|webp)$/i.test(file)
-            if (isImage) {
-              files.push({
-                name: file,
-                path: `/images/${dirType === 'recipe' ? 'recipes' : 'chefs'}/${file}`,
-                type: dirType
-              })
-            }
-          }
-        }
-      } catch (error) {
-        console.error(`Error reading directory ${dir}:`, error)
-      }
-    }
-
-    // Sort by filename (newest first based on timestamp in filename)
-    files.sort((a, b) => b.name.localeCompare(a.name))
+    const files = result.resources.map((resource: any) => ({
+      name: resource.public_id.split('/').pop(),
+      path: resource.secure_url,
+      type: resource.public_id.includes('/recipes/') ? 'recipe' : 'chef',
+      cloudinary_id: resource.public_id,
+      created_at: resource.created_at,
+      bytes: resource.bytes,
+      width: resource.width,
+      height: resource.height
+    }))
 
     return NextResponse.json({ files })
 
   } catch (error) {
-    console.error('Error listing files:', error)
+    console.error('Error listing Cloudinary images:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to list images' },
       { status: 500 }
     )
   }
